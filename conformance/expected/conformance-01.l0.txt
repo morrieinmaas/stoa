@@ -1,0 +1,109 @@
+Conformance document 01
+=======================
+
+# Notice of award and conformance fixture
+
+This document exercises every element in the register exactly as a real administrative notice would, so that closing the vocabulary is tested against use rather than against intent. It is simultaneously the test fixture, the theme validation target, and the golden output.
+
+1. The award
+2. Amounts
+3. Appeal
+
+## The award
+
+The authority has awarded the contract described in Amounts to the successful tenderer, with effect from 2026-09-01. The decision is final and, unless suspended on appeal, takes effect automatically[n-effect]. The reference of record is `9ФΩГ4691Ω2-ΛΛΧ`, published at the national transparency register <https://diavgeia.gov.gr/decision/view/example>.
+
+Issuing authority:
+  Public Employment Service
+  Regional Directorate of Epirus
+Decision type:
+  Act of financial content
+Protocol number:
+  01/07/5702 - 2026
+
+1. The tender was published and the period for expressions of interest has closed.
+2. The evaluation committee assessed all admissible tenders against the published criteria.
+3. The award follows the committee recommendation without modification.
+
+### important
+
+Standstill applies. No contract may be signed before 2026-09-11.
+
+> Contracting authorities shall as soon as possible inform each candidate and tenderer of decisions reached concerning the award of a contract.
+> -- Directive 2014/24/EU, Article 55
+
+## Amounts
+
+All amounts are exact. Currency is carried as an integer significand and a scale, never as a floating point number, so a total is reproducible byte for byte on every client.
+
+[table: Awarded amounts by budget line]
+(Awarded amounts by budget line)
+
+Budget line | Beneficiary | Amount
+2520101 | First beneficiary | 6200.00 EUR
+2520102 | Second beneficiary | 14837.50 EUR
+Total | 21037.50 EUR
+
+The register carries no floating point type at any layer, including inside renderer payloads. That single decision closes both the encoding question and renderer numeric determinism across hosts.
+
+(Cumulative disbursement, four quarters)
+
+(Cumulative disbursement rising from 0 to 21,037.50 EUR across four quarters.)
+
+[image: A stoa: a covered public colonnade of repeated identical columns, open along one side.]
+
+(A civic building assembled from a small vocabulary of repeated standard elements.)
+
+```json
+{"t":"quantity","significand":620000,"scale":2,"unit":"EUR"}
+```
+
+## Appeal
+
+> Any interested party may seek review.
+> -- Law 4412/2016
+
+An appeal must be lodged within ten days. The form below is submitted only when the reader submits it; the document has no way to cause a request on its own.
+
+### Lodge an appeal
+
+Fields marked required must be completed.
+
+Name of appellant:
+Grounds for appeal:
+Legal basis:
+  - Procedural irregularity
+  - Misapplication of award criteria
+  - Other
+
+Lodge appeal
+
+### What happens after an appeal is lodged
+
+The authority suspends the standstill period and responds in writing within fifteen days.
+
+### By post
+
+Regional Directorate of Epirus
+45332 Ioannina
+
+### In person
+
+At the registry, on working days between 09:00 and 13:00.
+
+Show this notice in Greek <?lang=el>. State is addressable, so the alternative is an ordinary link to the same document.
+
+Signed:
+  The Regional Director
+Date of signature:
+  2026-07-28
+
+Document identifier:
+  urn:stoa:conformance-01
+Published:
+  2026-07-28T09:15:00Z
+
+- Amounts, this document.
+- Directive 2014/24/EU on public procurement.
+
+[n-effect] Automatic effect is suspended for the duration of the standstill period and for any period during which an appeal is pending.

@@ -1,0 +1,24 @@
+version = 1
+SPDX-PackageName = "stoa"
+SPDX-PackageDownloadLocation = "https://github.com/morrieinmaas/stoa"
+
+# Specification text, register, design notes: independent implementation,
+# derivative specifications and translation permitted irrevocably.
+[[annotations]]
+path = ["spec/**", "docs/**", "m0/**", "README.md"]
+SPDX-FileCopyrightText = "Stoa contributors"
+SPDX-License-Identifier = "CC-BY-4.0"
+
+# Test data must carry zero obligations. A conformance suite that carries
+# obligations is a conformance suite people route around.
+[[annotations]]
+path = ["conformance/**", "corpus/**"]
+SPDX-FileCopyrightText = "Stoa contributors"
+SPDX-License-Identifier = "CC0-1.0"
+
+# Implementation: Apache-2.0 rather than MIT specifically for the explicit
+# patent grant, which matters more for a format than for an application.
+[[annotations]]
+path = ["tools/**", "mise.toml", "REUSE.toml", ".gitignore"]
+SPDX-FileCopyrightText = "Stoa contributors"
+SPDX-License-Identifier = "Apache-2.0"

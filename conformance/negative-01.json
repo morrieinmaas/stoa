@@ -1,0 +1,48 @@
+{
+  "t": "document",
+  "id": "urn:stoa:negative-01",
+  "lang": "en",
+  "title": "Negative fixture 01",
+  "c": [
+    { "t": "section", "id": "dup", "c": [
+      { "t": "heading", "level": 2, "c": [ { "t": "text", "v": "Fetch boundary" } ] },
+
+      { "t": "media", "kind": "image", "src": "https://tracker.example/px.gif",
+        "alt": "A tracking pixel with impeccable alternative text." },
+
+      { "t": "media", "kind": "image", "src": "figures/plan.png", "alt": "" },
+
+      { "t": "media", "kind": "image", "src": "figures/site.png" },
+
+      { "t": "media", "kind": "hologram", "src": "figures/model.bin",
+        "alt": "A projected model." } ] },
+
+    { "t": "section", "id": "dup", "c": [
+      { "t": "heading", "level": 9, "c": [ { "t": "text", "v": "Level out of range" } ] },
+
+      { "t": "heading", "level": "2", "c": [ { "t": "text", "v": "Level of the wrong type" } ] },
+
+      { "t": "paragraph", "align": "center", "c": [
+        { "t": "text", "v": "A field the register does not declare." } ] },
+
+      { "t": "marquee", "c": [ { "t": "text", "v": "An element the register does not contain." } ] },
+
+      { "t": "paragraph", "c": [
+        { "t": "section", "c": [
+          { "t": "paragraph", "c": [ { "t": "text", "v": "A block inside an inline slot." } ] } ] } ] },
+
+      { "t": "paragraph", "c": [
+        { "t": "text", "v": "A cross-reference to " },
+        { "t": "reference", "target": "does-not-exist", "c": [
+          { "t": "text", "v": "a node that is not here" } ] },
+        { "t": "text", "v": "." } ] },
+
+      { "t": "paragraph", "c": [
+        { "t": "text", "v": "An amount that is not exactly representable: " },
+        { "t": "quantity", "significand": 6200.50, "scale": 2, "unit": "EUR" },
+        { "t": "text", "v": "." } ] },
+
+      { "t": "payload", "id": "p-bad", "type": "stoa.example/time-series",
+        "data": "1,2.5,3" } ] }
+  ]
+}

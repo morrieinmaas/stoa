@@ -1,0 +1,210 @@
+{
+  "t": "document",
+  "id": "urn:stoa:conformance-01",
+  "lang": "en",
+  "title": "Conformance document 01",
+  "c": [
+    { "t": "heading", "level": 1, "c": [
+      { "t": "text", "v": "Notice of award and conformance fixture" } ] },
+
+    { "t": "abstract", "c": [
+      { "t": "paragraph", "c": [
+        { "t": "text", "v": "This document exercises every element in the register exactly as a real administrative notice would, so that closing the vocabulary is tested against use rather than against intent. It is simultaneously the test fixture, the theme validation target, and the golden output." } ] } ] },
+
+    { "t": "contents", "c": [
+      { "t": "item", "c": [ { "t": "paragraph", "c": [
+        { "t": "reference", "target": "sec-award", "c": [ { "t": "text", "v": "The award" } ] } ] } ] },
+      { "t": "item", "c": [ { "t": "paragraph", "c": [
+        { "t": "reference", "target": "sec-money", "c": [ { "t": "text", "v": "Amounts" } ] } ] } ] },
+      { "t": "item", "c": [ { "t": "paragraph", "c": [
+        { "t": "reference", "target": "sec-appeal", "c": [ { "t": "text", "v": "Appeal" } ] } ] } ] } ] },
+
+    { "t": "section", "id": "sec-award", "c": [
+      { "t": "heading", "level": 2, "c": [ { "t": "text", "v": "The award" } ] },
+
+      { "t": "paragraph", "c": [
+        { "t": "text", "v": "The authority has awarded the contract described in " },
+        { "t": "reference", "target": "sec-money", "c": [ { "t": "text", "v": "Amounts" } ] },
+        { "t": "text", "v": " to the successful tenderer, with effect from " },
+        { "t": "date", "value": "2026-09-01", "precision": "day" },
+        { "t": "text", "v": ". The decision is " },
+        { "t": "strong", "c": [ { "t": "text", "v": "final" } ] },
+        { "t": "text", "v": " and, unless " },
+        { "t": "emphasis", "c": [ { "t": "text", "v": "suspended" } ] },
+        { "t": "text", "v": " on appeal, takes effect automatically" },
+        { "t": "note-ref", "target": "n-effect" },
+        { "t": "text", "v": ". The reference of record is " },
+        { "t": "code", "c": [ { "t": "text", "v": "9ФΩГ4691Ω2-ΛΛΧ" } ] },
+        { "t": "text", "v": ", published at " },
+        { "t": "link", "href": "https://diavgeia.gov.gr/decision/view/example", "c": [
+          { "t": "text", "v": "the national transparency register" } ] },
+        { "t": "text", "v": "." } ] },
+
+      { "t": "term-list", "c": [
+        { "t": "term", "c": [ { "t": "text", "v": "Issuing authority" } ] },
+        { "t": "definition", "c": [ { "t": "paragraph", "c": [
+          { "t": "text", "v": "Public Employment Service" },
+          { "t": "line-break" },
+          { "t": "text", "v": "Regional Directorate of Epirus" } ] } ] },
+        { "t": "term", "c": [ { "t": "text", "v": "Decision type" } ] },
+        { "t": "definition", "c": [ { "t": "paragraph", "c": [
+          { "t": "text", "v": "Act of financial content" } ] } ] },
+        { "t": "term", "c": [ { "t": "text", "v": "Protocol number" } ] },
+        { "t": "definition", "c": [ { "t": "paragraph", "c": [
+          { "t": "text", "v": "01/07/5702 - 2026" } ] } ] } ] },
+
+      { "t": "list", "ordered": true, "c": [
+        { "t": "item", "c": [ { "t": "paragraph", "c": [
+          { "t": "text", "v": "The tender was published and the period for expressions of interest has closed." } ] } ] },
+        { "t": "item", "c": [ { "t": "paragraph", "c": [
+          { "t": "text", "v": "The evaluation committee assessed all admissible tenders against the published criteria." } ] } ] },
+        { "t": "item", "c": [ { "t": "paragraph", "c": [
+          { "t": "text", "v": "The award follows the committee recommendation without modification." } ] } ] } ] },
+
+      { "t": "admonition", "kind": "important", "c": [
+        { "t": "paragraph", "c": [
+          { "t": "text", "v": "Standstill applies. No contract may be signed before " },
+          { "t": "date", "value": "2026-09-11", "precision": "day" },
+          { "t": "text", "v": "." } ] } ] },
+
+      { "t": "quote", "source": "Directive 2014/24/EU, Article 55", "c": [
+        { "t": "paragraph", "c": [
+          { "t": "text", "v": "Contracting authorities shall as soon as possible inform each candidate and tenderer of decisions reached concerning the award of a contract." } ] } ] } ] },
+
+    { "t": "section", "id": "sec-money", "c": [
+      { "t": "heading", "level": 2, "c": [ { "t": "text", "v": "Amounts" } ] },
+
+      { "t": "paragraph", "c": [
+        { "t": "text", "v": "All amounts are exact. Currency is carried as an integer significand and a scale, never as a floating point number, so a total is reproducible byte for byte on every client." } ] },
+
+      { "t": "table", "summary": "Awarded amounts by budget line", "c": [
+        { "t": "caption", "c": [ { "t": "text", "v": "Awarded amounts by budget line" } ] },
+        { "t": "table-section", "kind": "head", "c": [
+          { "t": "row", "c": [
+            { "t": "header-cell", "scope": "column", "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "Budget line" } ] } ] },
+            { "t": "header-cell", "scope": "column", "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "Beneficiary" } ] } ] },
+            { "t": "header-cell", "scope": "column", "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "Amount" } ] } ] } ] } ] },
+        { "t": "table-section", "kind": "body", "c": [
+          { "t": "row", "c": [
+            { "t": "header-cell", "scope": "row", "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "2520101" } ] } ] },
+            { "t": "cell", "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "First beneficiary" } ] } ] },
+            { "t": "cell", "c": [ { "t": "paragraph", "c": [
+              { "t": "quantity", "significand": 620000, "scale": 2, "unit": "EUR" } ] } ] } ] },
+          { "t": "row", "c": [
+            { "t": "header-cell", "scope": "row", "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "2520102" } ] } ] },
+            { "t": "cell", "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "Second beneficiary" } ] } ] },
+            { "t": "cell", "c": [ { "t": "paragraph", "c": [
+              { "t": "quantity", "significand": 1483750, "scale": 2, "unit": "EUR" } ] } ] } ] } ] },
+        { "t": "table-section", "kind": "foot", "c": [
+          { "t": "row", "c": [
+            { "t": "header-cell", "scope": "row", "colspan": 2, "c": [ { "t": "paragraph", "c": [
+              { "t": "text", "v": "Total" } ] } ] },
+            { "t": "cell", "c": [ { "t": "paragraph", "c": [
+              { "t": "quantity", "significand": 2103750, "scale": 2, "unit": "EUR" } ] } ] } ] } ] } ] },
+
+      { "t": "sidebar", "c": [
+        { "t": "paragraph", "c": [
+          { "t": "text", "v": "The register carries no floating point type at any layer, including inside renderer payloads. That single decision closes both the encoding question and renderer numeric determinism across hosts." } ] } ] },
+
+      { "t": "payload", "id": "p-spend", "type": "stoa.example/time-series", "data": "0,620000,1483750,2103750" },
+
+      { "t": "rendering",
+        "renderer": "3d2f1a9c8b7e6d5c4b3a29180716253449586a7b8c9d0e1f2a3b4c5d6e7f8091",
+        "payload": "p-spend",
+        "fallback": "Cumulative disbursement rising from 0 to 21,037.50 EUR across four quarters.",
+        "c": [
+          { "t": "caption", "c": [ { "t": "text", "v": "Cumulative disbursement, four quarters" } ] } ] },
+
+      { "t": "figure", "c": [
+        { "t": "media", "kind": "image", "src": "assets/colonnade.png",
+          "alt": "A stoa: a covered public colonnade of repeated identical columns, open along one side." },
+        { "t": "caption", "c": [
+          { "t": "text", "v": "A civic building assembled from a small vocabulary of repeated standard elements." } ] } ] },
+
+      { "t": "code-block", "language": "json", "c": [
+        { "t": "text", "v": "{\"t\":\"quantity\",\"significand\":620000,\"scale\":2,\"unit\":\"EUR\"}" } ] } ] },
+
+    { "t": "article", "id": "art-appeal", "c": [
+      { "t": "section", "id": "sec-appeal", "c": [
+        { "t": "heading", "level": 2, "c": [ { "t": "text", "v": "Appeal" } ] },
+
+        { "t": "epigraph", "source": "Law 4412/2016", "c": [
+          { "t": "paragraph", "c": [
+            { "t": "text", "v": "Any interested party may seek review." } ] } ] },
+
+        { "t": "paragraph", "c": [
+          { "t": "text", "v": "An appeal must be lodged within ten days. The form below is submitted only when the reader submits it; the document has no way to cause a request on its own." } ] },
+
+        { "t": "form", "action": "appeals/submit", "method": "post", "c": [
+          { "t": "heading", "level": 3, "c": [ { "t": "text", "v": "Lodge an appeal" } ] },
+          { "t": "paragraph", "c": [
+            { "t": "text", "v": "Fields marked required must be completed." } ] },
+          { "t": "field", "name": "appellant", "label": "Name of appellant", "required": true, "c": [
+            { "t": "field-text", "value": "" } ] },
+          { "t": "field", "name": "grounds", "label": "Grounds for appeal", "required": true, "c": [
+            { "t": "field-text", "multiline": true, "value": "" } ] },
+          { "t": "field", "name": "basis", "label": "Legal basis", "required": false, "c": [
+            { "t": "field-choice", "multiple": false, "c": [
+              { "t": "field-option", "value": "procedure", "selected": true, "c": [
+                { "t": "text", "v": "Procedural irregularity" } ] },
+              { "t": "field-option", "value": "criteria", "c": [
+                { "t": "text", "v": "Misapplication of award criteria" } ] },
+              { "t": "field-option", "value": "other", "c": [
+                { "t": "text", "v": "Other" } ] } ] } ] },
+          { "t": "submit", "label": "Lodge appeal" } ] },
+
+        { "t": "disclosure", "summary": "What happens after an appeal is lodged", "open": false, "c": [
+          { "t": "paragraph", "c": [
+            { "t": "text", "v": "The authority suspends the standstill period and responds in writing within fifteen days." } ] } ] },
+
+        { "t": "tab-group", "c": [
+          { "t": "tab", "label": "By post", "c": [
+            { "t": "paragraph", "c": [
+              { "t": "text", "v": "Regional Directorate of Epirus" },
+              { "t": "line-break" },
+              { "t": "text", "v": "45332 Ioannina" } ] } ] },
+          { "t": "tab", "label": "In person", "c": [
+            { "t": "paragraph", "c": [
+              { "t": "text", "v": "At the registry, on working days between 09:00 and 13:00." } ] } ] } ] },
+
+        { "t": "paragraph", "c": [
+          { "t": "text", "v": "Show " },
+          { "t": "state-link", "key": "lang", "value": "el", "c": [
+            { "t": "text", "v": "this notice in Greek" } ] },
+          { "t": "text", "v": ". State is addressable, so the alternative is an ordinary link to the same document." } ] } ] } ] },
+
+    { "t": "signature-block", "c": [
+      { "t": "term", "c": [ { "t": "text", "v": "Signed" } ] },
+      { "t": "definition", "c": [ { "t": "paragraph", "c": [
+        { "t": "text", "v": "The Regional Director" } ] } ] },
+      { "t": "term", "c": [ { "t": "text", "v": "Date of signature" } ] },
+      { "t": "definition", "c": [ { "t": "paragraph", "c": [
+        { "t": "date", "value": "2026-07-28", "precision": "day" } ] } ] } ] },
+
+    { "t": "provenance", "c": [
+      { "t": "term", "c": [ { "t": "text", "v": "Document identifier" } ] },
+      { "t": "definition", "c": [ { "t": "paragraph", "c": [
+        { "t": "text", "v": "urn:stoa:conformance-01" } ] } ] },
+      { "t": "term", "c": [ { "t": "text", "v": "Published" } ] },
+      { "t": "definition", "c": [ { "t": "paragraph", "c": [
+        { "t": "date", "value": "2026-07-28T09:15:00Z", "precision": "second" } ] } ] } ] },
+
+    { "t": "bibliography", "c": [
+      { "t": "item", "c": [ { "t": "paragraph", "c": [
+        { "t": "citation", "target": "sec-money", "c": [ { "t": "text", "v": "Amounts" } ] },
+        { "t": "text", "v": ", this document." } ] } ] },
+      { "t": "item", "c": [ { "t": "paragraph", "c": [
+        { "t": "text", "v": "Directive 2014/24/EU on public procurement." } ] } ] } ] },
+
+    { "t": "note", "id": "n-effect", "c": [
+      { "t": "paragraph", "c": [
+        { "t": "text", "v": "Automatic effect is suspended for the duration of the standstill period and for any period during which an appeal is pending." } ] } ] }
+  ]
+}

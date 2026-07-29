@@ -1,0 +1,63 @@
+# --- Python -----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+build/
+dist/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+env/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+
+# --- Rust (M1 onward) -------------------------------------------------------
+/target/
+**/*.rs.bk
+*.pdb
+
+# --- Editors and OS ---------------------------------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# --- Tooling ----------------------------------------------------------------
+.mise.local.toml
+.direnv/
+.envrc.local
+node_modules/
+
+# --- Secrets: never, under any circumstances --------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.*
+credentials.*
+
+# --- Fetched corpora --------------------------------------------------------
+# Cached upstream response bodies. Not committed: they are large, they are not
+# ours to redistribute, and the point is that the measurement is reproducible
+# from the source register rather than from a snapshot we curated.
+#   python3 tools/diavgeia.py --n 100 --refresh
+#   python3 tools/rfc.py --n 12 --refresh
+corpus/cache/
+
+# --- Fuzzing ----------------------------------------------------------------
+# Crashers are committed as regression fixtures; the working corpus is not.
+fuzz/corpus/
+fuzz/artifacts/

@@ -1,0 +1,77 @@
+[tools]
+python = "3.12"
+
+[tasks.canon]
+description = "Canonicalise and report the structural digest"
+run = "python3 tools/stoa0.py conformance/conformance-01.json canon"
+
+[tasks.validate]
+description = "Run the conformance ruleset against the good fixture"
+run = "python3 tools/stoa0.py conformance/conformance-01.json check"
+
+[tasks.negative]
+description = "The ruleset must fail on the negative fixture, exactly 13 times"
+run = """
+set -e
+n=$(python3 tools/stoa0.py conformance/negative-01.json check | grep -c '^error')
+echo "negative fixture: $n errors"
+test "$n" -eq 13 || { echo "expected 13 errors, got $n"; exit 1; }
+"""
+
+[tasks.contract]
+description = "Degradation contract: every unit of content survives projection to L0"
+run = "python3 tools/stoa0.py conformance/conformance-01.json contract"
+
+[tasks.merkle]
+description = "Merkle root and an excerpt proof"
+run = "python3 tools/stoa0.py conformance/conformance-01.json merkle"
+
+[tasks.hash]
+description = "Encoding independence: canonical JSON and deterministic CBOR must agree"
+run = "python3 tools/structhash.py conformance/conformance-01.json"
+
+[tasks.l0]
+description = "Emit the L0 text projection"
+run = "python3 tools/stoa0.py conformance/conformance-01.json l0"
+
+[tasks.golden]
+description = "Regenerate the golden L0 projection and the generated spec"
+run = """
+python3 tools/stoa0.py conformance/conformance-01.json l0 > conformance/expected/conformance-01.l0.txt
+python3 tools/stoa0.py register > spec/VOCABULARY.md
+"""
+
+[tasks.golden-check]
+description = "The golden output and generated spec must be current"
+run = """
+set -e
+python3 tools/stoa0.py conformance/conformance-01.json l0 | diff -u conformance/expected/conformance-01.l0.txt - > /dev/null \
+  || { echo "golden L0 projection is stale: run 'mise run golden'"; exit 1; }
+python3 tools/stoa0.py register | diff -u spec/VOCABULARY.md - > /dev/null \
+  || { echo "spec/VOCABULARY.md is stale: run 'mise run golden'"; exit 1; }
+echo "golden outputs current"
+"""
+
+[tasks.fuzz]
+description = "Fuzz the parser, validator and emitters with hostile input"
+run = "python3 tools/fuzz.py --n 5000"
+
+[tasks.corpus]
+description = "Corpus 1: administrative notices (Diavgeia, Greek)"
+run = "python3 tools/diavgeia.py --n 100"
+
+[tasks."corpus-rfc"]
+description = "Corpus 2: standards documents (IETF RFCs, XML v3)"
+run = "python3 tools/rfc.py"
+
+[tasks.corpora]
+description = "Both corpora"
+depends = ["corpus", "corpus-rfc"]
+
+[tasks.selftest]
+description = "Self-test the toolchain: merkle at every index, CBOR edge cases, degradation totality, injection"
+run = "python3 tools/selftest.py"
+
+[tasks.check]
+description = "Everything that does not touch the network"
+depends = ["canon", "validate", "negative", "contract", "merkle", "hash", "golden-check", "selftest", "fuzz"]

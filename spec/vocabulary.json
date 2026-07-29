@@ -1,0 +1,845 @@
+{
+  "register": "stoa-vocabulary",
+  "version": "0.1.0-m0",
+  "status": "provisional; L0 not yet frozen (blocked on corpus coverage)",
+  "counts": {
+    "L0": 29,
+    "L1": 11,
+    "L2": 10,
+    "L3": 2,
+    "total": 52,
+    "render_primitives": 5
+  },
+  "field_types": {
+    "text": "NFC-normalised Unicode string, non-empty unless stated",
+    "int": "signed integer, no floating point anywhere in the format",
+    "decimal": "scaled decimal: an integer significand and an integer scale, never a float",
+    "bool": "true or false",
+    "lang": "BCP 47 language tag",
+    "urn": "a document identifier URN",
+    "iri": "an absolute IRI. Permitted ONLY on fields the client never fetches without a reader action",
+    "path": "a same-origin relative reference. MUST NOT express a scheme, an authority, or a leading '//'. This is the fetch boundary",
+    "idref": "the id of another node in the same document",
+    "hash": "a lowercase hex SHA-256 content hash"
+  },
+  "content_models": {
+    "none": "no children",
+    "text": "text nodes only",
+    "inline": "inline-class elements only",
+    "flow": "block-class elements only",
+    "list": "an explicit list of permitted child element names"
+  },
+  "elements": [
+    {
+      "n": "document",
+      "layer": 0,
+      "class": "root",
+      "children": "flow",
+      "fields": {
+        "id": {
+          "type": "urn",
+          "required": true
+        },
+        "lang": {
+          "type": "lang",
+          "required": true
+        },
+        "title": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "The root. Exactly one per document. title is metadata, not the first heading."
+    },
+    {
+      "n": "section",
+      "layer": 0,
+      "class": "block",
+      "children": "flow",
+      "fields": {
+        "id": {
+          "type": "text",
+          "required": false
+        },
+        "lang": {
+          "type": "lang",
+          "required": false
+        }
+      },
+      "note": "Nesting depth carries the outline. There is no numbered heading hierarchy to get wrong."
+    },
+    {
+      "n": "heading",
+      "layer": 0,
+      "class": "block",
+      "children": "inline",
+      "fields": {
+        "level": {
+          "type": "int",
+          "required": true,
+          "range": [
+            1,
+            6
+          ]
+        }
+      },
+      "note": "level is advisory for themes; the outline of record is section nesting."
+    },
+    {
+      "n": "paragraph",
+      "layer": 0,
+      "class": "block",
+      "children": "inline",
+      "fields": {}
+    },
+    {
+      "n": "list",
+      "layer": 0,
+      "class": "block",
+      "children": [
+        "item"
+      ],
+      "fields": {
+        "ordered": {
+          "type": "bool",
+          "required": true
+        },
+        "start": {
+          "type": "int",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "item",
+      "layer": 0,
+      "class": "block",
+      "children": "flow",
+      "fields": {
+        "id": {
+          "type": "text",
+          "required": false
+        }
+      },
+      "note": "id is optional and exists because real bibliographies are cited entry by entry. Found by the RFC corpus; see m0/FINDINGS.md defect 8."
+    },
+    {
+      "n": "term-list",
+      "layer": 0,
+      "class": "block",
+      "children": [
+        "term",
+        "definition"
+      ],
+      "fields": {},
+      "note": "Term/definition pairs. The workhorse for administrative record metadata."
+    },
+    {
+      "n": "term",
+      "layer": 0,
+      "class": "block",
+      "children": "inline",
+      "fields": {}
+    },
+    {
+      "n": "definition",
+      "layer": 0,
+      "class": "block",
+      "children": "flow",
+      "fields": {}
+    },
+    {
+      "n": "quote",
+      "layer": 0,
+      "class": "block",
+      "children": "flow",
+      "fields": {
+        "source": {
+          "type": "text",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "code-block",
+      "layer": 0,
+      "class": "block",
+      "children": "text",
+      "fields": {
+        "language": {
+          "type": "text",
+          "required": false
+        }
+      },
+      "note": "language is a hint. A client that does not know it renders plain text, which is conforming."
+    },
+    {
+      "n": "note",
+      "layer": 0,
+      "class": "block",
+      "children": "flow",
+      "fields": {
+        "id": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "Footnote body. Placed in document order; the theme decides where it appears."
+    },
+    {
+      "n": "figure",
+      "layer": 0,
+      "class": "block",
+      "children": [
+        "media",
+        "caption",
+        "table",
+        "code-block"
+      ],
+      "fields": {
+        "id": {
+          "type": "text",
+          "required": false
+        }
+      },
+      "note": "Does not admit a 'rendering' child. A rendering degrades into a figure, so permitting the nesting would let a conforming document project into a non-conforming one. Found by M0; see m0/FINDINGS.md defect 3."
+    },
+    {
+      "n": "caption",
+      "layer": 0,
+      "class": "block",
+      "children": "inline",
+      "fields": {}
+    },
+    {
+      "n": "media",
+      "layer": 0,
+      "class": "block",
+      "children": "none",
+      "fields": {
+        "src": {
+          "type": "path",
+          "required": true
+        },
+        "alt": {
+          "type": "text",
+          "required": true
+        },
+        "kind": {
+          "type": "text",
+          "required": true,
+          "enum": [
+            "image",
+            "audio",
+            "video"
+          ]
+        }
+      },
+      "note": "src is a path, never an IRI. A document therefore cannot name a host the client contacts. See m0/FINDINGS.md defect 1. alt is required and must be non-empty; that is a build error, not an audit finding."
+    },
+    {
+      "n": "table",
+      "layer": 0,
+      "class": "block",
+      "children": [
+        "row",
+        "table-section",
+        "caption"
+      ],
+      "fields": {
+        "summary": {
+          "type": "text",
+          "required": false
+        },
+        "id": {
+          "type": "text",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "row",
+      "layer": 0,
+      "class": "block",
+      "children": [
+        "cell",
+        "header-cell"
+      ],
+      "fields": {}
+    },
+    {
+      "n": "cell",
+      "layer": 0,
+      "class": "block",
+      "children": "flow",
+      "fields": {
+        "colspan": {
+          "type": "int",
+          "required": false
+        },
+        "rowspan": {
+          "type": "int",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "header-cell",
+      "layer": 0,
+      "class": "block",
+      "children": "flow",
+      "fields": {
+        "colspan": {
+          "type": "int",
+          "required": false
+        },
+        "rowspan": {
+          "type": "int",
+          "required": false
+        },
+        "scope": {
+          "type": "text",
+          "required": false,
+          "enum": [
+            "row",
+            "column"
+          ]
+        }
+      },
+      "note": "Header association is structural, so an unassociated data cell is unrepresentable rather than an audit finding."
+    },
+    {
+      "n": "text",
+      "layer": 0,
+      "class": "inline",
+      "children": "none",
+      "fields": {
+        "v": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "The only node that carries characters. Every content unit is one of these."
+    },
+    {
+      "n": "emphasis",
+      "layer": 0,
+      "class": "inline",
+      "children": "inline",
+      "fields": {}
+    },
+    {
+      "n": "strong",
+      "layer": 0,
+      "class": "inline",
+      "children": "inline",
+      "fields": {}
+    },
+    {
+      "n": "code",
+      "layer": 0,
+      "class": "inline",
+      "children": "text",
+      "fields": {}
+    },
+    {
+      "n": "link",
+      "layer": 0,
+      "class": "inline",
+      "children": "inline",
+      "fields": {
+        "href": {
+          "type": "iri",
+          "required": true
+        }
+      },
+      "note": "The one place an absolute IRI is permitted, because the client resolves it only on a reader action. Clients MUST NOT speculatively resolve, prefetch, or preconnect."
+    },
+    {
+      "n": "reference",
+      "layer": 0,
+      "class": "inline",
+      "children": "inline",
+      "fields": {
+        "target": {
+          "type": "idref",
+          "required": true
+        }
+      },
+      "note": "Intra-document cross-reference. Never leaves the document, so never a request."
+    },
+    {
+      "n": "note-ref",
+      "layer": 0,
+      "class": "inline",
+      "children": "none",
+      "fields": {
+        "target": {
+          "type": "idref",
+          "required": true
+        }
+      }
+    },
+    {
+      "n": "quantity",
+      "layer": 0,
+      "class": "inline",
+      "children": "none",
+      "fields": {
+        "significand": {
+          "type": "int",
+          "required": true
+        },
+        "scale": {
+          "type": "int",
+          "required": true
+        },
+        "unit": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "value = significand x 10^-scale, exactly. Currency is representable without error. Floats are not representable at all, which is the point."
+    },
+    {
+      "n": "date",
+      "layer": 0,
+      "class": "inline",
+      "children": "none",
+      "fields": {
+        "value": {
+          "type": "text",
+          "required": true
+        },
+        "precision": {
+          "type": "text",
+          "required": true,
+          "enum": [
+            "year",
+            "month",
+            "day",
+            "minute",
+            "second"
+          ]
+        }
+      },
+      "note": "ISO 8601, with declared precision so a client never invents accuracy the record does not have."
+    },
+    {
+      "n": "line-break",
+      "layer": 0,
+      "class": "inline",
+      "children": "none",
+      "fields": {},
+      "note": "For addresses and verse, where the break is content. Not for spacing; spacing is a theme concern."
+    },
+    {
+      "n": "article",
+      "layer": 1,
+      "class": "block",
+      "children": "flow",
+      "degrades": "section",
+      "fields": {
+        "id": {
+          "type": "text",
+          "required": false
+        }
+      },
+      "note": "A self-contained part of a compound document."
+    },
+    {
+      "n": "abstract",
+      "layer": 1,
+      "class": "block",
+      "children": "flow",
+      "degrades": "section",
+      "fields": {}
+    },
+    {
+      "n": "contents",
+      "layer": 1,
+      "class": "block",
+      "children": [
+        "item"
+      ],
+      "degrades": "list",
+      "fields": {},
+      "note": "Table of contents. Degrades to an ordinary list of intra-document references."
+    },
+    {
+      "n": "bibliography",
+      "layer": 1,
+      "class": "block",
+      "children": [
+        "item"
+      ],
+      "degrades": "list",
+      "fields": {}
+    },
+    {
+      "n": "citation",
+      "layer": 1,
+      "class": "inline",
+      "children": "inline",
+      "degrades": "reference",
+      "fields": {
+        "target": {
+          "type": "idref",
+          "required": true
+        }
+      }
+    },
+    {
+      "n": "admonition",
+      "layer": 1,
+      "class": "block",
+      "children": "flow",
+      "degrades": "section",
+      "fields": {
+        "kind": {
+          "type": "text",
+          "required": true,
+          "enum": [
+            "note",
+            "warning",
+            "caution",
+            "important"
+          ]
+        }
+      },
+      "note": "Degrades to a section whose heading is the kind label, so the salience survives as words rather than as colour."
+    },
+    {
+      "n": "sidebar",
+      "layer": 1,
+      "class": "block",
+      "children": "flow",
+      "degrades": "section",
+      "fields": {}
+    },
+    {
+      "n": "epigraph",
+      "layer": 1,
+      "class": "block",
+      "children": "flow",
+      "degrades": "quote",
+      "fields": {
+        "source": {
+          "type": "text",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "signature-block",
+      "layer": 1,
+      "class": "block",
+      "children": [
+        "term",
+        "definition"
+      ],
+      "degrades": "term-list",
+      "fields": {},
+      "note": "Who signed, in what role, when. Structural because it is the part of an administrative record most often reduced to an image."
+    },
+    {
+      "n": "provenance",
+      "layer": 1,
+      "class": "block",
+      "children": [
+        "term",
+        "definition"
+      ],
+      "degrades": "term-list",
+      "fields": {},
+      "note": "Issuer, identifier, timestamps, digest. Machine-readable custody without a second metadata format."
+    },
+    {
+      "n": "table-section",
+      "layer": 1,
+      "class": "block",
+      "children": [
+        "row"
+      ],
+      "degrades": "row",
+      "fields": {
+        "kind": {
+          "type": "text",
+          "required": true,
+          "enum": [
+            "head",
+            "body",
+            "foot"
+          ]
+        }
+      },
+      "note": "Degrades by splicing its rows into the parent table in order."
+    },
+    {
+      "n": "form",
+      "layer": 2,
+      "class": "block",
+      "children": [
+        "field",
+        "submit",
+        "heading",
+        "paragraph"
+      ],
+      "degrades": "section",
+      "fields": {
+        "action": {
+          "type": "path",
+          "required": true
+        },
+        "method": {
+          "type": "text",
+          "required": true,
+          "enum": [
+            "get",
+            "post"
+          ]
+        }
+      },
+      "note": "action is a path, so a form cannot post across origins. Submission is always a reader action. Degrades to a section in which each run of degraded fields is wrapped in a term-list, so the projection is itself conforming L0."
+    },
+    {
+      "n": "field",
+      "layer": 2,
+      "class": "block",
+      "children": [
+        "field-text",
+        "field-choice"
+      ],
+      "degrades": "term",
+      "fields": {
+        "name": {
+          "type": "text",
+          "required": true
+        },
+        "label": {
+          "type": "text",
+          "required": true
+        },
+        "required": {
+          "type": "bool",
+          "required": false
+        }
+      },
+      "note": "label is a required field, not a sibling element, so an unlabelled control cannot be expressed. Degrades to a term/definition pair."
+    },
+    {
+      "n": "field-text",
+      "layer": 2,
+      "class": "block",
+      "children": "none",
+      "degrades": "paragraph",
+      "fields": {
+        "multiline": {
+          "type": "bool",
+          "required": false
+        },
+        "value": {
+          "type": "text",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "field-choice",
+      "layer": 2,
+      "class": "block",
+      "children": [
+        "field-option"
+      ],
+      "degrades": "list",
+      "fields": {
+        "multiple": {
+          "type": "bool",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "field-option",
+      "layer": 2,
+      "class": "block",
+      "children": "inline",
+      "degrades": "item",
+      "fields": {
+        "value": {
+          "type": "text",
+          "required": true
+        },
+        "selected": {
+          "type": "bool",
+          "required": false
+        }
+      }
+    },
+    {
+      "n": "submit",
+      "layer": 2,
+      "class": "block",
+      "children": "none",
+      "degrades": "paragraph",
+      "fields": {
+        "label": {
+          "type": "text",
+          "required": true
+        }
+      }
+    },
+    {
+      "n": "disclosure",
+      "layer": 2,
+      "class": "block",
+      "children": "flow",
+      "degrades": "section",
+      "fields": {
+        "summary": {
+          "type": "text",
+          "required": true
+        },
+        "open": {
+          "type": "bool",
+          "required": false
+        }
+      },
+      "note": "Collapsing is a reader affordance. Degraded, the content is simply present, which is the safe direction."
+    },
+    {
+      "n": "tab-group",
+      "layer": 2,
+      "class": "block",
+      "children": [
+        "tab"
+      ],
+      "degrades": "section",
+      "fields": {}
+    },
+    {
+      "n": "tab",
+      "layer": 2,
+      "class": "block",
+      "children": "flow",
+      "degrades": "section",
+      "fields": {
+        "label": {
+          "type": "text",
+          "required": true
+        }
+      }
+    },
+    {
+      "n": "state-link",
+      "layer": 2,
+      "class": "inline",
+      "children": "inline",
+      "degrades": "link",
+      "fields": {
+        "key": {
+          "type": "text",
+          "required": true
+        },
+        "value": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "Changes addressable document state. Because state is addressable, it degrades to an ordinary link to the same document in that state."
+    },
+    {
+      "n": "payload",
+      "layer": 3,
+      "class": "invisible",
+      "children": "none",
+      "fields": {
+        "id": {
+          "type": "text",
+          "required": true
+        },
+        "type": {
+          "type": "text",
+          "required": true
+        },
+        "data": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "Typed data for a renderer. Integers and scaled decimals only; a float in a payload is a validation error. Carries no visible content, so it contributes nothing to the degradation contract."
+    },
+    {
+      "n": "rendering",
+      "layer": 3,
+      "class": "block",
+      "children": [
+        "caption"
+      ],
+      "degrades": "figure",
+      "fields": {
+        "renderer": {
+          "type": "hash",
+          "required": true
+        },
+        "payload": {
+          "type": "idref",
+          "required": true
+        },
+        "fallback": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "renderer is a content hash, never a location, so an unknown renderer is never a network lookup. Degrades to a figure carrying the fallback text."
+    }
+  ],
+  "render_primitives": [
+    {
+      "n": "frame",
+      "fields": {
+        "w": "int",
+        "h": "int"
+      },
+      "note": "Device-independent units. A renderer emits a display list, never pixels."
+    },
+    {
+      "n": "polyline",
+      "fields": {
+        "points": "int[]",
+        "role": "text"
+      }
+    },
+    {
+      "n": "area",
+      "fields": {
+        "points": "int[]",
+        "role": "text"
+      }
+    },
+    {
+      "n": "glyph-run",
+      "fields": {
+        "x": "int",
+        "y": "int",
+        "role": "text",
+        "v": "text"
+      },
+      "note": "Text emitted by a renderer stays text, so a chart is still readable by a non-visual client."
+    },
+    {
+      "n": "tick",
+      "fields": {
+        "axis": "text",
+        "at": "int",
+        "label": "text"
+      }
+    }
+  ],
+  "field_spec": {
+    "type": "one of field_types",
+    "required": "true if the field must be present",
+    "enum": "optional: the complete set of permitted values",
+    "range": "optional, integers only: inclusive [min, max]"
+  }
+}
