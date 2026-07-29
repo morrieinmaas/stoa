@@ -35,7 +35,8 @@ import stoa  # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 CORPORA = [("Diavgeia", ROOT / "corpus" / "RESULTS.md"),
            ("RFCs", ROOT / "corpus" / "RESULTS-rfc.md"),
-           ("JATS", ROOT / "corpus" / "RESULTS-jats.md")]
+           ("JATS", ROOT / "corpus" / "RESULTS-jats.md"),
+           ("Forms", ROOT / "corpus" / "RESULTS-forms.md")]
 
 
 def used_in(path):
@@ -60,10 +61,14 @@ def audit():
     for e in reg.raw["elements"]:
         n, layer = e["n"], e["layer"]
         where = [k for k, v in seen.items() if n in v]
-        if where:
-            verdict = "CORPUS"
+        if e.get("status") == "provisional":
+            verdict = "PROVISIONAL"
+        elif len(where) >= 2:
+            verdict = "CORPUS"          # the governance gate: two genres
+        elif where:
+            verdict = "ONE GENRE"
         elif n in fixture:
-            verdict = "FIXTURE" if layer < 2 else "BY DESIGN"
+            verdict = "FIXTURE"
         else:
             verdict = "UNTESTED"
         rows.append((n, layer, verdict, ", ".join(where) or "—"))
@@ -78,8 +83,9 @@ def main():
     reg, rows, union, fixture = audit()
     total = len(reg.elements)
     corpus_backed = sum(1 for r in rows if r[2] == "CORPUS")
+    one_genre = [r for r in rows if r[2] == "ONE GENRE"]
     fixture_only = [r for r in rows if r[2] == "FIXTURE"]
-    by_design = [r for r in rows if r[2] == "BY DESIGN"]
+    by_design = [r for r in rows if r[2] == "PROVISIONAL"]
     untested = [r for r in rows if r[2] == "UNTESTED"]
 
     out = []
@@ -92,10 +98,11 @@ def main():
       "needed it.\n")
     w(f"| Verdict | Count | Meaning |")
     w(f"|---|---|---|")
-    w(f"| **CORPUS** | {corpus_backed} of {total} | Exercised by real documents. Earned. |")
-    w(f"| **BY DESIGN** | {len(by_design)} of {total} | L2/L3. A corpus of published static documents cannot contain a form or a typed renderer payload; these need an authored conformance target instead, and have one. |")
-    w(f"| **FIXTURE** | {len(fixture_only)} of {total} | L0/L1, exercised only by the document the author wrote. An assertion, not evidence. |")
-    w(f"| **UNTESTED** | {len(untested)} of {total} | Not exercised anywhere. |")
+    w(f"| **CORPUS** | {corpus_backed} of {total} | Exercised by **two or more independent genres**. Passes the governance gate in `docs/GOVERNANCE.md` section 4. |")
+    w(f"| **ONE GENRE** | {len(one_genre)} of {total} | Exercised by real documents, but only in one genre. Not yet normative. |")
+    w(f"| **PROVISIONAL** | {len(by_design)} of {total} | Declared provisional in the register: implementable, removable, not normative. |")
+    w(f"| **FIXTURE** | {len(fixture_only)} of {total} | Exercised only by the document the author wrote. An assertion, not evidence. |")
+    w(f"| **UNTESTED** | {len(untested)} of {total} | Not exercised anywhere. Should not exist. |")
     w("")
 
     if not [r for r in rows if r[1] == 0 and r[2] != "CORPUS"]:

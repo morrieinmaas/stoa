@@ -3,9 +3,9 @@
 
 Register `stoa-vocabulary`, version `0.1.0-m0`.
 
-**Status:** provisional; L0 complete pending freeze (see docs/STATE.md)
+**Status:** provisional; L0 evidence-complete and ready to freeze (see spec/EVIDENCE.md)
 
-30 elements at L0, 11 at L1, 10 at L2, 2 at L3. Total 53, plus 5 render primitives that are not document elements.
+30 elements at L0, 11 at L1, 8 at L2, 2 at L3. Total 51, plus 5 render primitives that are not document elements.
 
 A document element above L0 declares the element it degrades into. That declaration is normative and mechanically tested: `stoa0.py <doc> contract` projects the whole document to L0 and asserts that no unit of reader-visible content is lost.
 
@@ -117,8 +117,6 @@ Notes:
 | `field-option` | block | `inline` | `item` | `value`:text, `selected`?:bool |
 | `submit` | block | `none` | `paragraph` | `label`:text |
 | `disclosure` | block | `flow` | `section` | `summary`:text, `open`?:bool |
-| `tab-group` | block | `tab` | `section` | — |
-| `tab` | block | `flow` | `section` | `label`:text |
 | `state-link` | inline | `inline` | `link` | `key`:text, `value`:text |
 
 Notes:
@@ -137,8 +135,8 @@ Notes:
 
 Notes:
 
-- **`payload`** — Typed data for a renderer. Integers and scaled decimals only; a float in a payload is a validation error. Carries no visible content, so it contributes nothing to the degradation contract.
-- **`rendering`** — renderer is a content hash, never a location, so an unknown renderer is never a network lookup. Degrades to a figure carrying the fallback text.
+- **`payload`** — Typed data for a renderer. Integers and scaled decimals only; a float in a payload is a validation error. Carries no visible content, so it contributes nothing to the degradation contract. PROVISIONAL: no corpus can produce a typed renderer payload, so this element is unevidenced. It ships so L3 can be implemented and tested, and does not become normative until two independent implementations exist. See docs/GOVERNANCE.md section 4.
+- **`rendering`** — renderer is a content hash, never a location, so an unknown renderer is never a network lookup. Degrades to a figure carrying the fallback text. PROVISIONAL: no corpus can produce a typed renderer payload, so this element is unevidenced. It ships so L3 can be implemented and tested, and does not become normative until two independent implementations exist. See docs/GOVERNANCE.md section 4.
 
 ## Render primitives
 

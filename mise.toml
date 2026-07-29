@@ -68,13 +68,17 @@ run = "python3 tools/rfc.py"
 description = "Corpus 3: scholarly articles (JATS, Europe PMC)"
 run = "python3 tools/jats.py"
 
+[tasks."corpus-forms"]
+description = "Corpus 4: public-sector forms, which is what tests L2"
+run = "python3 tools/forms.py"
+
 [tasks.evidence]
 description = "Evidence audit: what justifies each element in the register"
 run = "python3 tools/evidence.py --write"
 
 [tasks.corpora]
 description = "Both corpora"
-depends = ["corpus", "corpus-rfc", "corpus-jats", "evidence"]
+depends = ["corpus", "corpus-rfc", "corpus-jats", "corpus-forms", "evidence"]
 
 [tasks.selftest]
 description = "Self-test the toolchain: merkle at every index, CBOR edge cases, degradation totality, injection"

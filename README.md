@@ -17,7 +17,7 @@ implementation. Nothing here is stable, and **L0 is not frozen** — see below.
 
 ## What this is
 
-A document format with a finite semantic vocabulary of **53 elements**,
+A document format with a finite semantic vocabulary of **51 elements**,
 delivered over ordinary HTTPS, where the document carries meaning and structure
 and never carries appearance. Presentation comes from themes written against
 the vocabulary rather than against any individual site, and reader preferences
@@ -42,6 +42,12 @@ existing web pages. Applications are a separate resource type that a document
 may link to and can never contain.
 
 ## Why
+
+Two audiences, one mechanism: a document that carries meaning and never
+appearance is simultaneously the one a screen reader can read and the one a
+machine does not have to guess at. Accessibility and machine consumption are the
+same property seen from two ends, and both are measured in this repository
+rather than asserted.
 
 Four claims that are hard to make anywhere else, all mechanically checkable
 rather than asserted:
@@ -72,17 +78,17 @@ them with `mise run check` and `mise run corpora`.
 ### The conformance document
 
 ```
-canonical bytes  9891
+canonical bytes  9565
 structural hash  8541efc87f9014c543ad515e8a3bdd445a315e65d803f2801c4710da5511a27e
-distinct types   53 of 53 in register
+distinct types   51 of 51 in register
 check            0 errors, 0 warnings
-contract         98 units checked, 0 lost in projection to L0
-merkle blocks    124   proof size 7 sibling hashes (224 bytes)   verifies True
+contract         93 units checked, 0 lost in projection to L0
+merkle blocks    120   proof size 7 sibling hashes (224 bytes)   verifies True
 tamper check     forged leaf verifies False (must be False)
 ENCODING INDEPENDENT True
 ```
 
-- All 53 elements are exercised by one document.
+- All 51 elements are exercised by one document.
 - The negative fixture carries 13 deliberate faults across 13 distinct rules,
   and the ruleset reports exactly 13 errors. Asserted in CI.
 - The degradation contract is verified mechanically: every unit of
@@ -91,7 +97,7 @@ ENCODING INDEPENDENT True
 - Canonical JSON and deterministic CBOR of the same document produce an
   identical digest and identical Merkle leaves, so the encoding is a revisable
   transport detail rather than part of the format.
-- A 124-block document yields a 224-byte excerpt proof. One quoted paragraph is
+- A 120-block document yields a 224-byte excerpt proof. One quoted paragraph is
   provable without transmitting the document, and a forged block fails.
 - 19 toolchain self-tests: Merkle proof and forgery rejection at *every* index
   for n = 1..124, CBOR edge cases and key-order determinism, injection, and
@@ -150,7 +156,7 @@ in `docs/ROADMAP.md` is a conformance proof rather than a nicety.
 
 **Read the 100% with its caveats.** `corpus/RESULTS.md` section 6 states them:
 the act body is a signed PDF that this does not test, a generic mapper flatters
-the register, the corpus is one genre in one language, and 32 of the 53
+the register, the corpus is one genre in one language, and 32 of the 51
 elements were never exercised. This corpus is a falsifier that did not fire —
 which is exactly why a second one was needed.
 

@@ -163,7 +163,7 @@ that does not carry appearance.
 The RFC mapper now takes the base token from the preceding text node, so
 `2<sup>64</sup>` becomes one semantic node rather than two fragments. After the
 fix the RFC corpus needs **no element outside the register at 100%**, and the
-register stands at 53 elements (L0 30).
+register stands at 51 elements (L0 30).
 
 This is the closed vocabulary doing exactly what a closed vocabulary is for:
 the bet was written down, a corpus falsified it with a number, and the fix was
@@ -243,6 +243,46 @@ is worth stating precisely: derived alternative text is *worse* than authored
 alternative text. The claim is not that the format writes good alt text. It is
 that the absence is unrepresentable, so the failure happens at build time in
 front of the author instead of silently in front of a reader.
+
+### 14. Two elements were removed, and removal cost nothing
+
+`tab-group` and `tab` survived three corpora without a single instance, and the
+fourth — public-sector forms, where tabs would live if anywhere — produced none
+either. Four genres, zero occurrences.
+
+They were removed. The register went from 53 elements to 51.
+
+**The reason is not only that they lacked evidence.** Tabs are sections shown
+one at a time, which is a theme decision, and this format does not carry
+appearance. They degraded to sections anyway, so a publisher who wants tabbed
+content writes sections and a theme presents them — which is what should have
+happened from the start. The absence of evidence was the prompt to notice a
+design error that had been sitting in plain sight.
+
+**The generalisation, now written into governance.** An element that no real
+document has ever needed is a liability, not an asset. The amendment process
+(`../docs/GOVERNANCE.md` §4) now gates *normative* status on two independent
+corpora exercising the element, and keeps the removal path open for everything
+that has not passed that gate. This is the structural answer to the way
+constrained formats die: they die through the escape hatch, the escape hatch
+opens one reasonable-sounding element at a time, and a persuasive argument
+cannot satisfy a requirement to produce two unrelated bodies of real documents.
+
+### 15. Public-sector forms are well labelled; the two that were not are unrepresentable
+
+The scholarly corpus found 0 of 65 figures with alternative text. The forms
+corpus found the opposite: **2,446 of 2,449 controls carried a real `<label>`**.
+
+That contrast is worth stating rather than hiding. The forms sample is drawn
+from GOV.UK, the ECB and comparable bodies, which are among the best-run
+publishers in the world for accessibility. It is a *best case*, and it still
+contained two controls with no label of any kind — which are, in this format,
+unwritable.
+
+It also separates two things HTML conflates. A `placeholder` is not a label: it
+disappears on focus and is not reliably announced. The corpus counts
+placeholder-rescued and `aria-label`-rescued controls separately, because in
+HTML both pass and here both had to be promoted to a real label or dropped.
 
 ## Where this leaves the freeze
 

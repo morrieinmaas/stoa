@@ -51,10 +51,17 @@ For everything else:
 2. **Degradation test.** The proposal is rejected outright if the element cannot degrade without losing meaning. This is mechanical, not a matter of opinion (design notes 3.6).
 3. **Base role.** If the proposal introduces a semantic role, it must declare the existing base role it inherits from, so that themes written before it still render it (4.5).
 4. **Public comment.** A fixed minimum period, in the open, with comments retained.
-5. **Provisional acceptance.** The element ships in the register marked provisional, with at least two independent implementations required before it becomes normative.
-6. **Normative.** Once normative it is permanent. There is no removal, only deprecation as a documentation state.
+5. **Corpus evidence.** *(Added after M0b: this is the load-bearing gate.)* The element does not become normative until **at least two independent corpora, in different document genres, exercise it** — corpora nobody assembled for the purpose of justifying this element. "Three real documents that cannot be expressed without it" (step 1) is the proposer's claim; this is the check on it, and it is mechanical: `tools/evidence.py` classifies every element in the register as CORPUS, FIXTURE or UNTESTED and is run in CI.
 
-Deliberately slow. A format whose vocabulary is easy to extend does not have a finite vocabulary, and the finiteness is the product.
+   This is the answer to the question that kills constrained formats. Every one of them died through its escape hatch, and the escape hatch is always opened one reasonable-sounding element at a time. Discipline does not survive a decade; a gate that says *show me two unrelated bodies of real documents that needed this* does, because it cannot be satisfied by a persuasive argument.
+
+   It is also symmetrical: the gate has already been used to **remove** elements. `tab-group` and `tab` were cut when four corpora failed to produce a single instance — and cutting them cost nothing, because they degraded to sections, which is what a publisher should have used.
+
+6. **Provisional acceptance.** An element that passes the design tests but has no corpus evidence ships marked `"status": "provisional"` in the register. Provisional elements are implementable and testable, are **not** normative, and carry no permanence guarantee. They are removable. L3 (`payload`, `rendering`) is provisional today for exactly this reason: no corpus of published documents can produce a typed renderer payload, so the evidence gate cannot be satisfied by observation and must wait on two independent implementations instead.
+
+7. **Normative.** Once normative it is permanent. There is no removal, only deprecation as a documentation state.
+
+Deliberately slow, and deliberately **two-way**. A format whose vocabulary is easy to extend does not have a finite vocabulary, and the finiteness is the product. The addition path is gated by evidence from unrelated corpora; the removal path stays open for anything not yet normative. An element that no real document has ever needed is a liability, not an asset, and the register is expected to shrink at least as often as it grows before L0 freezes.
 
 ## 5. Succession
 

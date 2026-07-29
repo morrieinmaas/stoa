@@ -173,16 +173,6 @@
           { "t": "paragraph", "c": [
             { "t": "text", "v": "The authority suspends the standstill period and responds in writing within fifteen days." } ] } ] },
 
-        { "t": "tab-group", "c": [
-          { "t": "tab", "label": "By post", "c": [
-            { "t": "paragraph", "c": [
-              { "t": "text", "v": "Regional Directorate of Epirus" },
-              { "t": "line-break" },
-              { "t": "text", "v": "45332 Ioannina" } ] } ] },
-          { "t": "tab", "label": "In person", "c": [
-            { "t": "paragraph", "c": [
-              { "t": "text", "v": "At the registry, on working days between 09:00 and 13:00." } ] } ] } ] },
-
         { "t": "paragraph", "c": [
           { "t": "text", "v": "Show " },
           { "t": "state-link", "key": "lang", "value": "el", "c": [

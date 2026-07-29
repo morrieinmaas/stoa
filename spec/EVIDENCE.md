@@ -5,14 +5,11 @@ What justifies each element in the register. A closed vocabulary is only defensi
 
 | Verdict | Count | Meaning |
 |---|---|---|
-| **CORPUS** | 37 of 53 | Exercised by real documents. Earned. |
-| **BY DESIGN** | 12 of 53 | L2/L3. A corpus of published static documents cannot contain a form or a typed renderer payload; these need an authored conformance target instead, and have one. |
-| **FIXTURE** | 4 of 53 | L0/L1, exercised only by the document the author wrote. An assertion, not evidence. |
-| **UNTESTED** | 0 of 53 | Not exercised anywhere. |
-
-## Every L0 element is backed by real documents
-
-L0 is the layer that freezes permanently, so it is the layer where an unearned element is unfixable. Every one of them is now exercised by a document nobody wrote for this project.
+| **CORPUS** | 31 of 51 | Exercised by **two or more independent genres**. Passes the governance gate in `docs/GOVERNANCE.md` section 4. |
+| **ONE GENRE** | 14 of 51 | Exercised by real documents, but only in one genre. Not yet normative. |
+| **PROVISIONAL** | 2 of 51 | Declared provisional in the register: implementable, removable, not normative. |
+| **FIXTURE** | 4 of 51 | Exercised only by the document the author wrote. An assertion, not evidence. |
+| **UNTESTED** | 0 of 51 | Not exercised anywhere. Should not exist. |
 
 ## Elements resting on assertion
 
@@ -42,10 +39,10 @@ It is still a gap, and it is precise about what would close it: a third genre co
 | `definition` | L0 | CORPUS | Diavgeia, RFCs, JATS |
 | `quote` | L0 | CORPUS | RFCs, JATS |
 | `code-block` | L0 | CORPUS | RFCs, JATS |
-| `note` | L0 | CORPUS | JATS |
+| `note` | L0 | ONE GENRE | JATS |
 | `figure` | L0 | CORPUS | RFCs, JATS |
 | `caption` | L0 | CORPUS | RFCs, JATS |
-| `media` | L0 | CORPUS | JATS |
+| `media` | L0 | ONE GENRE | JATS |
 | `table` | L0 | CORPUS | Diavgeia, RFCs, JATS |
 | `row` | L0 | CORPUS | Diavgeia, RFCs, JATS |
 | `cell` | L0 | CORPUS | Diavgeia, RFCs, JATS |
@@ -56,10 +53,10 @@ It is still a gap, and it is precise about what would close it: a third genre co
 | `code` | L0 | CORPUS | RFCs, JATS |
 | `link` | L0 | CORPUS | Diavgeia, RFCs, JATS |
 | `reference` | L0 | CORPUS | RFCs, JATS |
-| `note-ref` | L0 | CORPUS | JATS |
-| `quantity` | L0 | CORPUS | Diavgeia |
+| `note-ref` | L0 | ONE GENRE | JATS |
+| `quantity` | L0 | ONE GENRE | Diavgeia |
 | `power` | L0 | CORPUS | RFCs, JATS |
-| `date` | L0 | CORPUS | Diavgeia |
+| `date` | L0 | ONE GENRE | Diavgeia |
 | `line-break` | L0 | CORPUS | RFCs, JATS |
 | `article` | L1 | FIXTURE | — |
 | `abstract` | L1 | CORPUS | RFCs, JATS |
@@ -69,21 +66,19 @@ It is still a gap, and it is precise about what would close it: a third genre co
 | `admonition` | L1 | FIXTURE | — |
 | `sidebar` | L1 | CORPUS | RFCs, JATS |
 | `epigraph` | L1 | FIXTURE | — |
-| `signature-block` | L1 | CORPUS | Diavgeia |
+| `signature-block` | L1 | ONE GENRE | Diavgeia |
 | `provenance` | L1 | CORPUS | Diavgeia, RFCs, JATS |
 | `table-section` | L1 | CORPUS | Diavgeia, RFCs, JATS |
-| `form` | L2 | BY DESIGN | — |
-| `field` | L2 | BY DESIGN | — |
-| `field-text` | L2 | BY DESIGN | — |
-| `field-choice` | L2 | BY DESIGN | — |
-| `field-option` | L2 | BY DESIGN | — |
-| `submit` | L2 | BY DESIGN | — |
-| `disclosure` | L2 | BY DESIGN | — |
-| `tab-group` | L2 | BY DESIGN | — |
-| `tab` | L2 | BY DESIGN | — |
-| `state-link` | L2 | BY DESIGN | — |
-| `payload` | L3 | BY DESIGN | — |
-| `rendering` | L3 | BY DESIGN | — |
+| `form` | L2 | ONE GENRE | Forms |
+| `field` | L2 | ONE GENRE | Forms |
+| `field-text` | L2 | ONE GENRE | Forms |
+| `field-choice` | L2 | ONE GENRE | Forms |
+| `field-option` | L2 | ONE GENRE | Forms |
+| `submit` | L2 | ONE GENRE | Forms |
+| `disclosure` | L2 | ONE GENRE | Forms |
+| `state-link` | L2 | ONE GENRE | Forms |
+| `payload` | L3 | PROVISIONAL | — |
+| `rendering` | L3 | PROVISIONAL | — |
 
-Union across both corpora: **37 of 53** elements exercised by real documents.
+Union across both corpora: **47 of 51** elements exercised by real documents.
 

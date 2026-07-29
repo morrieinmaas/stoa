@@ -1,14 +1,15 @@
 {
   "register": "stoa-vocabulary",
   "version": "0.1.0-m0",
-  "status": "provisional; L0 complete pending freeze (see docs/STATE.md)",
+  "status": "provisional; L0 evidence-complete and ready to freeze (see spec/EVIDENCE.md)",
   "counts": {
     "L0": 30,
     "L1": 11,
-    "L2": 10,
+    "L2": 8,
     "L3": 2,
-    "total": 53,
-    "render_primitives": 5
+    "total": 51,
+    "render_primitives": 5,
+    "provisional": 2
   },
   "field_types": {
     "text": "NFC-normalised Unicode string, non-empty unless stated",
@@ -725,29 +726,6 @@
       "note": "Collapsing is a reader affordance. Degraded, the content is simply present, which is the safe direction."
     },
     {
-      "n": "tab-group",
-      "layer": 2,
-      "class": "block",
-      "children": [
-        "tab"
-      ],
-      "degrades": "section",
-      "fields": {}
-    },
-    {
-      "n": "tab",
-      "layer": 2,
-      "class": "block",
-      "children": "flow",
-      "degrades": "section",
-      "fields": {
-        "label": {
-          "type": "text",
-          "required": true
-        }
-      }
-    },
-    {
       "n": "state-link",
       "layer": 2,
       "class": "inline",
@@ -784,7 +762,8 @@
           "required": true
         }
       },
-      "note": "Typed data for a renderer. Integers and scaled decimals only; a float in a payload is a validation error. Carries no visible content, so it contributes nothing to the degradation contract."
+      "note": "Typed data for a renderer. Integers and scaled decimals only; a float in a payload is a validation error. Carries no visible content, so it contributes nothing to the degradation contract. PROVISIONAL: no corpus can produce a typed renderer payload, so this element is unevidenced. It ships so L3 can be implemented and tested, and does not become normative until two independent implementations exist. See docs/GOVERNANCE.md section 4.",
+      "status": "provisional"
     },
     {
       "n": "rendering",
@@ -808,7 +787,8 @@
           "required": true
         }
       },
-      "note": "renderer is a content hash, never a location, so an unknown renderer is never a network lookup. Degrades to a figure carrying the fallback text."
+      "note": "renderer is a content hash, never a location, so an unknown renderer is never a network lookup. Degrades to a figure carrying the fallback text. PROVISIONAL: no corpus can produce a typed renderer payload, so this element is unevidenced. It ships so L3 can be implemented and tested, and does not become normative until two independent implementations exist. See docs/GOVERNANCE.md section 4.",
+      "status": "provisional"
     }
   ],
   "render_primitives": [
