@@ -5,7 +5,7 @@ Register `stoa-vocabulary`, version `0.1.0-m0`.
 
 **Status:** provisional; L0 evidence-complete and ready to freeze (see spec/EVIDENCE.md)
 
-30 elements at L0, 11 at L1, 8 at L2, 2 at L3. Total 51, plus 5 render primitives that are not document elements.
+30 elements at L0, 10 at L1, 8 at L2, 2 at L3. Total 50, plus 5 render primitives that are not document elements.
 
 A document element above L0 declares the element it degrades into. That declaration is normative and mechanically tested: `stoa0.py <doc> contract` projects the whole document to L0 and asserts that no unit of reader-visible content is lost.
 
@@ -92,7 +92,6 @@ Notes:
 | `citation` | inline | `inline` | `reference` | `target`:idref |
 | `admonition` | block | `flow` | `section` | `kind`:text ∈ {note, warning, caution, important} |
 | `sidebar` | block | `flow` | `section` | — |
-| `epigraph` | block | `flow` | `quote` | `source`?:text |
 | `signature-block` | block | `term, definition` | `term-list` | — |
 | `provenance` | block | `term, definition` | `term-list` | — |
 | `table-section` | block | `row` | `row` | `kind`:text ∈ {head, body, foot} |

@@ -163,7 +163,7 @@ that does not carry appearance.
 The RFC mapper now takes the base token from the preceding text node, so
 `2<sup>64</sup>` becomes one semantic node rather than two fragments. After the
 fix the RFC corpus needs **no element outside the register at 100%**, and the
-register stands at 51 elements (L0 30).
+register stands at 50 elements (L0 30).
 
 This is the closed vocabulary doing exactly what a closed vocabulary is for:
 the bet was written down, a corpus falsified it with a number, and the fix was
@@ -283,6 +283,47 @@ It also separates two things HTML conflates. A `placeholder` is not a label: it
 disappears on focus and is not reliably announced. The corpus counts
 placeholder-rescued and `aria-label`-rescued controls separately, because in
 HTML both pass and here both had to be promoted to a real label or dropped.
+
+### 16. `epigraph` was removed after five genres produced none
+
+Five corpora, 138 documents, four markup languages: zero epigraphs.
+
+The gate's answer to that is removal, and the reason it is the right answer is
+worth stating because it is counter-intuitive. The obvious move is to go and
+find a sixth corpus that contains epigraphs — literary texts would have them.
+**That move is exactly what the gate exists to prevent.** Choosing a corpus
+because it contains the element you want to justify inverts the test: it stops
+measuring whether the vocabulary fits real documents and starts measuring
+whether the author can find a document that fits the vocabulary.
+
+Genres are chosen for their importance to the format's purpose. Elements are
+kept or removed by what those genres contain. Reversing that order is how a
+finite vocabulary stops being finite.
+
+### 17. What "51 of 51" would have cost
+
+At one point the register stood at 34 of 51 elements passing the two-genre
+gate. The natural reading is that 51 of 51 is the target and the remaining 17
+are unfinished work. That reading is wrong in three separate ways, and the
+distinctions matter more than the number:
+
+- **L3 (2 elements) cannot be evidenced by observation at all.** No existing
+  format has typed rendering, so no corpus of existing documents can contain a
+  renderer payload. This is why the register marks them `provisional`: they
+  need two independent *implementations*, not a corpus. Counting them as a gap
+  in corpus coverage is a category error.
+- **L2 (8 elements) is one genre wide, not one corpus wide.** Every one is
+  exercised by real public forms. What is missing is a second *independent
+  publisher family*, which is a real gap and a small one.
+- **The rest is two elements at L0 and four at L1**, each of which names the
+  genre that would close it: `media` needs a second genre with images,
+  `quantity` a second with structured amounts, `article` a second with
+  self-contained parts, `contents` any genre with a published table of
+  contents.
+
+The number that actually governs the freeze is **L0: 28 of 30 pass the
+two-genre gate, and 30 of 30 are exercised by real documents.** L1 and L2 are
+additive-only and recoverable; L0 is not.
 
 ## Where this leaves the freeze
 

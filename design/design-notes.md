@@ -181,7 +181,7 @@ unchanged. Archives do all three.
 
 Block-level nodes are the leaves of a Merkle tree over the document. A single
 paragraph is therefore independently provable without transmitting, or even
-disclosing, the rest of the document. A 120-block document yields a 224-byte
+disclosing, the rest of the document. A 118-block document yields a 224-byte
 proof.
 
 Odd nodes are promoted rather than duplicated, which avoids the duplicate-leaf
@@ -457,7 +457,7 @@ Kept here rather than in a section that sounds like marketing.
 
 - **The stranded reader** (§11.3).
 - **One genre of corpus.** The first corpus did not falsify the vocabulary and
-  did not exercise 32 of 51 elements. M0b2 exists for this.
+  did not exercise 32 of 50 elements. M0b2 exists for this.
 - **Governance is interim.** The licences are irrevocable and the succession
   question has a written answer, but no institution exists.
 - **Solo maintainer.** The format is designed to outlive its author; the project

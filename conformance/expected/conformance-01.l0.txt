@@ -62,9 +62,6 @@ The register carries no floating point type at any layer, including inside rende
 
 ## Appeal
 
-> Any interested party may seek review.
-> -- Law 4412/2016
-
 An appeal must be lodged within ten days. The form below is submitted only when the reader submits it; the document has no way to cause a request on its own.
 
 ### Lodge an appeal

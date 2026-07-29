@@ -55,14 +55,14 @@ Decisions that survived scrutiny and are unlikely to move.
 
 M0, M0b and M0b2 are complete and run. All figures below are produced by `mise run check` and `mise run corpora`. See `../m0/FINDINGS.md`.
 
-- Vocabulary register: 51 elements (L0 30, L1 11, L2 8, L3 2 plus 5 render primitives).
+- Vocabulary register: 50 elements (L0 30, L1 10, L2 8, L3 2 plus 5 render primitives).
 - Conformance document exercising all 52, in canonical form, 9,359 canonical bytes.
 - Negative fixture with 13 deliberate faults across 13 distinct rules; the ruleset reports exactly 13 errors.
-- Degradation contract verified mechanically: 93 content units, 0 lost projecting to L0, and the projection is itself conforming.
+- Degradation contract verified mechanically: 91 content units, 0 lost projecting to L0, and the projection is itself conforming.
 - Encoding independence verified across canonical JSON and deterministic CBOR: identical digest, identical Merkle leaves.
 - Merkle excerpt proofs: 124 blocks, 224-byte proof, verifies at every index, and fails on a tampered block at every index.
 - Three corpora, all at 100% on conformance, no-loss and no-omission: 100 Diavgeia acts, 16 IETF RFCs (which falsified the superscript bet and drove `power` into L0), and 14 JATS articles (which settled `media`, `note` and `note-ref`).
-- Evidence audit: 31 of 51 elements corpus-backed, 12 L2/L3 unreachable by any static corpus, 4 L1 fixture-only, 0 untested. Every L0 element is corpus-backed.
+- Evidence audit: 31 of 50 elements corpus-backed, 12 L2/L3 unreachable by any static corpus, 4 L1 fixture-only, 0 untested. Every L0 element is corpus-backed.
 - Accessibility measured, not asserted: 0 of 65 real figures carried alternative text, and none of them is expressible without it.
 - 19 toolchain self-tests and 5,000 hostile documents per fuzz run, 0 crashes.
 
@@ -76,7 +76,7 @@ M0 found four defects that were free to fix then and would have been impossible 
 
 2. ~~**A second corpus, in a second genre.**~~ Done, and it fired.
 
-3. **The freeze is now a judgement, not a measurement.** Three corpora across three genres are at 100% on every component, and `../spec/EVIDENCE.md` shows every L0 element backed by real documents. What remains unproven is four L1 elements (`article`, `contents`, `admonition`, `epigraph`) exercised only by the conformance fixture. L1 is additive-only rather than frozen, so an unearned element there is recoverable. Freezing L0 is now a decision to take deliberately. The first corpus has run: 100 acts from Diavgeia, sampled across 10 act types and 66 public bodies, 100% coverage, zero elements missing, zero amounts needing a float, and the envelope figures held (2,143 bytes and 1 request against 22,187 bytes and 81 requests). It did not falsify the vocabulary. It also did not exercise 32 of the 51 elements, and it did not test the act body, which is a signed PDF. One genre is not enough to conclude the register is closed correctly. Full report and its stated limits: `../corpus/RESULTS.md` section 6.
+3. **The freeze is now a judgement, not a measurement.** Three corpora across three genres are at 100% on every component, and `../spec/EVIDENCE.md` shows every L0 element backed by real documents. What remains unproven is four L1 elements (`article`, `contents`, `admonition`, `epigraph`) exercised only by the conformance fixture. L1 is additive-only rather than frozen, so an unearned element there is recoverable. Freezing L0 is now a decision to take deliberately. The first corpus has run: 100 acts from Diavgeia, sampled across 10 act types and 66 public bodies, 100% coverage, zero elements missing, zero amounts needing a float, and the envelope figures held (2,143 bytes and 1 request against 22,187 bytes and 81 requests). It did not falsify the vocabulary. It also did not exercise 32 of the 50 elements, and it did not test the act body, which is a signed PDF. One genre is not enough to conclude the register is closed correctly. Full report and its stated limits: `../corpus/RESULTS.md` section 6.
 
 **Not blocking the freeze:**
 
@@ -126,7 +126,7 @@ A high coverage number is also the single most persuasive line available for a f
 
 ### What makes this application unusual
 
-Most two-page applications describe intended work. This one can attach work already done: a closed vocabulary register, a conformance document exercising all 51 elements, a ruleset catching 13 deliberate faults, a degradation contract verified over 121 content units, encoding independence demonstrated across two serialisations, and a written governance document answering the stewardship question. Very few proposals can answer stewardship at all.
+Most two-page applications describe intended work. This one can attach work already done: a closed vocabulary register, a conformance document exercising all 50 elements, a ruleset catching 13 deliberate faults, a degradation contract verified over 121 content units, encoding independence demonstrated across two serialisations, and a written governance document answering the stewardship question. Very few proposals can answer stewardship at all.
 
 ### Scoping the ask
 

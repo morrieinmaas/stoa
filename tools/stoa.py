@@ -441,7 +441,6 @@ FIELD_UNITS = {
     "rendering": ["fallback"],
     "admonition": ["kind"],
     "quote": ["source"],
-    "epigraph": ["source"],
     "caption": [],
 }
 
@@ -524,11 +523,6 @@ def to_l0(node, reg):
     if name == "admonition":
         head = {"t": "heading", "level": 3, "c": [_text(f["kind"])]}
         return {"t": "section", "c": [head] + kids}
-    if name == "epigraph":
-        out = {"t": "quote", "c": kids}
-        if f.get("source"):
-            out["source"] = f["source"]
-        return out
     if name in ("signature-block", "provenance"):
         return {"t": "term-list", "c": kids}
     if name == "table-section":

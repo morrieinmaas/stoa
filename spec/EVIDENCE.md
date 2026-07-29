@@ -5,11 +5,11 @@ What justifies each element in the register. A closed vocabulary is only defensi
 
 | Verdict | Count | Meaning |
 |---|---|---|
-| **CORPUS** | 31 of 51 | Exercised by **two or more independent genres**. Passes the governance gate in `docs/GOVERNANCE.md` section 4. |
-| **ONE GENRE** | 14 of 51 | Exercised by real documents, but only in one genre. Not yet normative. |
-| **PROVISIONAL** | 2 of 51 | Declared provisional in the register: implementable, removable, not normative. |
-| **FIXTURE** | 4 of 51 | Exercised only by the document the author wrote. An assertion, not evidence. |
-| **UNTESTED** | 0 of 51 | Not exercised anywhere. Should not exist. |
+| **CORPUS** | 34 of 50 | Exercised by **two or more independent genres**. Passes the governance gate in `docs/GOVERNANCE.md` section 4. |
+| **ONE GENRE** | 12 of 50 | Exercised by real documents, but only in one genre. Not yet normative. |
+| **PROVISIONAL** | 2 of 50 | Declared provisional in the register: implementable, removable, not normative. |
+| **FIXTURE** | 2 of 50 | Exercised only by the document the author wrote. An assertion, not evidence. |
+| **UNTESTED** | 0 of 50 | Not exercised anywhere. Should not exist. |
 
 ## Elements resting on assertion
 
@@ -19,56 +19,53 @@ Read this as a statement about the corpora, not automatically about the elements
 
 It is still a gap, and it is precise about what would close it: a third genre containing footnotes and figures. Legislation with footnoted recitals, or scholarly articles in JATS, would settle all three L0 entries at once. Until then these elements rest on the author's judgement, and after the freeze that judgement is permanent.
 
-- **`article`** (L1) — A self-contained part of a compound document.
 - **`contents`** (L1) — Table of contents. Degrades to an ordinary list of intra-document references.
 - **`admonition`** (L1) — Degrades to a section whose heading is the kind label, so the salience survives as words rather than as colour.
-- **`epigraph`** (L1) — no rationale recorded
 
 ## Full table
 
 | Element | Layer | Verdict | Seen in |
 |---|---|---|---|
-| `document` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `section` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `heading` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `paragraph` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `list` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `item` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `document` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `section` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `heading` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `paragraph` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `list` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `item` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
 | `term-list` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `term` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `definition` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `term` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `definition` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
 | `quote` | L0 | CORPUS | RFCs, JATS |
 | `code-block` | L0 | CORPUS | RFCs, JATS |
-| `note` | L0 | ONE GENRE | JATS |
+| `note` | L0 | CORPUS | JATS, UK law |
 | `figure` | L0 | CORPUS | RFCs, JATS |
-| `caption` | L0 | CORPUS | RFCs, JATS |
+| `caption` | L0 | CORPUS | RFCs, JATS, UK law |
 | `media` | L0 | ONE GENRE | JATS |
-| `table` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `row` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `cell` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `header-cell` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `text` | L0 | CORPUS | Diavgeia, RFCs, JATS |
-| `emphasis` | L0 | CORPUS | RFCs, JATS |
-| `strong` | L0 | CORPUS | RFCs, JATS |
-| `code` | L0 | CORPUS | RFCs, JATS |
-| `link` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `table` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `row` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `cell` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `header-cell` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `text` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `emphasis` | L0 | CORPUS | RFCs, JATS, UK law |
+| `strong` | L0 | CORPUS | RFCs, JATS, UK law |
+| `code` | L0 | CORPUS | RFCs, JATS, UK law |
+| `link` | L0 | CORPUS | Diavgeia, RFCs, JATS, UK law |
 | `reference` | L0 | CORPUS | RFCs, JATS |
-| `note-ref` | L0 | ONE GENRE | JATS |
+| `note-ref` | L0 | CORPUS | JATS, UK law |
 | `quantity` | L0 | ONE GENRE | Diavgeia |
 | `power` | L0 | CORPUS | RFCs, JATS |
-| `date` | L0 | ONE GENRE | Diavgeia |
+| `date` | L0 | CORPUS | Diavgeia, UK law |
 | `line-break` | L0 | CORPUS | RFCs, JATS |
-| `article` | L1 | FIXTURE | — |
+| `article` | L1 | ONE GENRE | UK law |
 | `abstract` | L1 | CORPUS | RFCs, JATS |
 | `contents` | L1 | FIXTURE | — |
 | `bibliography` | L1 | CORPUS | RFCs, JATS |
 | `citation` | L1 | CORPUS | RFCs, JATS |
 | `admonition` | L1 | FIXTURE | — |
 | `sidebar` | L1 | CORPUS | RFCs, JATS |
-| `epigraph` | L1 | FIXTURE | — |
 | `signature-block` | L1 | ONE GENRE | Diavgeia |
-| `provenance` | L1 | CORPUS | Diavgeia, RFCs, JATS |
-| `table-section` | L1 | CORPUS | Diavgeia, RFCs, JATS |
+| `provenance` | L1 | CORPUS | Diavgeia, RFCs, JATS, UK law |
+| `table-section` | L1 | CORPUS | Diavgeia, RFCs, JATS, UK law |
 | `form` | L2 | ONE GENRE | Forms |
 | `field` | L2 | ONE GENRE | Forms |
 | `field-text` | L2 | ONE GENRE | Forms |
@@ -80,5 +77,5 @@ It is still a gap, and it is precise about what would close it: a third genre co
 | `payload` | L3 | PROVISIONAL | — |
 | `rendering` | L3 | PROVISIONAL | — |
 
-Union across both corpora: **47 of 51** elements exercised by real documents.
+Union across both corpora: **48 of 50** elements exercised by real documents.
 

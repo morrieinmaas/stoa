@@ -15,7 +15,7 @@ Not a protocol, not a browser, not an alternative internet. The closest structur
 
 ## What this is
 
-A document format with a finite semantic vocabulary (51 elements), delivered over ordinary HTTPS, where the document carries meaning and structure and never carries appearance. Presentation is supplied by themes written against the vocabulary rather than against any individual site, and reader preferences override publisher styling with no mechanism for the publisher to override back.
+A document format with a finite semantic vocabulary (50 elements), delivered over ordinary HTTPS, where the document carries meaning and structure and never carries appearance. Presentation is supplied by themes written against the vocabulary rather than against any individual site, and reader preferences override publisher styling with no mechanism for the publisher to override back.
 
 The client fetches content and nothing else: no scripts, no stylesheets per document, no font files, no third-party subresources. A document cannot name a host that the client will contact without the reader acting, so third-party requests are unrepresentable rather than forbidden.
 
@@ -76,10 +76,10 @@ mise run check      # everything, and fails loudly if it should not
 Current expected output:
 
 ```
-distinct types   51 of 51 in register
+distinct types   50 of 50 in register
 check            0 errors, 0 warnings
-contract         93 units checked, 0 lost in projection to L0
-merkle blocks    120   proof size 7 sibling hashes (224 bytes)   verifies True
+contract         91 units checked, 0 lost in projection to L0
+merkle blocks    118   proof size 7 sibling hashes (224 bytes)   verifies True
 ENCODING INDEPENDENT True
 ```
 

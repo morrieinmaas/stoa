@@ -144,10 +144,6 @@
       { "t": "section", "id": "sec-appeal", "c": [
         { "t": "heading", "level": 2, "c": [ { "t": "text", "v": "Appeal" } ] },
 
-        { "t": "epigraph", "source": "Law 4412/2016", "c": [
-          { "t": "paragraph", "c": [
-            { "t": "text", "v": "Any interested party may seek review." } ] } ] },
-
         { "t": "paragraph", "c": [
           { "t": "text", "v": "An appeal must be lodged within ten days. The form below is submitted only when the reader submits it; the document has no way to cause a request on its own." } ] },
 

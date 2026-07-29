@@ -10,6 +10,7 @@ Milestones from `design/design-notes.md` section 13, with current status.
 | **M0b3** | Decide how to represent an exponent and add it. | **Done.** L0 gained `power`; the RFC corpus went to 100%. |
 | **M0b4** | A third corpus in a genre with figures and footnotes, to settle the three L0 elements no other genre reached. | **Done.** 14 JATS articles: 100% on every component, `media`/`note`/`note-ref` all earned, and 0 of 65 real figures carried alternative text. |
 | **M0b5** | A fourth corpus testing L2 against real public-sector forms, which the static corpora could not reach. | **Done.** 10 pages, 16 forms, 100% conforming; 8 of 10 L2 elements earned, `tab-group` and `tab` earned nothing and were removed. |
+| **M0b6** | A fifth corpus: UK legislation in CLML, the genre the project is aimed at and had not tested. | **Done.** 8 Acts, 100% on every component; `article` and `contents` reached for the first time, `epigraph` removed after five genres produced none. |
 | **M0d** | Freeze L0. Now a deliberate judgement rather than a task waiting on evidence: every L0 element is corpus-backed, four L1 elements are not. | **Next.** `../spec/EVIDENCE.md`. |
 | **M0c** | Write the conformance document a second time in a surface syntax; compare as a fixed-point test. | Not started. |
 | **M1** | Core types, canonical encoding, NFC, structural hash. Parser for L0 and L1. Validator. HTML emitter. Ends with real publishable documents and a 6 KB page to show someone. | Not started. |

@@ -4,10 +4,10 @@
   "status": "provisional; L0 evidence-complete and ready to freeze (see spec/EVIDENCE.md)",
   "counts": {
     "L0": 30,
-    "L1": 11,
+    "L1": 10,
     "L2": 8,
     "L3": 2,
-    "total": 51,
+    "total": 50,
     "render_primitives": 5,
     "provisional": 2
   },
@@ -534,19 +534,6 @@
       "children": "flow",
       "degrades": "section",
       "fields": {}
-    },
-    {
-      "n": "epigraph",
-      "layer": 1,
-      "class": "block",
-      "children": "flow",
-      "degrades": "quote",
-      "fields": {
-        "source": {
-          "type": "text",
-          "required": false
-        }
-      }
     },
     {
       "n": "signature-block",

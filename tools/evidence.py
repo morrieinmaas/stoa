@@ -36,7 +36,8 @@ ROOT = Path(__file__).resolve().parent.parent
 CORPORA = [("Diavgeia", ROOT / "corpus" / "RESULTS.md"),
            ("RFCs", ROOT / "corpus" / "RESULTS-rfc.md"),
            ("JATS", ROOT / "corpus" / "RESULTS-jats.md"),
-           ("Forms", ROOT / "corpus" / "RESULTS-forms.md")]
+           ("Forms", ROOT / "corpus" / "RESULTS-forms.md"),
+           ("UK law", ROOT / "corpus" / "RESULTS-law.md")]
 
 
 def used_in(path):
