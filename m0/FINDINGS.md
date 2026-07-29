@@ -246,11 +246,11 @@ front of the author instead of silently in front of a reader.
 
 ### 14. Two elements were removed, and removal cost nothing
 
-`tab-group` and `tab` survived three corpora without a single instance, and the
-fourth — public-sector forms, where tabs would live if anywhere — produced none
-either. Four genres, zero occurrences.
+`tab-group` and `tab` survived four corpora without a single instance, and the
+one where tabs would live if anywhere — public-sector forms — produced none
+either. Five genres, zero occurrences.
 
-They were removed. The register went from 53 elements to 51.
+They were removed, and `epigraph` followed for the same reason. The register went from 53 elements to 50.
 
 **The reason is not only that they lacked evidence.** Tabs are sections shown
 one at a time, which is a theme decision, and this format does not carry
@@ -286,7 +286,7 @@ HTML both pass and here both had to be promoted to a real label or dropped.
 
 ### 16. `epigraph` was removed after five genres produced none
 
-Five corpora, 138 documents, four markup languages: zero epigraphs.
+Five corpora, 138 documents, five markup languages: zero epigraphs.
 
 The gate's answer to that is removal, and the reason it is the right answer is
 worth stating because it is counter-intuitive. The obvious move is to go and
@@ -300,11 +300,11 @@ Genres are chosen for their importance to the format's purpose. Elements are
 kept or removed by what those genres contain. Reversing that order is how a
 finite vocabulary stops being finite.
 
-### 17. What "51 of 51" would have cost
+### 17. What chasing a full-marks ratio would have cost
 
 At one point the register stood at 34 of 51 elements passing the two-genre
-gate. The natural reading is that 51 of 51 is the target and the remaining 17
-are unfinished work. That reading is wrong in three separate ways, and the
+gate. The natural reading is that full marks is the target and the remainder is
+unfinished work. That reading is wrong in three separate ways, and the
 distinctions matter more than the number:
 
 - **L3 (2 elements) cannot be evidenced by observation at all.** No existing
@@ -338,15 +338,15 @@ outcome for a test that cost two days.
 | Documents produce a conforming tree | 100% | 100% |
 | Lose no source string | 100% | **100%** |
 | Need no element outside the register | 100% | **100%** (was 44% before `power`) |
-| Register elements exercised | 20 of 53 | 31 of 53 |
+
 
 **Both gaps are closed.** The exponent became `power`, and a third corpus of
 scholarly articles settled `media` (65), `note` (48) and `note-ref` (32).
 `../spec/EVIDENCE.md` now records every L0 element as backed by documents nobody
 wrote for this project.
 
-What remains is four L1 elements — `article`, `contents`, `admonition`,
-`epigraph` — exercised only by the conformance fixture. L1 is additive-only
+What remains is two elements exercised only by the conformance fixture, and
+twelve exercised in a single genre. L1 is additive-only
 rather than frozen, so an unearned element there is recoverable in a way an L0
 one is not. Freezing L0 is now a judgement to take deliberately rather than a
 task waiting on evidence.

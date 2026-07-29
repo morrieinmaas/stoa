@@ -85,10 +85,10 @@ ENCODING INDEPENDENT True
 
 ## The one thing standing between here and freezing L0
 
-A third genre containing footnotes and figures. Two corpora are at 100%, and the
-second one falsified the superscript bet and was fixed. What remains is that
-three L0 elements (`media`, `note`, `note-ref`) are exercised by no real
-document yet. See `../spec/EVIDENCE.md`.
+Nothing mechanical. Five corpora across five genres are at 100% on every
+component; every L0 element is exercised by real documents and 28 of 30 pass the
+two-genre evidence gate. Freezing L0 is now a deliberate judgement. See
+`../spec/EVIDENCE.md`.
 
 ## Licensing
 

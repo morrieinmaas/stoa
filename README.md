@@ -7,11 +7,12 @@ Not a protocol, not a browser, not an alternative internet. The closest
 structural analogue is PDF/A: a constrained format defined by what it
 guarantees rather than by what it can express.
 
-**Status:** M0 and M0b complete. Design notes, a closed vocabulary register, a
-working throwaway toolchain, and two corpus coverage runs against real public
-documents in two genres. The second corpus falsified one of the design's stated
-bets, which is what it was for. Not a specification, not a reference
-implementation. Nothing here is stable, and **L0 is not frozen** — see below.
+**Status:** M0 complete. A closed vocabulary register, design notes, a working
+throwaway toolchain, and five corpus coverage runs over 138 real public
+documents in five genres. One of those corpora falsified a bet the design had
+written down, which is what it was for. Not a specification, not a reference
+implementation. Nothing here is stable, and **L0 is not frozen** — the remaining
+gate is a judgement, not a measurement.
 
 ---
 
@@ -100,7 +101,7 @@ ENCODING INDEPENDENT True
 - A 118-block document yields a 224-byte excerpt proof. One quoted paragraph is
   provable without transmitting the document, and a forged block fails.
 - 19 toolchain self-tests: Merkle proof and forgery rejection at *every* index
-  for n = 1..124, CBOR edge cases and key-order determinism, injection, and
+  for n = 1..118, CBOR edge cases and key-order determinism, injection, and
   degradation totality over synthetic instances of all 23 elements above L0.
 - 5,000 generated hostile documents per fuzz run, 0 crashes. The first run
   found 272 in 3,000 — see `m0/FINDINGS.md` defect 12.
@@ -201,6 +202,8 @@ tools/                        throwaway M0 toolchain (Python, standard library o
 corpus/RESULTS.md             corpus 1: administrative notices (Diavgeia)
 corpus/RESULTS-rfc.md         corpus 2: standards documents (IETF RFCs)
 corpus/RESULTS-jats.md        corpus 3: scholarly articles (JATS)
+corpus/RESULTS-forms.md       corpus 4: public-sector forms (tests L2)
+corpus/RESULTS-law.md         corpus 5: UK legislation (CLML)
 spec/EVIDENCE.md              what justifies each element; generated
 design/design-notes.md        the working design document
 corpus/sample/                one real notice as canonical JSON, HTML and text
@@ -213,58 +216,79 @@ docs/LICENSING.md             licence split and rationale
 docs/NAME.md                  naming decision and how to undo it
 ```
 
-### The second corpus, and what it falsified
+### Five corpora, five genres, five markup languages
 
-16 IETF RFCs in RFC 7991 XML v3 — standards documents in English, the opposite
-genre from Greek administrative notices on every axis that matters. Full report
-in [`corpus/RESULTS-rfc.md`](corpus/RESULTS-rfc.md).
+Every corpus is a live public source. None was assembled for this project, and
+each genre was chosen for its importance to the format's purpose rather than for
+the elements it happens to contain — that distinction is the whole point of the
+evidence gate below.
 
-| | Corpus 1 (Diavgeia) | Corpus 2 (RFCs) |
-|---|---|---|
-| Produce a conforming document | 100% | **100%** |
-| Lose no source string | 100% | 81% |
-| Need no element outside the register | 100% | **44%** |
-| Register elements exercised | 20 of 53 | **31 of 53** |
+| | 1 | 2 | 3 | 4 | 5 |
+|---|---|---|---|---|---|
+| Genre | Admin notices | Standards | Scholarly articles | Public forms | Legislation |
+| Source | [Diavgeia](https://diavgeia.gov.gr) | IETF RFCs | Europe PMC | GOV.UK, ECB, EP | [legislation.gov.uk](https://www.legislation.gov.uk) |
+| Markup | JSON | RFC XML v3 | JATS | HTML | CLML |
+| Tests | L0/L1 | L0/L1 | L0/L1 | **L2** | L0/L1 |
+| Documents | 100 | 16 | 14 | 16 forms | 8 Acts |
+| Produce a conforming document | 100% | 100% | 100% | 100% | 100% |
+| Lose no source string | 100% | 100% | 100% | — | 100% |
+| Need no element outside the register | 100% | 100% | 100% | 100% | 100% |
 
-**It found a real hole.** `<sup>` occurs 75 times, and every occurrence is an
-exponent: `2^64`, `2^32`, `2^62`. The register has no superscript, so those
-degrade to `264` and `232` — inside sentences of the form *"an integer in the
-range -2^64..2^64-1 inclusive"*. That is not a formatting loss, it is silent
-numeric corruption in a normative range specification, produced by a format
-whose entire numeric thesis is exactness.
+**138 documents. 100% on every component.** Reports:
+[1](corpus/RESULTS.md) · [2](corpus/RESULTS-rfc.md) · [3](corpus/RESULTS-jats.md) ·
+[4](corpus/RESULTS-forms.md) · [5](corpus/RESULTS-law.md)
 
-`docs/STATE.md` §6 explicitly bet that superscripts would not be load-bearing.
-That bet is now falsified, with a number attached. See
-[`m0/FINDINGS.md`](m0/FINDINGS.md) defect 8 for the three candidate fixes.
+Those numbers are the *end* state. Getting there is the interesting part, and
+`m0/FINDINGS.md` records all seventeen defects the corpora found — four in the
+format itself, the rest in the mappers.
 
-### Corpus 3: scholarly articles, and the accessibility claim measured
+### What corpus 2 falsified
 
-14 open-access articles in JATS XML from Europe PMC — the genre the first two
-could not reach, because neither administrative notices nor RFCs contain an
-image or a footnote. Full report in
-[`corpus/RESULTS-jats.md`](corpus/RESULTS-jats.md).
+`docs/STATE.md` §6 wrote down a prediction before any code existed:
 
-| | Result |
+> *"Do superscripts, layout tables, or inline icons turn out to be load-bearing
+> in practice. **The register bets they are not.**"*
+
+The RFC corpus produced 75 superscripts, and **every one was an exponent** —
+`2^64`, `2^32`, `2^62`. With no superscript in the register they degraded to
+`264` and `232`, inside sentences of the form *"an integer in the range
+-2^64..2^64-1 inclusive"*. Not a formatting loss: **a wrong number in a
+normative specification**, produced by a format whose entire numeric thesis is
+exactness.
+
+L0 gained `power` — semantic rather than presentational, because an exponent is
+meaning and a superscript is appearance. The corpus went to 100%.
+
+That episode is the argument for the method. A pre-registered prediction, a test
+capable of refuting it, refutation with a number attached, and a fix that cost
+nothing because the layer had not frozen. After the freeze the only remedy would
+have been a new epoch.
+
+### What corpus 3 measured: the accessibility claim
+
+`media.alt` is a required, non-empty field, so a figure with no alternative text
+is *unrepresentable*.
+
+| | Count |
 |---|---|
-| Produce a conforming document | **100%** (14/14) |
-| Lose no source string | **100%** (14/14) |
-| Need no element outside the register | **100%** (14/14) |
-| `media` / `note` / `note-ref` occurrences | 65 / 48 / 32 — all three **earned** |
+| Graphics in 14 real scholarly articles | 65 |
+| Carrying alternative text in the source | **0 (0%)** |
+| Carrying none | **65 (100%)** |
 
-**The accessibility claim, measured against reality.** `media.alt` is a
-required, non-empty field, so a figure with no alternative text is
-*unrepresentable*. In this corpus:
+Every one would pass an HTML validator, ship, and fail a reader. Here none of
+them is expressible: a conforming document did not exist until alternative text
+was supplied.
 
-- 65 graphics encountered
-- **0 of 65 (0%)** carried alternative text in the source
-- **65 of 65 (100%)** had none
+Stated precisely, because the limit matters — the mapper had to *derive* that
+text from figure captions, and derived text is worse than authored text. The
+claim is not that the format writes good alt text. It is that **the absence is
+impossible**, so the failure lands at build time in front of the author instead
+of silently in front of a reader.
 
-Every one of those would pass an HTML validator, ship, and fail a reader. Here
-they cannot be expressed at all — the mapper had to derive alternative text from
-the figure caption before a conforming document existed. Derived text is worse
-than authored text; the point is that *the absence is impossible*, so the
-failure surfaces at build time in front of the author instead of silently in
-front of a reader.
+Corpus 4 is the same property applied to interaction: `field.label` is required,
+so an unlabelled control cannot be written. Of 2,449 controls on well-run
+public-sector sites, 2,446 carried a real `<label>` — a best case, and it still
+contained two that this format cannot express.
 
 ### Is the register earned?
 
@@ -273,13 +297,24 @@ elements by what justifies them:
 
 | Verdict | Count | Meaning |
 |---|---|---|
-| **CORPUS** | 37 | Exercised by real documents nobody wrote for this project |
-| **BY DESIGN** | 12 | L2/L3 — no corpus of published static documents can contain a form or a renderer payload |
-| **FIXTURE** | 4 | L1 only, exercised solely by the conformance document |
+| **CORPUS** | 34 | Exercised by **two or more independent genres**. Passes the gate. |
+| **ONE GENRE** | 12 | Exercised by real documents, in one genre only. Not yet normative. |
+| **PROVISIONAL** | 2 | L3. Declared provisional: implementable, removable, not normative. |
+| **FIXTURE** | 2 | Exercised only by the conformance document. An assertion. |
 | **UNTESTED** | 0 | — |
 
-**Every L0 element is now backed by real documents.** L0 is the layer that
-freezes permanently, so it is the layer where an unearned element is unfixable.
+**L0 — the layer that freezes permanently — is 28 of 30 through the two-genre
+gate, and 30 of 30 exercised by real documents.** That is the number that
+governs the freeze. L1 and L2 are additive-only, so an unearned element there is
+recoverable; at L0 it is not.
+
+The gate is defined in `docs/GOVERNANCE.md` §4 and it runs in both directions.
+It admitted `power` on evidence, and it removed `tab-group`, `tab` and
+`epigraph` when five genres produced none — the register has shrunk twice and
+grown once under it. That is the structural answer to the way constrained
+formats die: they die through the escape hatch, the escape hatch opens one
+reasonable-sounding element at a time, and **a persuasive argument cannot
+satisfy a requirement to produce two unrelated bodies of real documents.**
 
 ## The one thing standing between here and freezing L0
 
@@ -288,7 +323,7 @@ component, every L0 element is corpus-backed, and the one bet that was
 falsified (superscripts) has been fixed by adding `power`.
 
 What is left is a judgement call, not a measurement: four L1 elements
-(`article`, `contents`, `admonition`, `epigraph`) are still exercised only by
+(`contents`, `admonition`) are still exercised only by
 the conformance document. L1 is additive-only rather than frozen, so an
 unearned element there is recoverable — unlike at L0. The freeze is a decision
 the maintainer should now take deliberately rather than a task waiting on

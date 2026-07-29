@@ -4,9 +4,9 @@ Milestones from `design/design-notes.md` section 13, with current status.
 
 | | Milestone | Status |
 |---|---|---|
-| **M0** | Vocabulary register and conformance document, hand-written in canonical form, before any code. Simultaneously the test fixture, the theme validation target, and the thing that forces the vocabulary to close. | **Done.** 53 elements, 4 defects found and fixed. |
+| **M0** | Vocabulary register and conformance document, hand-written in canonical form, before any code. Simultaneously the test fixture, the theme validation target, and the thing that forces the vocabulary to close. | **Done.** 50 elements after two removals and one addition; 4 format defects found and fixed. |
 | **M0b** | Corpus coverage test against a real public register. The last thing gating the L0 freeze. | **Done.** 100 acts from Diavgeia, 10 act types, 66 bodies: 100% coverage, 0 missing elements, 0 amounts needing a float. Did not falsify the vocabulary. See `../corpus/RESULTS.md`. |
-| **M0b2** | A second corpus in a second genre, to exercise what the administrative corpus never touched. | **Done.** 16 IETF RFCs in XML v3: 100% produce conforming documents, 30 of 53 elements exercised, and it **falsified the superscript bet** — 75 exponents that degrade to corrupted numbers. See `../corpus/RESULTS-rfc.md`. |
+| **M0b2** | A second corpus in a second genre, to exercise what the administrative corpus never touched. | **Done.** 16 IETF RFCs in XML v3: 100% produce conforming documents, and it **falsified the superscript bet** — 75 exponents that degrade to corrupted numbers. See `../corpus/RESULTS-rfc.md`. |
 | **M0b3** | Decide how to represent an exponent and add it. | **Done.** L0 gained `power`; the RFC corpus went to 100%. |
 | **M0b4** | A third corpus in a genre with figures and footnotes, to settle the three L0 elements no other genre reached. | **Done.** 14 JATS articles: 100% on every component, `media`/`note`/`note-ref` all earned, and 0 of 65 real figures carried alternative text. |
 | **M0b5** | A fourth corpus testing L2 against real public-sector forms, which the static corpora could not reach. | **Done.** 10 pages, 16 forms, 100% conforming; 8 of 10 L2 elements earned, `tab-group` and `tab` earned nothing and were removed. |

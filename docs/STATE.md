@@ -60,9 +60,9 @@ M0, M0b and M0b2 are complete and run. All figures below are produced by `mise r
 - Negative fixture with 13 deliberate faults across 13 distinct rules; the ruleset reports exactly 13 errors.
 - Degradation contract verified mechanically: 91 content units, 0 lost projecting to L0, and the projection is itself conforming.
 - Encoding independence verified across canonical JSON and deterministic CBOR: identical digest, identical Merkle leaves.
-- Merkle excerpt proofs: 124 blocks, 224-byte proof, verifies at every index, and fails on a tampered block at every index.
-- Three corpora, all at 100% on conformance, no-loss and no-omission: 100 Diavgeia acts, 16 IETF RFCs (which falsified the superscript bet and drove `power` into L0), and 14 JATS articles (which settled `media`, `note` and `note-ref`).
-- Evidence audit: 31 of 50 elements corpus-backed, 12 L2/L3 unreachable by any static corpus, 4 L1 fixture-only, 0 untested. Every L0 element is corpus-backed.
+- Merkle excerpt proofs: 118 blocks, 224-byte proof, verifies at every index, and fails on a tampered block at every index.
+- Five corpora over 138 documents in five markup languages, all at 100% on conformance, no-loss and no-omission: 100 Diavgeia acts; 16 IETF RFCs (which falsified the superscript bet and drove `power` into L0); 14 JATS articles (which settled `media`, `note`, `note-ref`, and measured 0 of 65 real figures carrying alternative text); 16 public-sector forms (which is what tests L2); and 8 UK Acts in CLML.
+- Evidence audit (`../spec/EVIDENCE.md`, generated): 34 of 50 elements pass the two-genre gate, 12 exercised in one genre, 2 provisional (L3), 2 fixture-only, 0 untested. **L0 is 28 of 30 through the gate and 30 of 30 exercised by real documents.**
 - Accessibility measured, not asserted: 0 of 65 real figures carried alternative text, and none of them is expressible without it.
 - 19 toolchain self-tests and 5,000 hostile documents per fuzz run, 0 crashes.
 
@@ -72,11 +72,7 @@ M0 found four defects that were free to fix then and would have been impossible 
 
 **Blocking the L0 freeze:**
 
-1. ~~**Representing an exponent.**~~ Done: L0 gained `power`. Original finding retained because it is the best evidence the method works — The second corpus falsified the register. `<sup>` occurs 75 times across 16 RFCs and every occurrence is an exponent (`2^64`, `2^32`); with no superscript in the register these degrade to `264` and `232` inside normative range specifications. Section 6 below bet that superscripts were not load-bearing. They are. Three candidate fixes are in `../m0/FINDINGS.md` defect 8; the recommendation is a semantic inline `power` element degrading to `base^exponent`, which is already the notation the RFC plain-text renderings use. This must be decided before the freeze, because afterwards the only remedy is a new epoch.
-
-2. ~~**A second corpus, in a second genre.**~~ Done, and it fired.
-
-3. **The freeze is now a judgement, not a measurement.** Three corpora across three genres are at 100% on every component, and `../spec/EVIDENCE.md` shows every L0 element backed by real documents. What remains unproven is four L1 elements (`article`, `contents`, `admonition`, `epigraph`) exercised only by the conformance fixture. L1 is additive-only rather than frozen, so an unearned element there is recoverable. Freezing L0 is now a decision to take deliberately. The first corpus has run: 100 acts from Diavgeia, sampled across 10 act types and 66 public bodies, 100% coverage, zero elements missing, zero amounts needing a float, and the envelope figures held (2,143 bytes and 1 request against 22,187 bytes and 81 requests). It did not falsify the vocabulary. It also did not exercise 32 of the 50 elements, and it did not test the act body, which is a signed PDF. One genre is not enough to conclude the register is closed correctly. Full report and its stated limits: `../corpus/RESULTS.md` section 6.
+1. **Nothing mechanical — the freeze is now a judgement.** Five corpora across five genres are at 100% on every component. Every L0 element is exercised by real documents and 28 of 30 pass the two-genre evidence gate; the two that do not (`media`, `quantity`) each name the genre that would close them. L1 and L2 are additive-only, so an unearned element there is recoverable in a way an L0 one is not. Freezing L0 is now a decision to take deliberately rather than a task waiting on evidence. See `../spec/EVIDENCE.md`.
 
 **Not blocking the freeze:**
 
@@ -92,14 +88,17 @@ M0 found four defects that were free to fix then and would have been impossible 
 
 ## 5. Immediate next actions, in order
 
-1. ~~**Run the corpus test.**~~ Done. Four format defects and three mapper defects found and fixed; see `../m0/FINDINGS.md`.
-2. ~~**Run a second corpus in a second genre.**~~ Done: 16 IETF RFCs. It falsified the superscript bet. Decide the exponent representation, then freeze L0.
-3. **Write the conformance document a second time in a surface syntax** and compare against the canonical version. It is a fixed-point test, not a taste test.
-4. **Do the governance chores**: register the trademark, put the licence files in, mirror the repository, deposit with Software Heritage and Zenodo for a DOI. An afternoon, and the DOI is what makes it citable in a tender.
-5. **Start M1** (core types, encoding, parser, validator, HTML emitter).
-6. **Prepare the NLnet application** for when calls reopen after summer.
+1. ~~Run the corpus test.~~ Done, five times over. Seventeen defects found and fixed; see `../m0/FINDINGS.md`.
+2. **Decide whether to freeze L0.** Nothing is blocking it mechanically. The open question is whether 30 of 30 exercised and 28 of 30 twice-exercised is enough, given that after the freeze the only remedy is a new epoch.
+3. **Write the conformance document a second time in a surface syntax** and compare against the canonical version (M0c). It is a fixed-point test, not a taste test, and it is the last untouched milestone before M1.
+4. **Do the governance chores**: register the trademark, mirror the repository, deposit with Software Heritage and Zenodo for a DOI. An afternoon, and the DOI is what makes it citable in a tender.
+5. **Open one conversation with a public body about a paid pilot.** This is the single highest-value remaining action and no amount of further measurement substitutes for it.
+6. **Start M1** (core types, encoding, parser, validator, HTML emitter, in Rust).
+7. **Submit the NLnet application** when the general call reopens — see section 7 and `FUNDING.md` section 9.
 
-## 6. The corpus test
+## 6. The corpus test (original plan, retained for the record)
+
+> **Superseded by events.** This was written as a plan. It ran, five times, across five genres. The bet recorded in point 2 below — that superscripts are not load-bearing — was falsified: see `../m0/FINDINGS.md` defect 8. Results are in `../corpus/`.
 
 The fastest remaining way to falsify L0, and it is a two-day throwaway.
 

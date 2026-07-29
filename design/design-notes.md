@@ -441,7 +441,7 @@ list and is the place to look for what is done.
 |---|---|
 | **M0** | Vocabulary register and conformance document, hand-written in canonical form, before any code. Simultaneously the test fixture, the theme validation target, and the thing that forces the vocabulary to close. |
 | **M0b** | Corpus coverage against a real public register. |
-| **M0b2** | A second corpus in a second genre, exercising what the first did not reach. The last thing gating the L0 freeze. |
+| **M0b2–M0b6** | Further corpora in unlike genres, until the vocabulary stops changing under them. |
 | **M0c** | The conformance document written a second time in a surface syntax, compared as a fixed-point test. A fixed-point test, not a taste test. |
 | **M1** | Core types, canonical encoding, NFC, structural hash. Parser for L0 and L1. Validator. HTML emitter. Ends with real publishable documents and a page small enough to show someone. |
 | **M2** | Theme engine, base role set, three reference themes, theme conformance checker. Browser extension applying reader themes to the HTML projection. Client conformance tests for the unprompted-action rules. |
