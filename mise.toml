@@ -34,11 +34,16 @@ run = "python3 tools/structhash.py conformance/conformance-01.json"
 description = "Emit the L0 text projection"
 run = "python3 tools/stoa0.py conformance/conformance-01.json l0"
 
+[tasks.surface]
+description = "M0c: surface fixed point, both directions"
+run = "python3 tools/surface.py conformance/conformance-01.json fixedpoint"
+
 [tasks.golden]
 description = "Regenerate the golden L0 projection and the generated spec"
 run = """
 python3 tools/stoa0.py conformance/conformance-01.json l0 > conformance/expected/conformance-01.l0.txt
 python3 tools/stoa0.py register > spec/VOCABULARY.md
+python3 tools/surface.py conformance/conformance-01.json emit > conformance/conformance-01.stoa
 """
 
 [tasks.golden-check]
@@ -49,6 +54,8 @@ python3 tools/stoa0.py conformance/conformance-01.json l0 | diff -u conformance/
   || { echo "golden L0 projection is stale: run 'mise run golden'"; exit 1; }
 python3 tools/stoa0.py register | diff -u spec/VOCABULARY.md - > /dev/null \
   || { echo "spec/VOCABULARY.md is stale: run 'mise run golden'"; exit 1; }
+python3 tools/surface.py conformance/conformance-01.json emit | diff -u conformance/conformance-01.stoa - > /dev/null \
+  || { echo "surface document is stale: run 'mise run golden'"; exit 1; }
 echo "golden outputs current"
 """
 
@@ -90,4 +97,4 @@ run = "python3 tools/selftest.py"
 
 [tasks.check]
 description = "Everything that does not touch the network"
-depends = ["canon", "validate", "negative", "contract", "merkle", "hash", "golden-check", "selftest", "fuzz"]
+depends = ["canon", "validate", "negative", "contract", "merkle", "hash", "golden-check", "selftest", "surface", "fuzz"]

@@ -49,7 +49,7 @@ Decisions that survived scrutiny and are unlikely to move.
 
 **Applications are a separate media type.** A document links to one and can never contain one. The escape hatch is what killed every constrained format before this. The triage rule, worked through on customer support in design notes 10.4: if the interaction needs the *page* to decide when to talk to the server, it is an application; if it needs the *reader* to decide, it is a document. HTMX is the closest thing in spirit to this design and differs on exactly that point, which makes it a good way to build the linked application and a bad thing to import into the format.
 
-**Authoring surfaces are plural and non-normative.** The tree is the document; surfaces are input languages and there can be many. Removes the syntax argument and insulates the format from getting the first surface wrong. The reference surface should be contained by CommonMark so existing tooling works on day one.
+**Authoring surfaces are plural and non-normative.** The tree is the document; surfaces are input languages and there can be many. Removes the syntax argument and insulates the format from getting the first surface wrong. The reference surface is contained by CommonMark so existing tooling works on day one, with two generic extensions (`::: block` and `{{inline}}`) for what CommonMark has no construct for. Verified rather than asserted: `tree -> text -> tree` preserves the structural digest over all 50 elements, and `text -> tree -> text` is byte-identical.
 
 ## 3. What is built
 
@@ -90,7 +90,7 @@ M0 found four defects that were free to fix then and would have been impossible 
 
 1. ~~Run the corpus test.~~ Done, five times over. Seventeen defects found and fixed; see `../m0/FINDINGS.md`.
 2. **Decide whether to freeze L0.** Nothing is blocking it mechanically. The open question is whether 30 of 30 exercised and 28 of 30 twice-exercised is enough, given that after the freeze the only remedy is a new epoch.
-3. **Write the conformance document a second time in a surface syntax** and compare against the canonical version (M0c). It is a fixed-point test, not a taste test, and it is the last untouched milestone before M1.
+3. ~~**Write the conformance document a second time in a surface syntax.**~~ Done (M0c). Both fixed points hold over all 50 elements; the surface document is `../conformance/conformance-01.stoa`.
 4. **Do the governance chores**: register the trademark, mirror the repository, deposit with Software Heritage and Zenodo for a DOI. An afternoon, and the DOI is what makes it citable in a tender.
 5. **Open one conversation with a public body about a paid pilot.** This is the single highest-value remaining action and no amount of further measurement substitutes for it.
 6. **Start M1** (core types, encoding, parser, validator, HTML emitter, in Rust).

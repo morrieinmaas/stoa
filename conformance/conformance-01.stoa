@@ -1,0 +1,243 @@
+---
+id: urn:stoa:conformance-01
+lang: en
+title: Conformance document 01
+---
+
+# Notice of award and conformance fixture
+
+::: abstract
+This document exercises every element in the register exactly as a real administrative notice would, so that closing the vocabulary is tested against use rather than against intent. It is simultaneously the test fixture, the theme validation target, and the golden output.
+:::
+
+::: contents
+- {{reference target=sec-award}}The award{{/}}
+- {{reference target=sec-money}}Amounts{{/}}
+- {{reference target=sec-appeal}}Appeal{{/}}
+:::
+
+::: section id=sec-award
+## The award
+
+The authority has awarded the contract described in {{reference target=sec-money}}Amounts{{/}} to the successful tenderer, with effect from {{date precision=day value=2026-09-01}}. The decision is **final** and, unless *suspended* on appeal, takes effect automatically{{note-ref target=n-effect}}. The reference of record is `9ФΩГ4691Ω2-ΛΛΧ`, published at [the national transparency register](https://diavgeia.gov.gr/decision/view/example).
+
+Issuing authority
+: Public Employment Service{{line-break}}Regional Directorate of Epirus
+Decision type
+: Act of financial content
+Protocol number
+: 01/07/5702 - 2026
+
+1. The tender was published and the period for expressions of interest has closed.
+2. The evaluation committee assessed all admissible tenders against the published criteria.
+3. The award follows the committee recommendation without modification.
+
+::: admonition kind=important
+Standstill applies. No contract may be signed before {{date precision=day value=2026-09-11}}.
+:::
+
+> Contracting authorities shall as soon as possible inform each candidate and tenderer of decisions reached concerning the award of a contract.
+> {{source v="Directive 2014/24/EU, Article 55"}}
+:::
+
+::: section id=sec-money
+## Amounts
+
+All amounts are exact. Currency is carried as an integer significand and a scale, never as a floating point number, so a total is reproducible byte for byte on every client.
+
+Significands are bounded by the encoding, not by the format\: an integer in the range -{{power base=2 exponent=63}} to {{power base=2 exponent=63}}-1 inclusive. Exponentiation is a semantic element rather than a superscript, because a superscript is appearance and this document carries none. It projects to `2^63`, which is the notation the plain text already uses.
+
+::: table summary="Awarded amounts by budget line"
+::: caption
+::: text v="Awarded amounts by budget line"
+:::
+:::
+
+::: table-section kind=head
+::: row
+::: header-cell scope=column
+Budget line
+:::
+
+::: header-cell scope=column
+Beneficiary
+:::
+
+::: header-cell scope=column
+Amount
+:::
+:::
+:::
+
+::: table-section kind=body
+::: row
+::: header-cell scope=row
+2520101
+:::
+
+::: cell
+First beneficiary
+:::
+
+::: cell
+{{quantity scale=2 significand=620000 unit=EUR}}
+:::
+:::
+
+::: row
+::: header-cell scope=row
+2520102
+:::
+
+::: cell
+Second beneficiary
+:::
+
+::: cell
+{{quantity scale=2 significand=1483750 unit=EUR}}
+:::
+:::
+:::
+
+::: table-section kind=foot
+::: row
+::: header-cell colspan=2 scope=row
+Total
+:::
+
+::: cell
+{{quantity scale=2 significand=2103750 unit=EUR}}
+:::
+:::
+:::
+:::
+
+::: sidebar
+The register carries no floating point type at any layer, including inside renderer payloads. That single decision closes both the encoding question and renderer numeric determinism across hosts.
+:::
+
+::: payload data=0,620000,1483750,2103750 id=p-spend type=stoa.example/time-series
+:::
+
+::: rendering fallback="Cumulative disbursement rising from 0 to 21,037.50 EUR across four quarters." payload=p-spend renderer=3d2f1a9c8b7e6d5c4b3a29180716253449586a7b8c9d0e1f2a3b4c5d6e7f8091
+::: caption
+::: text v="Cumulative disbursement, four quarters"
+:::
+:::
+:::
+
+::: figure
+::: media alt="A stoa: a covered public colonnade of repeated identical columns, open along one side." kind=image src=assets/colonnade.png
+:::
+
+::: caption
+::: text v="A civic building assembled from a small vocabulary of repeated standard elements."
+:::
+:::
+:::
+
+```json
+{"t":"quantity","significand":620000,"scale":2,"unit":"EUR"}
+```
+:::
+
+::: article id=art-appeal
+::: section id=sec-appeal
+## Appeal
+
+An appeal must be lodged within ten days. The form below is submitted only when the reader submits it; the document has no way to cause a request on its own.
+
+::: form action=appeals/submit method=post
+### Lodge an appeal
+
+Fields marked required must be completed.
+
+::: field label="Name of appellant" name=appellant required=true
+::: field-text value=""
+:::
+:::
+
+::: field label="Grounds for appeal" name=grounds required=true
+::: field-text multiline=true value=""
+:::
+:::
+
+::: field label="Legal basis" name=basis required=false
+::: field-choice multiple=false
+::: field-option selected=true value=procedure
+::: text v="Procedural irregularity"
+:::
+:::
+
+::: field-option value=criteria
+::: text v="Misapplication of award criteria"
+:::
+:::
+
+::: field-option value=other
+::: text v=Other
+:::
+:::
+:::
+:::
+
+::: submit label="Lodge appeal"
+:::
+:::
+
+::: disclosure open=false summary="What happens after an appeal is lodged"
+The authority suspends the standstill period and responds in writing within fifteen days.
+:::
+
+Show {{state-link key=lang value=el}}this notice in Greek{{/}}. State is addressable, so the alternative is an ordinary link to the same document.
+:::
+:::
+
+::: signature-block
+::: term
+::: text v=Signed
+:::
+:::
+
+::: definition
+The Regional Director
+:::
+
+::: term
+::: text v="Date of signature"
+:::
+:::
+
+::: definition
+{{date precision=day value=2026-07-28}}
+:::
+:::
+
+::: provenance
+::: term
+::: text v="Document identifier"
+:::
+:::
+
+::: definition
+urn\:stoa\:conformance-01
+:::
+
+::: term
+::: text v=Published
+:::
+:::
+
+::: definition
+{{date precision=second value="2026-07-28T09:15:00Z"}}
+:::
+:::
+
+::: bibliography
+- {{citation target=sec-money}}Amounts{{/}}, this document.
+- Directive 2014/24/EU on public procurement.
+:::
+
+::: note id=n-effect
+Automatic effect is suspended for the duration of the standstill period and for any period during which an appeal is pending.
+:::

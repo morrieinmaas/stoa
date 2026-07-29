@@ -325,6 +325,35 @@ The number that actually governs the freeze is **L0: 28 of 30 pass the
 two-genre gate, and 30 of 30 are exercised by real documents.** L1 and L2 are
 additive-only and recoverable; L0 is not.
 
+### 18. A surface is only non-normative if it round-trips
+
+The design says authoring surfaces are plural and non-normative: the tree is the
+document, surfaces are input languages, and there can be many. That is a
+comfortable claim precisely because nothing tests it.
+
+M0c tests it. The surface ships with a fixed point in both directions, and the
+first run failed the one that matters: `text -> tree -> text` was byte-identical
+while `tree -> text -> tree` produced a different digest. The surface looked
+correct and was silently lossy.
+
+The cause was the same rule this project has now learned three times. A
+paragraph beginning with an inline extension flushed an empty text buffer and
+emitted a text node carrying the empty string — so a paragraph that started with
+`{{reference}}` gained a phantom empty child on every round trip.
+
+**Absence of content is absence of a node.** Defect 3 was this rule in the
+degradation projection, defect 10 was it in the JATS mapper, and this is it in
+the surface parser. Three unrelated components, three independent rediscoveries.
+That is a sign the rule belongs in the specification rather than in each
+implementer's memory.
+
+**The generalisation about surfaces.** A byte-level round trip is the weaker
+test and the one people reach for first, because it is easy to write. The
+structural round trip is the one that catches loss, because bytes can agree
+while trees do not: an emitter and a parser can be consistently wrong together.
+Any future surface must pass both, and the harness in `tools/surface.py` is
+reusable for that.
+
 ## Where this leaves the freeze
 
 The first corpus did not falsify the vocabulary. The second one did, on the

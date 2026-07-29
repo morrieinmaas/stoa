@@ -12,7 +12,7 @@ Milestones from `design/design-notes.md` section 13, with current status.
 | **M0b5** | A fourth corpus testing L2 against real public-sector forms, which the static corpora could not reach. | **Done.** 10 pages, 16 forms, 100% conforming; 8 of 10 L2 elements earned, `tab-group` and `tab` earned nothing and were removed. |
 | **M0b6** | A fifth corpus: UK legislation in CLML, the genre the project is aimed at and had not tested. | **Done.** 8 Acts, 100% on every component; `article` and `contents` reached for the first time, `epigraph` removed after five genres produced none. |
 | **M0d** | Freeze L0. Now a deliberate judgement rather than a task waiting on evidence: every L0 element is corpus-backed, four L1 elements are not. | **Next.** `../spec/EVIDENCE.md`. |
-| **M0c** | Write the conformance document a second time in a surface syntax; compare as a fixed-point test. | Not started. |
+| **M0c** | Write the conformance document a second time in a surface syntax; compare as a fixed-point test. | **Done.** `tools/surface.py`, a CommonMark-contained surface with two generic extensions. Both fixed points hold over all 50 elements: `tree -> text -> tree` preserves the structural digest exactly, and `text -> tree -> text` is byte-identical. The surface document is `../conformance/conformance-01.stoa`, 63% of the canonical JSON. Asserted in CI. |
 | **M1** | Core types, canonical encoding, NFC, structural hash. Parser for L0 and L1. Validator. HTML emitter. Ends with real publishable documents and a 6 KB page to show someone. | Not started. |
 | **M2** | Theme engine, base role set, three reference themes, theme conformance checker. Browser extension applying reader themes to the HTML projection. Client conformance tests for the unprompted-action rules. | Not started. |
 | **M2b** | Terminal client, as a conformance proof that non-visual targets are siblings rather than accommodations. | Not started. |
@@ -26,7 +26,7 @@ Milestones from `design/design-notes.md` section 13, with current status.
 1. **Encoding independence.** Encode the same tree two ways, assert one structural digest.
 2. **Degradation contract as a property test.** For any generated document, project to L0 and assert every text node survives.
 3. **Golden outputs.** Snapshot every projection of the conformance document.
-4. **Surface fixed point.** `text -> tree -> text` returns the original text.
+4. **Surface fixed point.** Both directions, and the tree direction is the one that matters: `tree -> text -> tree` must preserve the structural digest, which is what proves the surface can express every element without losing a field, a child, or an order. `text -> tree -> text` proves emitter and parser agree, which is what makes the surface usable in a diff. **Running since M0c.**
 
 Plus fuzzing on the parser, because it will eventually eat untrusted input.
 **Running since M0** (`tools/fuzz.py`): 5,000 generated hostile documents per

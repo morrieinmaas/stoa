@@ -105,6 +105,13 @@ ENCODING INDEPENDENT True
   degradation totality over synthetic instances of all 23 elements above L0.
 - 5,000 generated hostile documents per fuzz run, 0 crashes. The first run
   found 272 in 3,000 — see `m0/FINDINGS.md` defect 12.
+- **Surface fixed point, both directions.** The conformance document written a
+  second time in a CommonMark-contained surface syntax
+  ([`conformance/conformance-01.stoa`](conformance/conformance-01.stoa), 63% of
+  the canonical JSON): `tree → text → tree` preserves the structural digest
+  exactly over all 50 elements, and `text → tree → text` is byte-identical.
+  The tree direction is the one that matters — it proves the surface can
+  express every element without losing a field, a child, or an order.
 
 ### Corpus 1: administrative notices
 
@@ -198,6 +205,7 @@ mise run golden    # regenerate the golden output and the generated spec
 spec/vocabulary.json          the register: normative, machine-readable
 spec/VOCABULARY.md            generated from it; do not edit by hand
 conformance/                  the conformance document, negative fixture, golden output
+conformance/conformance-01.stoa  the same document in the surface syntax; generated
 tools/                        throwaway M0 toolchain (Python, standard library only)
 corpus/RESULTS.md             corpus 1: administrative notices (Diavgeia)
 corpus/RESULTS-rfc.md         corpus 2: standards documents (IETF RFCs)
