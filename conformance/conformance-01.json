@@ -77,6 +77,15 @@
       { "t": "paragraph", "c": [
         { "t": "text", "v": "All amounts are exact. Currency is carried as an integer significand and a scale, never as a floating point number, so a total is reproducible byte for byte on every client." } ] },
 
+      { "t": "paragraph", "c": [
+        { "t": "text", "v": "Significands are bounded by the encoding, not by the format: an integer in the range -" },
+        { "t": "power", "base": "2", "exponent": "63" },
+        { "t": "text", "v": " to " },
+        { "t": "power", "base": "2", "exponent": "63" },
+        { "t": "text", "v": "-1 inclusive. Exponentiation is a semantic element rather than a superscript, because a superscript is appearance and this document carries none. It projects to " },
+        { "t": "code", "c": [ { "t": "text", "v": "2^63" } ] },
+        { "t": "text", "v": ", which is the notation the plain text already uses." } ] },
+
       { "t": "table", "summary": "Awarded amounts by budget line", "c": [
         { "t": "caption", "c": [ { "t": "text", "v": "Awarded amounts by budget line" } ] },
         { "t": "table-section", "kind": "head", "c": [

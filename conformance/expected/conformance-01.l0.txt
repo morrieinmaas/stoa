@@ -36,6 +36,8 @@ Standstill applies. No contract may be signed before 2026-09-11.
 
 All amounts are exact. Currency is carried as an integer significand and a scale, never as a floating point number, so a total is reproducible byte for byte on every client.
 
+Significands are bounded by the encoding, not by the format: an integer in the range -2^63 to 2^63-1 inclusive. Exponentiation is a semantic element rather than a superscript, because a superscript is appearance and this document carries none. It projects to `2^63`, which is the notation the plain text already uses.
+
 [table: Awarded amounts by budget line]
 (Awarded amounts by budget line)
 

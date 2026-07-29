@@ -6,60 +6,47 @@ The first corpus is administrative notices in Greek: shallow records wrapped aro
 
 ## 1. Coverage
 
-**43.8%** (7/16) of RFCs map with no element outside the register, no conformance error, and no source string dropped. That headline is strict on purpose; the three components differ and the difference is the finding.
+**100.0%** (16/16) of RFCs map with no element outside the register, no conformance error, and no source string dropped. That headline is strict on purpose; the three components differ and the difference is the finding.
 
 | Component | Result |
 |---|---|
 | Produce a conforming document | **100%** (16/16) |
-| Lose no source string | **81%** (13/16) |
-| Need no element outside the register | **44%** (7/16) |
-
-Documents that did not pass cleanly:
-
-- RFC 9110: 0 conformance errors, 1 lost strings, no omission
-- RFC 9111: 0 conformance errors, 0 lost strings, needs an element outside the register
-- RFC 9113: 0 conformance errors, 0 lost strings, needs an element outside the register
-- RFC 9114: 0 conformance errors, 11 lost strings, needs an element outside the register
-- RFC 8949: 0 conformance errors, 0 lost strings, needs an element outside the register
-- RFC 9000: 0 conformance errors, 11 lost strings, needs an element outside the register
-- RFC 9293: 0 conformance errors, 0 lost strings, needs an element outside the register
-- RFC 9297: 0 conformance errors, 0 lost strings, needs an element outside the register
-- RFC 9562: 0 conformance errors, 0 lost strings, needs an element outside the register
+| Lose no source string | **100%** (16/16) |
+| Need no element outside the register | **100%** (16/16) |
 
 ## 2. Omissions -- what the register could not carry
 
-This is the finding the corpus exists to produce.
-
-- <sup>: no element in the register, rendered as adjacent text — x75
+None.
 
 ## 3. Element mix
 
-30 of 52 register elements exercised by this genre.
+31 of 53 register elements exercised by this genre.
 
 | Element | Layer | Occurrences |
 |---|---|---|
-| `text` | L0 | 32,385 |
-| `paragraph` | L0 | 11,496 |
-| `reference` | L0 | 3,602 |
+| `text` | L0 | 33,032 |
+| `paragraph` | L0 | 11,828 |
+| `reference` | L0 | 3,938 |
+| `strong` | L0 | 3,083 |
 | `cell` | L0 | 3,047 |
-| `strong` | L0 | 2,752 |
 | `item` | L0 | 2,325 |
-| `citation` | L1 | 1,541 |
+| `citation` | L1 | 1,543 |
+| `term` | L0 | 1,523 |
+| `definition` | L0 | 1,523 |
 | `heading` | L0 | 1,407 |
 | `section` | L0 | 1,391 |
-| `term` | L0 | 1,200 |
-| `definition` | L0 | 1,200 |
 | `row` | L0 | 892 |
 | `link` | L0 | 609 |
-| `code` | L0 | 599 |
+| `code` | L0 | 601 |
+| `emphasis` | L0 | 559 |
 | `code-block` | L0 | 528 |
 | `list` | L0 | 469 |
-| `emphasis` | L0 | 236 |
+| `term-list` | L0 | 234 |
 | `header-cell` | L0 | 221 |
-| `term-list` | L0 | 216 |
 | `caption` | L0 | 180 |
 | `figure` | L0 | 142 |
 | `table-section` | L1 | 118 |
+| `power` | L0 | 75 |
 | `sidebar` | L1 | 66 |
 | `table` | L0 | 59 |
 | `bibliography` | L1 | 46 |
@@ -75,7 +62,7 @@ Not exercised here (22): `admonition`, `article`, `contents`, `date`, `disclosur
 
 | | source XML | Stoa canonical | Stoa CBOR | Stoa HTML | L0 text |
 |---|---|---|---|---|---|
-| mean bytes / RFC | 331,928 | 234,030 | 195,243 | 165,433 | 130,948 |
+| mean bytes / RFC | 331,928 | 239,063 | 198,775 | 167,997 | 131,972 |
 
 ## 5. Source elements seen
 
@@ -83,20 +70,20 @@ What RFC XML actually used, so the mapping can be audited:
 
 | RFC XML element | Occurrences |
 |---|---|
-| `t` | 6,421 |
-| `xref` | 6,082 |
-| `bcp14` | 2,490 |
+| `t` | 6,753 |
+| `xref` | 6,430 |
+| `bcp14` | 2,498 |
 | `section` | 1,345 |
 | `name` | 1,345 |
 | `iref` | 991 |
-| `tt` | 599 |
+| `tt` | 601 |
+| `strong` | 585 |
+| `em` | 556 |
 | `ul` | 405 |
 | `contact` | 392 |
 | `sourcecode` | 272 |
-| `strong` | 262 |
 | `artwork` | 256 |
-| `em` | 233 |
-| `dl` | 216 |
+| `dl` | 234 |
 | `figure` | 142 |
 | `sup` | 75 |
 | `displayreference` | 70 |

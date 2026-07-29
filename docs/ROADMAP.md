@@ -4,9 +4,9 @@ Milestones from `design/design-notes.md` section 13, with current status.
 
 | | Milestone | Status |
 |---|---|---|
-| **M0** | Vocabulary register and conformance document, hand-written in canonical form, before any code. Simultaneously the test fixture, the theme validation target, and the thing that forces the vocabulary to close. | **Done.** 52 elements, 4 defects found and fixed. |
+| **M0** | Vocabulary register and conformance document, hand-written in canonical form, before any code. Simultaneously the test fixture, the theme validation target, and the thing that forces the vocabulary to close. | **Done.** 53 elements, 4 defects found and fixed. |
 | **M0b** | Corpus coverage test against a real public register. The last thing gating the L0 freeze. | **Done.** 100 acts from Diavgeia, 10 act types, 66 bodies: 100% coverage, 0 missing elements, 0 amounts needing a float. Did not falsify the vocabulary. See `../corpus/RESULTS.md`. |
-| **M0b2** | A second corpus in a second genre, to exercise what the administrative corpus never touched. | **Done.** 16 IETF RFCs in XML v3: 100% produce conforming documents, 30 of 52 elements exercised, and it **falsified the superscript bet** — 75 exponents that degrade to corrupted numbers. See `../corpus/RESULTS-rfc.md`. |
+| **M0b2** | A second corpus in a second genre, to exercise what the administrative corpus never touched. | **Done.** 16 IETF RFCs in XML v3: 100% produce conforming documents, 30 of 53 elements exercised, and it **falsified the superscript bet** — 75 exponents that degrade to corrupted numbers. See `../corpus/RESULTS-rfc.md`. |
 | **M0b3** | Decide how to represent an exponent and add it. The last thing gating the L0 freeze. | **Next.** `../m0/FINDINGS.md` defect 8. |
 | **M0c** | Write the conformance document a second time in a surface syntax; compare as a fixed-point test. | Not started. |
 | **M1** | Core types, canonical encoding, NFC, structural hash. Parser for L0 and L1. Validator. HTML emitter. Ends with real publishable documents and a 6 KB page to show someone. | Not started. |

@@ -1,13 +1,13 @@
 {
   "register": "stoa-vocabulary",
   "version": "0.1.0-m0",
-  "status": "provisional; L0 not yet frozen (blocked on corpus coverage)",
+  "status": "provisional; L0 complete pending freeze (see docs/STATE.md)",
   "counts": {
-    "L0": 29,
+    "L0": 30,
     "L1": 11,
     "L2": 10,
     "L3": 2,
-    "total": 52,
+    "total": 53,
     "render_primitives": 5
   },
   "field_types": {
@@ -400,6 +400,23 @@
         }
       },
       "note": "value = significand x 10^-scale, exactly. Currency is representable without error. Floats are not representable at all, which is the point."
+    },
+    {
+      "n": "power",
+      "layer": 0,
+      "class": "inline",
+      "children": "none",
+      "fields": {
+        "base": {
+          "type": "text",
+          "required": true
+        },
+        "exponent": {
+          "type": "text",
+          "required": true
+        }
+      },
+      "note": "Exponentiation, rendered as base^exponent. Added at L0 after the second corpus falsified the bet that superscripts are not load-bearing: 75 of 75 superscripts in 16 RFCs were exponents, and dropping them turns 2^64 into 264 inside normative range specifications. Semantic rather than presentational on purpose -- a superscript is appearance, an exponent is meaning, and only the latter can be carried by a format that does not carry appearance. The degradation is not invented: it is the notation the RFC plain-text renderings already use. Fields are text, not int, because real exponents include symbolic values such as n-24. See m0/FINDINGS.md defect 8."
     },
     {
       "n": "date",

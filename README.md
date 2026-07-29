@@ -17,7 +17,7 @@ implementation. Nothing here is stable, and **L0 is not frozen** — see below.
 
 ## What this is
 
-A document format with a finite semantic vocabulary of **52 elements**,
+A document format with a finite semantic vocabulary of **53 elements**,
 delivered over ordinary HTTPS, where the document carries meaning and structure
 and never carries appearance. Presentation comes from themes written against
 the vocabulary rather than against any individual site, and reader preferences
@@ -72,17 +72,17 @@ them with `mise run check` and `mise run corpora`.
 ### The conformance document
 
 ```
-canonical bytes  9359
+canonical bytes  9891
 structural hash  8541efc87f9014c543ad515e8a3bdd445a315e65d803f2801c4710da5511a27e
-distinct types   52 of 52 in register
+distinct types   53 of 53 in register
 check            0 errors, 0 warnings
-contract         91 units checked, 0 lost in projection to L0
+contract         98 units checked, 0 lost in projection to L0
 merkle blocks    124   proof size 7 sibling hashes (224 bytes)   verifies True
 tamper check     forged leaf verifies False (must be False)
 ENCODING INDEPENDENT True
 ```
 
-- All 52 elements are exercised by one document.
+- All 53 elements are exercised by one document.
 - The negative fixture carries 13 deliberate faults across 13 distinct rules,
   and the ruleset reports exactly 13 errors. Asserted in CI.
 - The degradation contract is verified mechanically: every unit of
@@ -150,7 +150,7 @@ in `docs/ROADMAP.md` is a conformance proof rather than a nicety.
 
 **Read the 100% with its caveats.** `corpus/RESULTS.md` section 6 states them:
 the act body is a signed PDF that this does not test, a generic mapper flatters
-the register, the corpus is one genre in one language, and 32 of the 52
+the register, the corpus is one genre in one language, and 32 of the 53
 elements were never exercised. This corpus is a falsifier that did not fire —
 which is exactly why a second one was needed.
 
@@ -216,7 +216,7 @@ in [`corpus/RESULTS-rfc.md`](corpus/RESULTS-rfc.md).
 | Produce a conforming document | 100% | **100%** |
 | Lose no source string | 100% | 81% |
 | Need no element outside the register | 100% | **44%** |
-| Register elements exercised | 20 of 52 | **30 of 52** |
+| Register elements exercised | 20 of 53 | **31 of 53** |
 
 **It found a real hole.** `<sup>` occurs 75 times, and every occurrence is an
 exponent: `2^64`, `2^32`, `2^62`. The register has no superscript, so those

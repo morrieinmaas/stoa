@@ -3,7 +3,7 @@
 The working design document. Written after M0 rather than before it, which is
 the wrong order for a specification and the right order for a design: the
 vocabulary was closed first, the conformance document was written by hand
-against it, and the four defects that surfaced (`../m0/FINDINGS.md`) changed the
+against it, and the defects that surfaced (`../m0/FINDINGS.md`) changed the
 design before any of it was written down as normative text.
 
 **Status.** Design rationale, not normative text. The normative artifacts are
@@ -457,7 +457,7 @@ Kept here rather than in a section that sounds like marketing.
 
 - **The stranded reader** (§11.3).
 - **One genre of corpus.** The first corpus did not falsify the vocabulary and
-  did not exercise 32 of 52 elements. M0b2 exists for this.
+  did not exercise 32 of 53 elements. M0b2 exists for this.
 - **Governance is interim.** The licences are irrevocable and the succession
   question has a written answer, but no institution exists.
 - **Solo maintainer.** The format is designed to outlive its author; the project

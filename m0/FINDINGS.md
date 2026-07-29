@@ -5,7 +5,7 @@ What closing the vocabulary actually surfaced.
 M0 is one experiment with one question: write the conformance document *before*
 writing any normative text, and see what breaks. The value of the milestone is
 not the toolchain, which is throwaway. It is this list, because every entry was
-free to fix now and three of them would have been impossible to fix after the
+free to fix now and several of them would have been impossible to fix after the
 L0 freeze.
 
 ---
@@ -140,9 +140,8 @@ inclusive"*. That is a silent numeric corruption in the normative range
 specification of a protocol — and it would be produced by a format whose entire
 numeric thesis is exactness.
 
-**Status: unresolved, and blocking the freeze.** It is a register change to L0,
-which is the most consequential decision available, so it is recorded rather
-than made. Three candidate resolutions:
+**Status: resolved.** L0 gained a `power` element — option 2 below. Three
+candidates were considered:
 
 1. **Add `superscript` and `subscript` to L0.** Cheapest, and wrong on the
    design's own terms: they are appearance, not meaning, and §1 of the design
@@ -154,8 +153,22 @@ than made. Three candidate resolutions:
 3. **Decide exponents belong in a payload and render at L3.** Consistent but
    heavy: it makes a number inside a sentence into a renderer invocation.
 
-Option 2 is the recommendation. Whichever is chosen, it must be chosen before
-L0 freezes, because after the freeze the only remedy is a new epoch.
+**Option 2 was taken.** `power` carries a base and an exponent as text (real
+exponents include symbolic values such as `n-24`), renders as `base^exponent`,
+and is L0 because it is content and L0 is the layer that must carry all
+meaning. It is semantic rather than presentational on purpose: a superscript is
+appearance, an exponent is meaning, and only the second can live in a format
+that does not carry appearance.
+
+The RFC mapper now takes the base token from the preceding text node, so
+`2<sup>64</sup>` becomes one semantic node rather than two fragments. After the
+fix the RFC corpus needs **no element outside the register at 100%**, and the
+register stands at 53 elements (L0 30).
+
+This is the closed vocabulary doing exactly what a closed vocabulary is for:
+the bet was written down, a corpus falsified it with a number, and the fix was
+made while it was still free. After the freeze the only remedy would have been
+a new epoch.
 
 ### 9. A cross-reference must not outlive its target
 
@@ -227,12 +240,17 @@ outcome for a test that cost two days.
 | Genre | Administrative notices | Standards documents |
 | Language | Greek | English |
 | Documents produce a conforming tree | 100% | 100% |
-| Lose no source string | 100% | 81% |
-| Need no element outside the register | 100% | **44%** |
-| Register elements exercised | 20 of 52 | 30 of 52 |
+| Lose no source string | 100% | **100%** |
+| Need no element outside the register | 100% | **100%** (was 44% before `power`) |
+| Register elements exercised | 20 of 53 | 31 of 53 |
 
-**L0 cannot freeze yet.** One element is missing, the shape of the fix is
-understood, and the decision is a design decision rather than a mechanical one.
+**The exponent gap is closed.** What still stands between here and the freeze is
+narrower and is named precisely by `../spec/EVIDENCE.md`: three L0 elements
+(`media`, `note`, `note-ref`) are exercised by no real document in either
+corpus, because neither genre contains an image or a footnote. That is a fact
+about the corpora, not proof the elements are unnecessary — but after the freeze
+the judgement is permanent, so a third genre with footnotes and figures should
+run first.
 
 No element in the register turned out to be *unnecessary*, and the combined
 corpora still leave elements untouched by any real document — the L2 and L3

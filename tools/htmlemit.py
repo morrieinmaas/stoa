@@ -97,6 +97,13 @@ def _quantity(node, out):
     out.append(f'<data value="{escape(v, True)}">{escape(v)}</data>')
 
 
+def _power(node, out):
+    # <sup> is presentation, which the document cannot carry but a rendering
+    # of it can. The data attribute keeps the plain-text form recoverable.
+    b, e = escape(str(node.get("base", ""))), escape(str(node.get("exponent", "")))
+    out.append(f'<span data-power="{b}^{e}">{b}<sup>{e}</sup></span>')
+
+
 def _date(node, out):
     v = escape(str(node.get("value", "")), True)
     out.append(f'<time datetime="{v}">{v}</time>')
@@ -192,6 +199,7 @@ HANDLERS = {
     "reference": _reference,
     "note-ref": _note_ref,
     "quantity": _quantity,
+    "power": _power,
     "date": _date,
     "line-break": lambda n, o: o.append("<br>"),
 }

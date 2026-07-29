@@ -15,7 +15,7 @@ Not a protocol, not a browser, not an alternative internet. The closest structur
 
 ## What this is
 
-A document format with a finite semantic vocabulary (52 elements), delivered over ordinary HTTPS, where the document carries meaning and structure and never carries appearance. Presentation is supplied by themes written against the vocabulary rather than against any individual site, and reader preferences override publisher styling with no mechanism for the publisher to override back.
+A document format with a finite semantic vocabulary (53 elements), delivered over ordinary HTTPS, where the document carries meaning and structure and never carries appearance. Presentation is supplied by themes written against the vocabulary rather than against any individual site, and reader preferences override publisher styling with no mechanism for the publisher to override back.
 
 The client fetches content and nothing else: no scripts, no stylesheets per document, no font files, no third-party subresources. A document cannot name a host that the client will contact without the reader acting, so third-party requests are unrepresentable rather than forbidden.
 
@@ -27,7 +27,7 @@ Not a replacement for the web. Not an application platform. Not a way to render 
 
 ## Why
 
-Three claims that are hard to make anywhere else, all of them mechanically checkable rather than asserted:
+Four claims that are hard to make anywhere else, all of them mechanically checkable rather than asserted:
 
 - **Accessibility by construction.** Structural failures are unrepresentable, and the mechanically detectable content failures are build errors. A sampled recurring audit becomes a complete build-time check.
 - **Verifiable content.** The document digest is defined over the tree rather than over any serialisation, so it is signable, and a Merkle construction over block nodes makes individual paragraphs independently provable without transmitting the document.
@@ -37,11 +37,14 @@ Three claims that are hard to make anywhere else, all of them mechanically check
 ## Layout
 
 ```
+design/design-notes.md      the working design document (read this first)
 spec/vocabulary.json        the vocabulary register, normative, machine-readable
+spec/EVIDENCE.md            what justifies each element; generated
 spec/VOCABULARY.md          generated from it; do not edit by hand
 conformance/                the conformance document, negative fixture, golden output
 tools/                      throwaway M0 toolchain (Python, stdlib only)
-corpus/RESULTS.md           the Diavgeia coverage report
+corpus/RESULTS.md           corpus 1: administrative notices (Diavgeia)
+corpus/RESULTS-rfc.md       corpus 2: standards documents (IETF RFCs)
 m0/FINDINGS.md              what closing the vocabulary actually surfaced
 docs/GOVERNANCE.md          licensing, custody, amendment process, succession
 docs/STATE.md               where things stand, what is next, funding
@@ -50,11 +53,8 @@ docs/FUNDING.md             the funding application
 docs/NAME.md                naming decision and how to undo it
 ```
 
-`design/design-notes.md` is referenced from `GOVERNANCE.md` and `STATE.md` by
-section number and has not been written. Those cross-references dangle. The
-normative content it would carry now lives in `spec/vocabulary.json` (element
-semantics, content models, degradations) and `m0/FINDINGS.md` (what the design
-decisions cost and why).
+`design/design-notes.md` is now written, with stable section numbering, so the
+cross-references from `GOVERNANCE.md` and `STATE.md` resolve.
 
 ## Running the M0 toolchain
 
@@ -76,19 +76,19 @@ mise run check      # everything, and fails loudly if it should not
 Current expected output:
 
 ```
-distinct types   52 of 52 in register
+distinct types   53 of 53 in register
 check            0 errors, 0 warnings
-contract         91 units checked, 0 lost in projection to L0
+contract         98 units checked, 0 lost in projection to L0
 merkle blocks    124   proof size 7 sibling hashes (224 bytes)   verifies True
 ENCODING INDEPENDENT True
 ```
 
 ## The one thing standing between here and freezing L0
 
-A second corpus, in a second genre. The first coverage run, against 100 real
-acts from the Greek national transparency register, did not falsify the
-vocabulary: 100% coverage, zero missing elements, zero amounts needing a float.
-See `../corpus/RESULTS.md` and `STATE.md`.
+A third genre containing footnotes and figures. Two corpora are at 100%, and the
+second one falsified the superscript bet and was fixed. What remains is that
+three L0 elements (`media`, `note`, `note-ref`) are exercised by no real
+document yet. See `../spec/EVIDENCE.md`.
 
 ## Licensing
 

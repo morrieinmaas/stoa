@@ -64,6 +64,8 @@ LABELS = {
     "skipVatReason": "VAT exemption reason", "afm": "Tax number",
     "afmType": "Tax number type", "afmCountry": "Country", "name": "Name",
     "amount": "Amount", "currency": "Currency", "expenseAmount": "Amount",
+    "filename": "File name", "mimeType": "Media type", "size": "Size in bytes",
+    "checksum": "SHA-256 checksum", "id": "Identifier",
     "sponsorAFMName": "Beneficiary", "cpv": "CPV code", "kae": "Budget line",
     "relatedDecisionsADA": "ADA",
 }
@@ -319,12 +321,29 @@ def to_stoa(rec, f, memo):
         links.append({"t": "item", "c": [_p(
             {"t": "link", "href": doc_url, "c": [_t("Signed source document (PDF)")]})]})
     for a in atts:
-        href = a.get("url") if isinstance(a, dict) else None
-        name = (a.get("description") or a.get("filename") or "Attachment") \
-            if isinstance(a, dict) else str(a)
-        if href:
-            links.append({"t": "item", "c": [_p(
-                {"t": "link", "href": href, "c": [_t(name)]})]})
+        if not isinstance(a, dict):
+            links.append({"t": "item", "c": [_p(_t(str(a)))]})
+            continue
+        # An attachment carries no url of its own: it is addressed through the
+        # act. It does carry a sha-256 checksum, which is the integrity claim
+        # this format exists to make, so dropping the record for want of a
+        # href would discard the one field that matters most.
+        name = a.get("description") or a.get("filename") or "Attachment"
+        href = a.get("url") or (
+            f"{API}/decisions/{urllib.parse.quote(ada)}/attachments/{a['id']}"
+            if a.get("id") and ada else None)
+        label = [{"t": "link", "href": href, "c": [_t(name)]}] if href \
+            else [_t(name)]
+        detail = []
+        for k in ("filename", "mimeType", "size", "checksum", "id"):
+            if a.get(k) not in (None, ""):
+                detail += _pair(label_for(k), [_p(_t(str(a[k])))])
+        # NOT `body`: that name holds the document's own children in this
+        # scope, and rebinding it made the attachments section contain itself.
+        entry = [_p(*label)]
+        if detail:
+            entry.append({"t": "term-list", "c": detail})
+        links.append({"t": "item", "c": entry})
     if links:
         body.append({"t": "section", "c": [
             {"t": "heading", "level": 2, "c": [_t("Documents")]},
@@ -437,8 +456,14 @@ def run(n, refresh, out_path):
         want = []
         source_strings(rec, want)
         carried = carried_strings(doc)
-        blob = "\n".join(sorted(carried))
-        lost = [s for s in want if s not in carried and s not in blob]
+        blob = re.sub(r"\s+", " ",
+                      "\n".join(stoa.project_text(stoa.to_l0(doc, reg)))
+                      + "\n" + "\n".join(sorted(carried)))
+        # normalise both sides: the blob is whitespace-collapsed, so the
+        # source strings must be too or the comparison is not like for like
+        lost = [s for s in want
+                if s not in carried
+                and re.sub(r"\s+", " ", s) not in blob]
         for s in lost:
             dropped_strings[s[:60]] += 1
 

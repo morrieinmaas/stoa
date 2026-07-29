@@ -6,10 +6,10 @@ Sampled across 13 act types and 73 public bodies.
 
 ## 1. Coverage
 
-**98.0%** (98/100) of real notices map into the register with no element outside it, no validation error, and no source string dropped.
+**100.0%** (100/100) of real notices map into the register with no element outside it, no validation error, and no source string dropped.
 
 - documents with a conformance error: 0
-- documents with a dropped source string: 2
+- documents with a dropped source string: 0
 - documents needing an element outside the register: 0
 
 Records whose source text was not NFC-normalised: **0/100**. Normalising on ingest is a mapper obligation, not a format change; the count is reported because it is the kind of thing that silently breaks a digest.
@@ -18,16 +18,6 @@ Records whose source text was not NFC-normalised: **0/100**. Normalising on inge
 
 None. No source field in the sample required an element outside the register.
 
-
-Source strings lost in mapping:
-
-- x2 `Συνοδευτικό έγγραφο`
-- x2 `report.pdf`
-- x2 `application/pdf`
-- x1 `185705ad-5c94-4078-a415-944ad9b3d540`
-- x1 `ef05fb97b1aba6d79a9f7d442143500110e59a4d21a62ab97951fd77b1b3`
-- x1 `7f4f8194-a16f-42bb-a61c-86d0715d9d97`
-- x1 `63af1876bc9f06d59b186f230c5797eb92b5fe569e4c773f8db87e942f1f`
 
 ## 3. Numerics
 
@@ -49,13 +39,13 @@ Numeric edge cases the corpus produced:
 
 | | Stoa (canonical) | Stoa (CBOR) | Stoa (HTML projection) | L0 text |
 |---|---|---|---|---|
-| mean bytes / notice | 4,101 | 3,007 | 2,286 | 1,361 |
+| mean bytes / notice | 4,122 | 3,023 | 2,297 | 1,369 |
 
 Against the live Diavgeia page for the same act:
 
 | | live page | Stoa HTML projection |
 |---|---|---|
-| HTML bytes | 22,187 | 2,286 |
+| HTML bytes | 22,187 | 2,297 |
 | fetched subresources | 80 | **0** |
 | requests for first complete content | 81 | **1** |
 
@@ -67,23 +57,23 @@ The same figures from the point of view of a consumer that wants the meaning and
 
 | | live page | Stoa L0 text projection |
 |---|---|---|
-| bytes to ingest | 22,187 | **1,361** |
-| of which recoverable text | 2,235 (10%) | 1,361 (100%) |
+| bytes to ingest | 22,187 | **1,369** |
+| of which recoverable text | 2,235 (10%) | 1,369 (100%) |
 | markup and boilerplate paid for but unusable | 19,952 (89%) | **0** |
-| ratio | — | **16.3x smaller** |
+| ratio | — | **16.2x smaller** |
 
 This is the accessibility guarantee measured from the other end. The L0 projection is not a stripped-down version of the document; it is normative, it is what the degradation contract guarantees is lossless, and it is produced by the format rather than recovered from it by heuristics. A consumer that wants structured meaning does not have to parse a presentation layer to guess at it.
 
 ## 5. Element mix
 
-20 of 52 register elements were exercised by real documents.
+20 of 53 register elements were exercised by real documents.
 
 | Element | Layer | Occurrences |
 |---|---|---|
-| `text` | L0 | 4,040 |
-| `paragraph` | L0 | 2,300 |
-| `term` | L0 | 1,560 |
-| `definition` | L0 | 1,560 |
+| `text` | L0 | 4,062 |
+| `paragraph` | L0 | 2,312 |
+| `term` | L0 | 1,570 |
+| `definition` | L0 | 1,570 |
 | `heading` | L0 | 567 |
 | `section` | L0 | 467 |
 | `date` | L0 | 300 |
@@ -91,17 +81,17 @@ This is the accessibility guarantee measured from the other end. The L0 projecti
 | `header-cell` | L0 | 164 |
 | `row` | L0 | 150 |
 | `table-section` | L1 | 118 |
-| `term-list` | L0 | 110 |
+| `term-list` | L0 | 112 |
+| `item` | L0 | 102 |
 | `document` | L0 | 100 |
 | `provenance` | L1 | 100 |
 | `list` | L0 | 100 |
-| `item` | L0 | 100 |
 | `signature-block` | L1 | 100 |
-| `link` | L0 | 97 |
+| `link` | L0 | 99 |
 | `quantity` | L0 | 87 |
 | `table` | L0 | 59 |
 
-Not exercised by this corpus (32): `abstract`, `admonition`, `article`, `bibliography`, `caption`, `citation`, `code`, `code-block`, `contents`, `disclosure`, `emphasis`, `epigraph`, `field`, `field-choice`, `field-option`, `field-text`, `figure`, `form`, `line-break`, `media`, `note`, `note-ref`, `payload`, `quote`, `reference`, `rendering`, `sidebar`, `state-link`, `strong`, `submit`, `tab`, `tab-group`.
+Not exercised by this corpus (33): `abstract`, `admonition`, `article`, `bibliography`, `caption`, `citation`, `code`, `code-block`, `contents`, `disclosure`, `emphasis`, `epigraph`, `field`, `field-choice`, `field-option`, `field-text`, `figure`, `form`, `line-break`, `media`, `note`, `note-ref`, `payload`, `power`, `quote`, `reference`, `rendering`, `sidebar`, `state-link`, `strong`, `submit`, `tab`, `tab-group`.
 
 An element unused by one register is not evidence it is unneeded; it is evidence this corpus is one document genre. The freeze decision needs a second genre, which is the next corpus.
 
@@ -111,7 +101,7 @@ Read the coverage figure with these limits attached. They are the reasons it is 
 
 1. **The act body is a PDF and is not tested.** Diavgeia publishes a structured record *around* a signed PDF. This measures the published record, which is what the site itself renders as a page; it does not measure the prose inside the PDF. Sub-headed legal prose, numbered recitals, and inline tables live there, and that is where an omission in the register would actually show up.
 2. **A generic mapper flatters the register.** Any JSON scalar can be placed in a term-list and any array of objects in a table, so a JSON-shaped source will nearly always map. The measure is therefore strongest as a *falsifier* — a failure would have been decisive — and weakest as a positive claim.
-3. **One genre, one country, one language.** A gazette, a statute, a standards document, and a scientific record are different shapes. 32 of 52 elements were never exercised.
+3. **One genre, one country, one language.** A gazette, a statute, a standards document, and a scientific record are different shapes. 33 of 53 elements were never exercised.
 4. **No adversarial input.** Every record here is well-formed output from one publishing system. The parser has not been fuzzed and the corpus contains no hostile document.
 
 The honest summary: nothing in a real public register falsified the closed vocabulary, and the envelope figures hold up. That is a necessary condition for the freeze, not a sufficient one.

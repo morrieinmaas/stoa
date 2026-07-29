@@ -245,8 +245,16 @@ def validate(doc, reg):
     def path_of(trail):
         return "/" + "/".join(trail) if trail else "/"
 
+    MAX_DEPTH = 100
+
     def check(node, trail):
         where = path_of(trail)
+
+        # R21: bounded nesting. An unbounded tree exhausts the stack of every
+        # recursive consumer, and no real document needs 100 levels.
+        if len(trail) > MAX_DEPTH:
+            err("R21", where, f"nesting deeper than {MAX_DEPTH} levels")
+            return
 
         # R20: the node is an object, and its children are a list of objects
         if not isinstance(node, dict):
@@ -446,6 +454,8 @@ def content_units(doc):
             units.append(nfc(str(node.get("v", ""))))
         elif name == "quantity":
             units.append(format_quantity(node))
+        elif name == "power":
+            units.append(format_power(node))
         elif name == "date":
             units.append(str(node.get("value", "")))
         for f in FIELD_UNITS.get(name, []):
@@ -453,6 +463,10 @@ def content_units(doc):
             if isinstance(v, str) and v.strip():
                 units.append(nfc(v))
     return units
+
+
+def format_power(node):
+    return f"{node.get('base', '')}^{node.get('exponent', '')}"
 
 
 def format_quantity(node):
@@ -573,7 +587,7 @@ def _group_term_pairs(kids):
 # --------------------------------------------------------------------------
 
 INLINE = {"text", "emphasis", "strong", "code", "link", "reference",
-          "note-ref", "quantity", "date", "line-break"}
+          "note-ref", "quantity", "power", "date", "line-break"}
 
 
 def inline_text(node):
@@ -582,6 +596,8 @@ def inline_text(node):
         return nfc(str(node.get("v", "")))
     if name == "quantity":
         return format_quantity(node)
+    if name == "power":
+        return format_power(node)
     if name == "date":
         return str(node.get("value", ""))
     if name == "line-break":

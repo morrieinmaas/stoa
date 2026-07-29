@@ -55,10 +55,10 @@ Decisions that survived scrutiny and are unlikely to move.
 
 M0, M0b and M0b2 are complete and run. All figures below are produced by `mise run check` and `mise run corpora`. See `../m0/FINDINGS.md`.
 
-- Vocabulary register: 52 elements (L0 29, L1 11, L2 10, L3 2 plus 5 render primitives).
+- Vocabulary register: 53 elements (L0 30, L1 11, L2 10, L3 2 plus 5 render primitives).
 - Conformance document exercising all 52, in canonical form, 9,359 canonical bytes.
 - Negative fixture with 13 deliberate faults across 13 distinct rules; the ruleset reports exactly 13 errors.
-- Degradation contract verified mechanically: 91 content units, 0 lost projecting to L0, and the projection is itself conforming.
+- Degradation contract verified mechanically: 98 content units, 0 lost projecting to L0, and the projection is itself conforming.
 - Encoding independence verified across canonical JSON and deterministic CBOR: identical digest, identical Merkle leaves.
 - Merkle excerpt proofs: 124 blocks, 224-byte proof, verifies at every index, and fails on a tampered block at every index.
 - Two corpora: 100 Diavgeia acts (100% coverage) and 16 IETF RFCs (100% conforming, and it falsified the superscript bet).
@@ -72,7 +72,7 @@ M0 found four defects that were free to fix then and would have been impossible 
 
 1. **Representing an exponent.** The second corpus falsified the register. `<sup>` occurs 75 times across 16 RFCs and every occurrence is an exponent (`2^64`, `2^32`); with no superscript in the register these degrade to `264` and `232` inside normative range specifications. Section 6 below bet that superscripts were not load-bearing. They are. Three candidate fixes are in `../m0/FINDINGS.md` defect 8; the recommendation is a semantic inline `power` element degrading to `base^exponent`, which is already the notation the RFC plain-text renderings use. This must be decided before the freeze, because afterwards the only remedy is a new epoch.
 
-2. ~~**A second corpus, in a second genre.**~~ Done, and it fired. The first corpus has run: 100 acts from Diavgeia, sampled across 10 act types and 66 public bodies, 100% coverage, zero elements missing, zero amounts needing a float, and the envelope figures held (2,143 bytes and 1 request against 22,187 bytes and 81 requests). It did not falsify the vocabulary. It also did not exercise 32 of the 52 elements, and it did not test the act body, which is a signed PDF. One genre is not enough to conclude the register is closed correctly. Full report and its stated limits: `../corpus/RESULTS.md` section 6.
+2. ~~**A second corpus, in a second genre.**~~ Done, and it fired. The first corpus has run: 100 acts from Diavgeia, sampled across 10 act types and 66 public bodies, 100% coverage, zero elements missing, zero amounts needing a float, and the envelope figures held (2,143 bytes and 1 request against 22,187 bytes and 81 requests). It did not falsify the vocabulary. It also did not exercise 32 of the 53 elements, and it did not test the act body, which is a signed PDF. One genre is not enough to conclude the register is closed correctly. Full report and its stated limits: `../corpus/RESULTS.md` section 6.
 
 **Not blocking the freeze:**
 
@@ -122,7 +122,7 @@ A high coverage number is also the single most persuasive line available for a f
 
 ### What makes this application unusual
 
-Most two-page applications describe intended work. This one can attach work already done: a closed vocabulary register, a conformance document exercising all 52 elements, a ruleset catching 13 deliberate faults, a degradation contract verified over 121 content units, encoding independence demonstrated across two serialisations, and a written governance document answering the stewardship question. Very few proposals can answer stewardship at all.
+Most two-page applications describe intended work. This one can attach work already done: a closed vocabulary register, a conformance document exercising all 53 elements, a ruleset catching 13 deliberate faults, a degradation contract verified over 121 content units, encoding independence demonstrated across two serialisations, and a written governance document answering the stewardship question. Very few proposals can answer stewardship at all.
 
 ### Scoping the ask
 

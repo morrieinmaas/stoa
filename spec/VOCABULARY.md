@@ -3,9 +3,9 @@
 
 Register `stoa-vocabulary`, version `0.1.0-m0`.
 
-**Status:** provisional; L0 not yet frozen (blocked on corpus coverage)
+**Status:** provisional; L0 complete pending freeze (see docs/STATE.md)
 
-29 elements at L0, 11 at L1, 10 at L2, 2 at L3. Total 52, plus 5 render primitives that are not document elements.
+30 elements at L0, 11 at L1, 10 at L2, 2 at L3. Total 53, plus 5 render primitives that are not document elements.
 
 A document element above L0 declares the element it degrades into. That declaration is normative and mechanically tested: `stoa0.py <doc> contract` projects the whole document to L0 and asserts that no unit of reader-visible content is lost.
 
@@ -57,6 +57,7 @@ Frozen on release. No amendment process can alter this layer; if L0 is wrong the
 | `reference` | inline | `inline` | — | `target`:idref |
 | `note-ref` | inline | `none` | — | `target`:idref |
 | `quantity` | inline | `none` | — | `significand`:int, `scale`:int, `unit`:text |
+| `power` | inline | `none` | — | `base`:text, `exponent`:text |
 | `date` | inline | `none` | — | `value`:text, `precision`:text ∈ {year, month, day, minute, second} |
 | `line-break` | inline | `none` | — | — |
 
@@ -76,6 +77,7 @@ Notes:
 - **`link`** — The one place an absolute IRI is permitted, because the client resolves it only on a reader action. Clients MUST NOT speculatively resolve, prefetch, or preconnect.
 - **`reference`** — Intra-document cross-reference. Never leaves the document, so never a request.
 - **`quantity`** — value = significand x 10^-scale, exactly. Currency is representable without error. Floats are not representable at all, which is the point.
+- **`power`** — Exponentiation, rendered as base^exponent. Added at L0 after the second corpus falsified the bet that superscripts are not load-bearing: 75 of 75 superscripts in 16 RFCs were exponents, and dropping them turns 2^64 into 264 inside normative range specifications. Semantic rather than presentational on purpose -- a superscript is appearance, an exponent is meaning, and only the latter can be carried by a format that does not carry appearance. The degradation is not invented: it is the notation the RFC plain-text renderings already use. Fields are text, not int, because real exponents include symbolic values such as n-24. See m0/FINDINGS.md defect 8.
 - **`date`** — ISO 8601, with declared precision so a client never invents accuracy the record does not have.
 - **`line-break`** — For addresses and verse, where the break is content. Not for spacing; spacing is a theme concern.
 

@@ -156,8 +156,15 @@ def keep(nodes):
     return out
 
 
-def inline_one(ch, f, anchors):
-    """One RFC inline element -> zero or more Stoa inline nodes."""
+BASE_TOKEN = re.compile(r"([A-Za-z0-9]+)$")
+
+
+def inline_one(ch, f, anchors, prev=None):
+    """One RFC inline element -> zero or more Stoa inline nodes.
+
+    `prev` is the list built so far, because <sup> needs the token before it:
+    in `2<sup>64</sup>` the base lives in the preceding text node's tail.
+    """
     name = tag(ch)
     kids = inline(ch, f, anchors)
 
@@ -178,11 +185,23 @@ def inline_one(ch, f, anchors):
         return kids
     if name == "br":
         return [{"t": "line-break"}]
-    if name in ("sup", "sub"):
-        # The register has no superscript or subscript. This is the bet stated
-        # in ../docs/STATE.md section 6, measured rather than restated.
-        f.escapes[f"<{name}>: no element in the register, "
-                  f"rendered as adjacent text"] += 1
+    if name == "sup":
+        # Every superscript in this corpus is an exponent, which is why L0
+        # gained `power`. Take the base from the preceding text node so that
+        # 2<sup>64</sup> becomes one semantic node rather than two fragments.
+        exp = clean("".join(ch.itertext()))
+        if exp and prev and prev[-1].get("t") == "text":
+            m = BASE_TOKEN.search(prev[-1]["v"])
+            if m:
+                prev[-1]["v"] = prev[-1]["v"][:m.start()]
+                if not prev[-1]["v"]:
+                    prev.pop()
+                return [{"t": "power", "base": m.group(1), "exponent": exp}]
+        f.escapes["<sup> with no adjacent base token"] += 1
+        return kids or ([_t(exp)] if exp else [])
+    if name == "sub":
+        # Subscripts do not occur in this corpus. Recorded if they ever do.
+        f.escapes["<sub>: no element in the register"] += 1
         return kids or ([_t(clean(ch.text))] if clean(ch.text) else [])
     if name == "contact":
         # a person, inline. Their name is the content; the rest is metadata
@@ -204,7 +223,7 @@ def inline(el, f, anchors):
         out.append(_t(clean(el.text)))
     for ch in el:
         f.src_elements[tag(ch)] += 1
-        out.extend(inline_one(ch, f, anchors))
+        out.extend(inline_one(ch, f, anchors, out))
         if ch.tail and ch.tail.strip():
             out.append(_t(clean(ch.tail)))
     return keep(out)
@@ -239,7 +258,7 @@ def blocks(el, f, anchors, depth=0):
         f.src_elements[name] += 1
 
         if name in INLINE_TAGS:
-            loose.extend(inline_one(ch, f, anchors))
+            loose.extend(inline_one(ch, f, anchors, loose))
             if ch.tail and ch.tail.strip():
                 loose.append(_t(clean(ch.tail)))
             continue
@@ -286,11 +305,21 @@ def blocks(el, f, anchors, depth=0):
                         pairs += [{"t": "term", "c": pending},
                                   {"t": "definition", "c": []}]
                     pending = inline(d, f, anchors)
-                elif tag(d) == "dd" and pending:
+                elif tag(d) == "dd":
                     body = blocks(d, f, anchors, depth + 1)
                     if not body:
                         c = inline(d, f, anchors)
                         body = [{"t": "paragraph", "c": c}] if c else []
+                    if not pending:
+                        # <dt/> with content in its <dd>: a continuation of the
+                        # previous definition, not a new pair. Skipping it here
+                        # silently dropped whole paragraphs.
+                        if pairs and body:
+                            pairs[-1]["c"].extend(body)
+                        elif body:
+                            pairs += [{"t": "term", "c": []},
+                                      {"t": "definition", "c": body}]
+                        continue
                     # A term whose definition is empty still carries the term.
                     # Dropping the pair loses the term text, which is content.
                     pairs += [{"t": "term", "c": pending},
@@ -615,8 +644,15 @@ def run(nums, refresh, out_path):
         want = []
         source_text(ET.fromstring(xml), want)
         carried = set(stoa.content_units(doc))
-        blob = "\n".join(sorted(carried))
-        lost = [s for s in want if s not in carried and s not in blob]
+        # Compare against the rendered L0 projection, not against the set of
+        # content units. A unit boundary is not a text boundary: `power` takes
+        # its base from the preceding text node, so "range -2" spans two units
+        # and only the projection puts it back together.
+        blob = re.sub(r"\s+", " ",
+                      "\n".join(stoa.project_text(stoa.to_l0(doc, reg))))
+        lost = [s for s in want
+                if s not in carried
+                and re.sub(r"\s+", " ", s) not in blob]
 
         escaped = sum(f.escapes.values()) > before
         if not errs:
