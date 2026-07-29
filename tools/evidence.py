@@ -34,7 +34,8 @@ import stoa  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 CORPORA = [("Diavgeia", ROOT / "corpus" / "RESULTS.md"),
-           ("RFCs", ROOT / "corpus" / "RESULTS-rfc.md")]
+           ("RFCs", ROOT / "corpus" / "RESULTS-rfc.md"),
+           ("JATS", ROOT / "corpus" / "RESULTS-jats.md")]
 
 
 def used_in(path):
@@ -97,6 +98,11 @@ def main():
     w(f"| **UNTESTED** | {len(untested)} of {total} | Not exercised anywhere. |")
     w("")
 
+    if not [r for r in rows if r[1] == 0 and r[2] != "CORPUS"]:
+        w("## Every L0 element is backed by real documents\n")
+        w("L0 is the layer that freezes permanently, so it is the layer where "
+          "an unearned element is unfixable. Every one of them is now "
+          "exercised by a document nobody wrote for this project.\n")
     if fixture_only:
         w("## Elements resting on assertion\n")
         w("These are L0 or L1 and no real document in either corpus used them.\n")

@@ -61,7 +61,9 @@ M0, M0b and M0b2 are complete and run. All figures below are produced by `mise r
 - Degradation contract verified mechanically: 98 content units, 0 lost projecting to L0, and the projection is itself conforming.
 - Encoding independence verified across canonical JSON and deterministic CBOR: identical digest, identical Merkle leaves.
 - Merkle excerpt proofs: 124 blocks, 224-byte proof, verifies at every index, and fails on a tampered block at every index.
-- Two corpora: 100 Diavgeia acts (100% coverage) and 16 IETF RFCs (100% conforming, and it falsified the superscript bet).
+- Three corpora, all at 100% on conformance, no-loss and no-omission: 100 Diavgeia acts, 16 IETF RFCs (which falsified the superscript bet and drove `power` into L0), and 14 JATS articles (which settled `media`, `note` and `note-ref`).
+- Evidence audit: 37 of 53 elements corpus-backed, 12 L2/L3 unreachable by any static corpus, 4 L1 fixture-only, 0 untested. Every L0 element is corpus-backed.
+- Accessibility measured, not asserted: 0 of 65 real figures carried alternative text, and none of them is expressible without it.
 - 19 toolchain self-tests and 5,000 hostile documents per fuzz run, 0 crashes.
 
 M0 found four defects that were free to fix then and would have been impossible after the freeze. The most important: `media.src` was an absolute IRI, which meant the layer about to freeze permanently permitted tracking pixels with good alt text. It was found by writing out a media example, not by reasoning about the design. That is the argument for building the fixture before writing normative text, and it is the single most valuable thing produced so far.
@@ -70,9 +72,11 @@ M0 found four defects that were free to fix then and would have been impossible 
 
 **Blocking the L0 freeze:**
 
-1. **Representing an exponent.** The second corpus falsified the register. `<sup>` occurs 75 times across 16 RFCs and every occurrence is an exponent (`2^64`, `2^32`); with no superscript in the register these degrade to `264` and `232` inside normative range specifications. Section 6 below bet that superscripts were not load-bearing. They are. Three candidate fixes are in `../m0/FINDINGS.md` defect 8; the recommendation is a semantic inline `power` element degrading to `base^exponent`, which is already the notation the RFC plain-text renderings use. This must be decided before the freeze, because afterwards the only remedy is a new epoch.
+1. ~~**Representing an exponent.**~~ Done: L0 gained `power`. Original finding retained because it is the best evidence the method works — The second corpus falsified the register. `<sup>` occurs 75 times across 16 RFCs and every occurrence is an exponent (`2^64`, `2^32`); with no superscript in the register these degrade to `264` and `232` inside normative range specifications. Section 6 below bet that superscripts were not load-bearing. They are. Three candidate fixes are in `../m0/FINDINGS.md` defect 8; the recommendation is a semantic inline `power` element degrading to `base^exponent`, which is already the notation the RFC plain-text renderings use. This must be decided before the freeze, because afterwards the only remedy is a new epoch.
 
-2. ~~**A second corpus, in a second genre.**~~ Done, and it fired. The first corpus has run: 100 acts from Diavgeia, sampled across 10 act types and 66 public bodies, 100% coverage, zero elements missing, zero amounts needing a float, and the envelope figures held (2,143 bytes and 1 request against 22,187 bytes and 81 requests). It did not falsify the vocabulary. It also did not exercise 32 of the 53 elements, and it did not test the act body, which is a signed PDF. One genre is not enough to conclude the register is closed correctly. Full report and its stated limits: `../corpus/RESULTS.md` section 6.
+2. ~~**A second corpus, in a second genre.**~~ Done, and it fired.
+
+3. **The freeze is now a judgement, not a measurement.** Three corpora across three genres are at 100% on every component, and `../spec/EVIDENCE.md` shows every L0 element backed by real documents. What remains unproven is four L1 elements (`article`, `contents`, `admonition`, `epigraph`) exercised only by the conformance fixture. L1 is additive-only rather than frozen, so an unearned element there is recoverable. Freezing L0 is now a decision to take deliberately. The first corpus has run: 100 acts from Diavgeia, sampled across 10 act types and 66 public bodies, 100% coverage, zero elements missing, zero amounts needing a float, and the envelope figures held (2,143 bytes and 1 request against 22,187 bytes and 81 requests). It did not falsify the vocabulary. It also did not exercise 32 of the 53 elements, and it did not test the act body, which is a signed PDF. One genre is not enough to conclude the register is closed correctly. Full report and its stated limits: `../corpus/RESULTS.md` section 6.
 
 **Not blocking the freeze:**
 

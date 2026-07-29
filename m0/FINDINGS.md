@@ -229,6 +229,21 @@ which is exactly the assumption an attacker gets to violate.
 
 ---
 
+### 13. Every real figure lacked alternative text
+
+Across 65 graphics in 14 scholarly articles, **zero** carried `<alt-text>` in
+the source. All 65 would pass an HTML validator and fail a reader.
+
+`media.alt` is required and non-empty, so none of them is expressible. A
+conforming document did not exist until alternative text was supplied, and the
+mapper had to derive it from the figure caption.
+
+This is the accessibility claim doing work rather than being asserted, and it
+is worth stating precisely: derived alternative text is *worse* than authored
+alternative text. The claim is not that the format writes good alt text. It is
+that the absence is unrepresentable, so the failure happens at build time in
+front of the author instead of silently in front of a reader.
+
 ## Where this leaves the freeze
 
 The first corpus did not falsify the vocabulary. The second one did, on the
@@ -244,13 +259,16 @@ outcome for a test that cost two days.
 | Need no element outside the register | 100% | **100%** (was 44% before `power`) |
 | Register elements exercised | 20 of 53 | 31 of 53 |
 
-**The exponent gap is closed.** What still stands between here and the freeze is
-narrower and is named precisely by `../spec/EVIDENCE.md`: three L0 elements
-(`media`, `note`, `note-ref`) are exercised by no real document in either
-corpus, because neither genre contains an image or a footnote. That is a fact
-about the corpora, not proof the elements are unnecessary — but after the freeze
-the judgement is permanent, so a third genre with footnotes and figures should
-run first.
+**Both gaps are closed.** The exponent became `power`, and a third corpus of
+scholarly articles settled `media` (65), `note` (48) and `note-ref` (32).
+`../spec/EVIDENCE.md` now records every L0 element as backed by documents nobody
+wrote for this project.
+
+What remains is four L1 elements — `article`, `contents`, `admonition`,
+`epigraph` — exercised only by the conformance fixture. L1 is additive-only
+rather than frozen, so an unearned element there is recoverable in a way an L0
+one is not. Freezing L0 is now a judgement to take deliberately rather than a
+task waiting on evidence.
 
 No element in the register turned out to be *unnecessary*, and the combined
 corpora still leave elements untouched by any real document — the L2 and L3

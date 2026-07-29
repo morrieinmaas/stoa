@@ -64,13 +64,17 @@ run = "python3 tools/diavgeia.py --n 100"
 description = "Corpus 2: standards documents (IETF RFCs, XML v3)"
 run = "python3 tools/rfc.py"
 
+[tasks."corpus-jats"]
+description = "Corpus 3: scholarly articles (JATS, Europe PMC)"
+run = "python3 tools/jats.py"
+
 [tasks.evidence]
 description = "Evidence audit: what justifies each element in the register"
 run = "python3 tools/evidence.py --write"
 
 [tasks.corpora]
 description = "Both corpora"
-depends = ["corpus", "corpus-rfc", "evidence"]
+depends = ["corpus", "corpus-rfc", "corpus-jats", "evidence"]
 
 [tasks.selftest]
 description = "Self-test the toolchain: merkle at every index, CBOR edge cases, degradation totality, injection"

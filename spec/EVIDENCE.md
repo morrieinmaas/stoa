@@ -5,10 +5,14 @@ What justifies each element in the register. A closed vocabulary is only defensi
 
 | Verdict | Count | Meaning |
 |---|---|---|
-| **CORPUS** | 34 of 53 | Exercised by real documents. Earned. |
+| **CORPUS** | 37 of 53 | Exercised by real documents. Earned. |
 | **BY DESIGN** | 12 of 53 | L2/L3. A corpus of published static documents cannot contain a form or a typed renderer payload; these need an authored conformance target instead, and have one. |
-| **FIXTURE** | 7 of 53 | L0/L1, exercised only by the document the author wrote. An assertion, not evidence. |
+| **FIXTURE** | 4 of 53 | L0/L1, exercised only by the document the author wrote. An assertion, not evidence. |
 | **UNTESTED** | 0 of 53 | Not exercised anywhere. |
+
+## Every L0 element is backed by real documents
+
+L0 is the layer that freezes permanently, so it is the layer where an unearned element is unfixable. Every one of them is now exercised by a document nobody wrote for this project.
 
 ## Elements resting on assertion
 
@@ -18,9 +22,6 @@ Read this as a statement about the corpora, not automatically about the elements
 
 It is still a gap, and it is precise about what would close it: a third genre containing footnotes and figures. Legislation with footnoted recitals, or scholarly articles in JATS, would settle all three L0 entries at once. Until then these elements rest on the author's judgement, and after the freeze that judgement is permanent.
 
-- **`note`** (L0) — Footnote body. Placed in document order; the theme decides where it appears.
-- **`media`** (L0) — src is a path, never an IRI. A document therefore cannot name a host the client contacts. See m0/FINDINGS.md defect 1. alt is required and must be non-empty; th
-- **`note-ref`** (L0) — no rationale recorded
 - **`article`** (L1) — A self-contained part of a compound document.
 - **`contents`** (L1) — Table of contents. Degrades to an ordinary list of intra-document references.
 - **`admonition`** (L1) — Degrades to a section whose heading is the kind label, so the salience survives as words rather than as colour.
@@ -30,47 +31,47 @@ It is still a gap, and it is precise about what would close it: a third genre co
 
 | Element | Layer | Verdict | Seen in |
 |---|---|---|---|
-| `document` | L0 | CORPUS | Diavgeia, RFCs |
-| `section` | L0 | CORPUS | Diavgeia, RFCs |
-| `heading` | L0 | CORPUS | Diavgeia, RFCs |
-| `paragraph` | L0 | CORPUS | Diavgeia, RFCs |
-| `list` | L0 | CORPUS | Diavgeia, RFCs |
-| `item` | L0 | CORPUS | Diavgeia, RFCs |
-| `term-list` | L0 | CORPUS | Diavgeia, RFCs |
-| `term` | L0 | CORPUS | Diavgeia, RFCs |
-| `definition` | L0 | CORPUS | Diavgeia, RFCs |
-| `quote` | L0 | CORPUS | RFCs |
-| `code-block` | L0 | CORPUS | RFCs |
-| `note` | L0 | FIXTURE | — |
-| `figure` | L0 | CORPUS | RFCs |
-| `caption` | L0 | CORPUS | RFCs |
-| `media` | L0 | FIXTURE | — |
-| `table` | L0 | CORPUS | Diavgeia, RFCs |
-| `row` | L0 | CORPUS | Diavgeia, RFCs |
-| `cell` | L0 | CORPUS | Diavgeia, RFCs |
-| `header-cell` | L0 | CORPUS | Diavgeia, RFCs |
-| `text` | L0 | CORPUS | Diavgeia, RFCs |
-| `emphasis` | L0 | CORPUS | RFCs |
-| `strong` | L0 | CORPUS | RFCs |
-| `code` | L0 | CORPUS | RFCs |
-| `link` | L0 | CORPUS | Diavgeia, RFCs |
-| `reference` | L0 | CORPUS | RFCs |
-| `note-ref` | L0 | FIXTURE | — |
+| `document` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `section` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `heading` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `paragraph` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `list` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `item` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `term-list` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `term` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `definition` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `quote` | L0 | CORPUS | RFCs, JATS |
+| `code-block` | L0 | CORPUS | RFCs, JATS |
+| `note` | L0 | CORPUS | JATS |
+| `figure` | L0 | CORPUS | RFCs, JATS |
+| `caption` | L0 | CORPUS | RFCs, JATS |
+| `media` | L0 | CORPUS | JATS |
+| `table` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `row` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `cell` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `header-cell` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `text` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `emphasis` | L0 | CORPUS | RFCs, JATS |
+| `strong` | L0 | CORPUS | RFCs, JATS |
+| `code` | L0 | CORPUS | RFCs, JATS |
+| `link` | L0 | CORPUS | Diavgeia, RFCs, JATS |
+| `reference` | L0 | CORPUS | RFCs, JATS |
+| `note-ref` | L0 | CORPUS | JATS |
 | `quantity` | L0 | CORPUS | Diavgeia |
-| `power` | L0 | CORPUS | RFCs |
+| `power` | L0 | CORPUS | RFCs, JATS |
 | `date` | L0 | CORPUS | Diavgeia |
-| `line-break` | L0 | CORPUS | RFCs |
+| `line-break` | L0 | CORPUS | RFCs, JATS |
 | `article` | L1 | FIXTURE | — |
-| `abstract` | L1 | CORPUS | RFCs |
+| `abstract` | L1 | CORPUS | RFCs, JATS |
 | `contents` | L1 | FIXTURE | — |
-| `bibliography` | L1 | CORPUS | RFCs |
-| `citation` | L1 | CORPUS | RFCs |
+| `bibliography` | L1 | CORPUS | RFCs, JATS |
+| `citation` | L1 | CORPUS | RFCs, JATS |
 | `admonition` | L1 | FIXTURE | — |
-| `sidebar` | L1 | CORPUS | RFCs |
+| `sidebar` | L1 | CORPUS | RFCs, JATS |
 | `epigraph` | L1 | FIXTURE | — |
 | `signature-block` | L1 | CORPUS | Diavgeia |
-| `provenance` | L1 | CORPUS | Diavgeia, RFCs |
-| `table-section` | L1 | CORPUS | Diavgeia, RFCs |
+| `provenance` | L1 | CORPUS | Diavgeia, RFCs, JATS |
+| `table-section` | L1 | CORPUS | Diavgeia, RFCs, JATS |
 | `form` | L2 | BY DESIGN | — |
 | `field` | L2 | BY DESIGN | — |
 | `field-text` | L2 | BY DESIGN | — |
@@ -84,5 +85,5 @@ It is still a gap, and it is precise about what would close it: a third genre co
 | `payload` | L3 | BY DESIGN | — |
 | `rendering` | L3 | BY DESIGN | — |
 
-Union across both corpora: **34 of 53** elements exercised by real documents.
+Union across both corpora: **37 of 53** elements exercised by real documents.
 
