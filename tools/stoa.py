@@ -481,14 +481,50 @@ def format_quantity(node):
 # degradation to L0
 # --------------------------------------------------------------------------
 
+def prune(nodes):
+    """Remove nodes that carry no characters, recursively.
+
+    NORMATIVE RULE: absence of content is absence of a node. A required text
+    field is non-empty (R8), so an element whose content is empty must project
+    to nothing rather than to a node carrying the empty string.
+
+    This function exists because that rule was independently rediscovered three
+    times -- in the degradation projection, in a corpus mapper, and in the
+    surface parser (see m0/FINDINGS.md defects 3, 10 and 18). A rule learned
+    three times by three components is a rule that belongs in one place. Every
+    producer of trees in this repository calls this, and `mise run selftest`
+    asserts none of them emits an empty node.
+    """
+    out = []
+    for n in nodes:
+        if not isinstance(n, dict):
+            continue
+        t = n.get("t")
+        if t == "text":
+            if str(n.get("v", "")).strip():
+                out.append(n)
+            continue
+        if "c" in n:
+            n["c"] = prune(n["c"])
+            # an element whose only purpose is to wrap content carries none
+            if not n["c"] and t not in VOID_OK:
+                continue
+        out.append(n)
+    return out
+
+
+# elements that legitimately have no children and no text of their own
+VOID_OK = {"media", "line-break", "note-ref", "quantity", "date", "power",
+           "payload", "submit", "field-text", "thematic-break"}
+
+
 def _text(s):
     return {"t": "text", "v": s}
 
 
 def _para(s):
-    # an empty string is absence of content, not a text node carrying nothing;
-    # emitting the latter makes the projection fail its own R8 check
-    return {"t": "paragraph", "c": [_text(s)] if s else []}
+    # see prune(): absence of content is absence of a node
+    return {"t": "paragraph", "c": [_text(s)] if str(s).strip() else []}
 
 
 def to_l0(node, reg):

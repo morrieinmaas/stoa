@@ -137,24 +137,6 @@ INLINE_TAGS = set(INLINE_MAP) | {"xref", "relref", "eref", "br", "sup", "sub",
                                  "cref", "contact", "iref"}
 
 
-def keep(nodes):
-    """Drop inline nodes that would carry no characters. An element whose text
-    is empty must project to absence, not to a text node holding nothing."""
-    out = []
-    for x in nodes:
-        if x.get("t") == "text":
-            if x.get("v"):
-                out.append(x)
-        elif x.get("t") == "line-break":
-            out.append(x)
-        elif "c" in x:
-            x["c"] = keep(x["c"])
-            if x["c"]:
-                out.append(x)
-        else:
-            out.append(x)
-    return out
-
 
 BASE_TOKEN = re.compile(r"([A-Za-z0-9]+)$")
 
@@ -226,7 +208,7 @@ def inline(el, f, anchors):
         out.extend(inline_one(ch, f, anchors, out))
         if ch.tail and ch.tail.strip():
             out.append(_t(clean(ch.tail)))
-    return keep(out)
+    return stoa.prune(out)
 
 
 def _anchor(a):
@@ -245,7 +227,7 @@ def blocks(el, f, anchors, depth=0):
         """Loose inline content in a block slot becomes a paragraph, rather
         than being dropped as an unmappable block."""
         if loose:
-            c = keep(list(loose))
+            c = stoa.prune(list(loose))
             if c:
                 out.append({"t": "paragraph", "c": c})
             loose.clear()

@@ -150,7 +150,8 @@ def parse_inline(s):
         # the same rule the degradation projection had to learn
         v = unesc("".join(buf))
         buf.clear()
-        if v:
+        # absence of content is absence of a node -- see stoa.prune
+        if v.strip():
             (stack[-1]["c"] if stack else nodes).append({"t": "text", "v": v})
 
     def push(node):

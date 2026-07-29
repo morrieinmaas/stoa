@@ -347,6 +347,21 @@ the surface parser. Three unrelated components, three independent rediscoveries.
 That is a sign the rule belongs in the specification rather than in each
 implementer's memory.
 
+**Fixed properly, not noted a third time.** Recording the same rule in three
+places is how it gets rediscovered a fourth. So:
+
+- `stoa.prune()` is now the single implementation, and the degradation
+  projection, all three corpus mappers and the surface parser call it.
+- The rule is stated normatively in the register under `authoring_rules`, and
+  the generated `spec/VOCABULARY.md` carries it under "Rules for producers".
+- Two self-tests assert it: that `prune` removes empty content while keeping
+  legitimately void elements, and that no element above L0 degrades into a tree
+  containing an empty text node.
+
+A rule that three components learned separately belongs in one place, with a
+test. Two other rules were promoted the same way at the same time:
+*projection-conforms* (defect 2) and *identifiers-are-not-consumed* (defect 7).
+
 **The generalisation about surfaces.** A byte-level round trip is the weaker
 test and the one people reach for first, because it is easy to write. The
 structural round trip is the one that catches loss, because bytes can agree

@@ -57,7 +57,7 @@ Mapping decisions recorded:
 
 ## 5. Element mix
 
-34 of 53 register elements exercised.
+34 of 50 register elements exercised.
 
 | Element | Layer | Occurrences |
 |---|---|---|

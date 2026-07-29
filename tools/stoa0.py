@@ -135,6 +135,16 @@ def cmd_register(reg):
           "non-visual targets are siblings in this design rather than "
           "accommodations.\n")
 
+    if r.get("authoring_rules"):
+        print("## Rules for producers\n")
+        print("These bind anything that emits a conforming tree: a degradation "
+              "projection, an importer from another format, a surface parser. "
+              "Each was independently rediscovered by more than one component "
+              "during M0, which is why they are stated here rather than left "
+              "to each implementer.\n")
+        for k, v in r["authoring_rules"].items():
+            print(f"**`{k}`** — {v}\n")
+
     print("## Field types\n")
     for k, v in r["field_types"].items():
         print(f"- `{k}` — {v}")

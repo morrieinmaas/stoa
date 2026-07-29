@@ -20,7 +20,7 @@ None.
 
 ## 3. Element mix
 
-31 of 53 register elements exercised by this genre.
+31 of 50 register elements exercised by this genre.
 
 | Element | Layer | Occurrences |
 |---|---|---|
@@ -56,7 +56,7 @@ None.
 | `quote` | L0 | 6 |
 | `line-break` | L0 | 1 |
 
-Not exercised here (22): `admonition`, `article`, `contents`, `date`, `disclosure`, `epigraph`, `field`, `field-choice`, `field-option`, `field-text`, `form`, `media`, `note`, `note-ref`, `payload`, `quantity`, `rendering`, `signature-block`, `state-link`, `submit`, `tab`, `tab-group`.
+Not exercised here (19): `admonition`, `article`, `contents`, `date`, `disclosure`, `field`, `field-choice`, `field-option`, `field-text`, `form`, `media`, `note`, `note-ref`, `payload`, `quantity`, `rendering`, `signature-block`, `state-link`, `submit`.
 
 ## 4. Envelope
 

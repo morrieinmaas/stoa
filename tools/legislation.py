@@ -116,22 +116,6 @@ class Findings:
         self.commentaries = 0
 
 
-def keep(nodes):
-    out = []
-    for x in nodes:
-        if x.get("t") == "text":
-            if x.get("v"):
-                out.append(x)
-        elif x.get("t") in ("line-break", "power", "note-ref"):
-            out.append(x)
-        elif "c" in x:
-            x["c"] = keep(x["c"])
-            if x["c"]:
-                out.append(x)
-        else:
-            out.append(x)
-    return out
-
 
 def inline_one(ch, f, ctx, prev=None):
     name = tag(ch)
@@ -175,7 +159,7 @@ def inline(el, f, ctx):
         out.extend(inline_one(ch, f, ctx, out))
         if ch.tail and ch.tail.strip():
             out.append(_t(clean(ch.tail)))
-    return keep(out)
+    return stoa.prune(out)
 
 
 def heading_of(el, f, ctx, depth):
@@ -194,7 +178,7 @@ def heading_of(el, f, ctx, depth):
         parts.extend(title)
     if not parts:
         return None
-    return {"t": "heading", "level": min(max(depth, 1), 6), "c": keep(parts)}
+    return {"t": "heading", "level": min(max(depth, 1), 6), "c": stoa.prune(parts)}
 
 
 def blocks(el, f, ctx, depth=0, titled=False):
@@ -205,7 +189,7 @@ def blocks(el, f, ctx, depth=0, titled=False):
 
     def flush():
         if loose:
-            c = keep(list(loose))
+            c = stoa.prune(list(loose))
             if c:
                 out.append({"t": "paragraph", "c": c})
             loose.clear()

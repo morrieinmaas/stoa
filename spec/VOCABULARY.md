@@ -11,6 +11,16 @@ A document element above L0 declares the element it degrades into. That declarat
 
 L0 is therefore not a reduced or lossy view. It is the layer every other layer is defined against, and the projection into it is normative output rather than best-effort extraction. Any consumer that wants meaning without presentation reads it directly: a screen reader, a terminal client, an archival indexer, or an autonomous agent. Those are one consumer with one guarantee, which is why non-visual targets are siblings in this design rather than accommodations.
 
+## Rules for producers
+
+These bind anything that emits a conforming tree: a degradation projection, an importer from another format, a surface parser. Each was independently rediscovered by more than one component during M0, which is why they are stated here rather than left to each implementer.
+
+**`absence-is-absence`** — Absence of content is absence of a node. An element whose content is empty MUST be omitted rather than emitted with a child carrying the empty string. A required text field is non-empty (R8), so a producer that emits one has produced a non-conforming document. This applies to every producer: a degradation projection, an importer from another format, and a surface parser alike. Independently rediscovered three times during M0; see m0/FINDINGS.md defects 3, 10 and 18.
+
+**`projection-conforms`** — Projecting a conforming document MUST produce a conforming document. The degradation graph and the content models are therefore not independent: if X degrades to Y, no element permitting X as a child may forbid Y as a child.
+
+**`identifiers-are-not-consumed`** — Resolving an identifier to a human label MUST NOT discard the identifier. Labels are not stable and are not what anything cites.
+
 ## Field types
 
 - `text` — NFC-normalised Unicode string, non-empty unless stated

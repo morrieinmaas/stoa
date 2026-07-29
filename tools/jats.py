@@ -149,22 +149,6 @@ class Findings:
         self.figures = 0
 
 
-def keep(nodes):
-    out = []
-    for x in nodes:
-        if x.get("t") == "text":
-            if x.get("v"):
-                out.append(x)
-        elif x.get("t") in ("line-break", "power", "media"):
-            out.append(x)
-        elif "c" in x:
-            x["c"] = keep(x["c"])
-            if x["c"]:
-                out.append(x)
-        else:
-            out.append(x)
-    return out
-
 
 BASE_TOKEN = re.compile(r"([A-Za-z0-9)\]]+)$")
 NUMERIC = re.compile(r"^[-+]?[0-9][0-9A-Za-z+\-]*$")
@@ -242,7 +226,7 @@ def inline(el, f, ctx):
         out.extend(inline_one(ch, f, ctx, out))
         if ch.tail and ch.tail.strip():
             out.append(_t(clean(ch.tail)))
-    return keep(out)
+    return stoa.prune(out)
 
 
 def graphic(el, f, ctx, alt_hint=""):
@@ -275,7 +259,7 @@ def blocks(el, f, ctx, depth=0):
 
     def flush():
         if loose:
-            c = keep(list(loose))
+            c = stoa.prune(list(loose))
             if c:
                 out.append({"t": "paragraph", "c": c})
             loose.clear()
@@ -443,7 +427,7 @@ def caption_of(el, f, ctx):
             if parts and parts[-1].get("t") == "text":
                 parts[-1] = _t(parts[-1]["v"].rstrip() + " ")
             parts.extend(inner)
-    return keep(parts), body
+    return stoa.prune(parts), body
 
 
 def flatten_inline(block):

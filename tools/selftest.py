@@ -262,6 +262,45 @@ def test_degradation_preserves_content():
           not bad, "\n       " + "\n       ".join(bad))
 
 
+def test_absence_is_absence():
+    """The rule three components learned separately, asserted in one place."""
+    cases = [
+        [{"t": "text", "v": ""}],
+        [{"t": "text", "v": "   "}],
+        [{"t": "emphasis", "c": [{"t": "text", "v": ""}]}],
+        [{"t": "paragraph", "c": [{"t": "text", "v": ""},
+                                  {"t": "text", "v": "x"}]}],
+    ]
+    for c in cases:
+        for n, _ in zip(stoa.prune(c), range(99)):
+            for m, _p in stoa.walk(n):
+                if stoa.typ(m) == "text" and not str(m.get("v", "")).strip():
+                    check(f"prune removes empty text from {c}", False)
+                    return
+    # and it must not remove elements that legitimately carry no children
+    void = [{"t": "line-break"}, {"t": "media", "kind": "image",
+                                  "src": "a.png", "alt": "x"}]
+    if len(stoa.prune(void)) != 2:
+        check("prune keeps legitimately void elements", False)
+        return
+    check("prune: absence of content is absence of a node", True)
+
+
+def test_producers_emit_no_empty_nodes():
+    """Every element above L0, projected, must contain no empty text node."""
+    bad = []
+    for e in REG.raw["elements"]:
+        if e["layer"] == 0:
+            continue
+        l0 = stoa.to_l0(host(e["n"]), REG)
+        for n, _ in stoa.walk(l0):
+            if stoa.typ(n) == "text" and not str(n.get("v", "")).strip():
+                bad.append(e["n"])
+                break
+    check("degradation emits no empty text node, for any element", not bad,
+          str(bad))
+
+
 def test_float_is_unrepresentable():
     import json
     doc = json.loads('{"t":"quantity","significand":1.5,"scale":2,"unit":"E"}',

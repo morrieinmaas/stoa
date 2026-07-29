@@ -825,5 +825,10 @@
     "required": "true if the field must be present",
     "enum": "optional: the complete set of permitted values",
     "range": "optional, integers only: inclusive [min, max]"
+  },
+  "authoring_rules": {
+    "absence-is-absence": "Absence of content is absence of a node. An element whose content is empty MUST be omitted rather than emitted with a child carrying the empty string. A required text field is non-empty (R8), so a producer that emits one has produced a non-conforming document. This applies to every producer: a degradation projection, an importer from another format, and a surface parser alike. Independently rediscovered three times during M0; see m0/FINDINGS.md defects 3, 10 and 18.",
+    "projection-conforms": "Projecting a conforming document MUST produce a conforming document. The degradation graph and the content models are therefore not independent: if X degrades to Y, no element permitting X as a child may forbid Y as a child.",
+    "identifiers-are-not-consumed": "Resolving an identifier to a human label MUST NOT discard the identifier. Labels are not stable and are not what anything cites."
   }
 }
