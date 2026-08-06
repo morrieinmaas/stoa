@@ -15,6 +15,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import stoa            # noqa: E402
+
+ROOT = Path(__file__).resolve().parent.parent
 import htmlemit        # noqa: E402
 import structhash      # noqa: E402
 
@@ -327,6 +329,45 @@ def test_register_hash_is_provenance_only():
         check("pinning the register changes the document digest", False)
         return
     check("register hash: accepted, unfamiliar is fine, never a location", True)
+
+
+def test_register_archive_resolves_offline():
+    """A document pinned to a superseded register must still validate against
+    the register it names -- that is the whole archival claim."""
+    import json as _j
+    cur = stoa.register_digest()
+    if stoa.register_for(cur) is None:
+        check("current register is in the local archive", False)
+        return
+    if stoa.register_for("f" * 64) is not None:
+        check("an unknown register hash resolves to nothing", False)
+        return
+    arch = sorted(stoa.REGISTER_ARCHIVE.glob("*.json"))
+    if len(arch) < 2:
+        check("archive holds more than one register version", False,
+              f"{len(arch)} found")
+        return
+    # every archived register must match its own filename, or the archive lies
+    for f in arch:
+        if stoa.register_digest(f) != f.stem:
+            check(f"archive entry {f.name[:12]} matches its hash", False)
+            return
+    # a document pinning a superseded register validates against it
+    doc = stoa.load_document(ROOT / "conformance" / "archived-01.json")
+    pinned = stoa.register_for(doc.get("register"))
+    if pinned is None:
+        check("the archived fixture's pin resolves", False)
+        return
+    errs = [d for d in stoa.validate(doc, pinned) if d.sev == "error"]
+    if errs:
+        check("archived document validates against its pinned register",
+              False, str(errs[0]))
+        return
+    # and it is *not* valid against the current one, which is the point
+    cur_errs = [d for d in stoa.validate(doc, REG) if d.sev == "error"]
+    check("a superseded pin resolves offline and still validates "
+          f"({len(arch)} registers archived; document invalid against current: "
+          f"{bool(cur_errs)})", bool(cur_errs))
 
 
 def test_float_is_unrepresentable():

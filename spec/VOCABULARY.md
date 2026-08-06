@@ -21,7 +21,7 @@ These bind anything that emits a conforming tree: a degradation projection, an i
 
 **`identifiers-are-not-consumed`** — Resolving an identifier to a human label MUST NOT discard the identifier. Labels are not stable and are not what anything cites.
 
-**`register-hash-is-provenance`** — A document MAY name the vocabulary register it was written against, by content hash, in `document.register`. A client MUST NOT alter its behaviour based on that value, MUST NOT refuse a document because the hash is unfamiliar, and MUST NOT resolve it over a network. Forward compatibility comes from unknown elements rendering their fallback; a version field a client acts on would replace that with a compatibility matrix, which is the thing this design exists to avoid.
+**`register-hash-is-provenance`** — A document MAY name the vocabulary register it was written against, by content hash, in `document.register`. A client MUST NOT alter its behaviour based on that value, MUST NOT refuse a document because the hash is unfamiliar, and MUST NOT resolve it over a network. Forward compatibility comes from unknown elements rendering their fallback; a version field a client acts on would replace that with a compatibility matrix, which is the thing this design exists to avoid. `document.register` is the format's single meta-level field: it is exempt from the unknown-field rule, because a register cannot govern the field that names it, and a register published before the field existed would otherwise reject every document that pins it.
 
 ## Field types
 

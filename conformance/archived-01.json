@@ -1,0 +1,33 @@
+{
+  "t": "document",
+  "id": "urn:stoa:archived-01",
+  "lang": "en",
+  "title": "A notice written before the register changed",
+  "register": "55f02211fad640f56840764a70c5af4bac5401d5ec8cc194b52f1a9c36089cb2",
+  "c": [
+    {
+      "t": "heading",
+      "level": 1,
+      "c": [
+        {
+          "t": "text",
+          "v": "Archived notice"
+        }
+      ]
+    },
+    {
+      "t": "epigraph",
+      "c": [
+        {
+          "t": "paragraph",
+          "c": [
+            {
+              "t": "text",
+              "v": "This element was in the register when this document was written."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

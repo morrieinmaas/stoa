@@ -404,6 +404,54 @@ versioning, this design reasons from archival epochs, and both land on "new
 version, new hash, both coexist, no migration." Two unrelated paths to the same
 rule is the strongest signal available that the rule is right.
 
+### 20. The pin cannot be governed by the thing it names
+
+Implementing finding 19 immediately produced a circularity, and it is the kind
+that would have made the field decorative.
+
+A document pinning register `55f0…` was validated against that register — and
+rejected, with `unknown field 'register' on document`. Correctly: that register
+was published before the field existed. But it means **every document pinning a
+register older than the field is invalid against the register it pins**, which
+is precisely the archival case the field was added for.
+
+**Fix.** `document.register` is the format's single meta-level field and is
+exempt from the unknown-field rule. A register cannot govern the field that
+names it without circularity.
+
+This is the same problem TSON answers with a meta-schema layer — "the schema
+names its meta-schema" — reached from the other direction and answered more
+cheaply, because Stoa needs exactly one such field rather than a general
+mechanism.
+
+**What it now does, end to end.** `spec/registers/` is a content-addressed
+archive of register versions, and `stoa0.py <doc> provenance` resolves a pin
+against it *locally*:
+
+```
+register claimed 55f02211fad6…        (51 elements, superseded)
+register current 7bf853f12779…        (50 elements)
+pin              resolved from the local archive
+validated against the pinned register:  0 errors
+validated against the current register: 1 errors
+reading          the document was valid when written and uses something the
+                 current register no longer has. This is what an epoch is for;
+                 it is not a defect in the document
+```
+
+That is the archival claim demonstrated rather than asserted, on a real
+superseded register — the one that still contained `epigraph` before the
+evidence gate removed it.
+
+**Where the Go analogy holds and where it breaks.** Go pins dependencies by
+`path + hash` and resolves the path over the network, through a proxy and a
+checksum database. The pinning half is right and is what this borrows: verify
+that what you have is what was meant. The resolution half is unavailable here —
+a document-controlled string that a client turns into a request is the covert
+channel the fetch boundary exists to close (design notes 6.3). So there is no
+path, no proxy and no checksum server: only a hash, and a local archive that
+either holds it or does not. An unresolvable pin is *reported*, never fetched.
+
 ## Where this leaves the freeze
 
 The first corpus did not falsify the vocabulary. The second one did, on the

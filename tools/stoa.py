@@ -185,6 +185,33 @@ def digest_hex(node):
     return structural_hash(node).hex()
 
 
+REGISTER_ARCHIVE = ROOT / "spec" / "registers"
+
+
+def register_for(digest):
+    """Load a register by content hash, from the local archive only.
+
+    This is the half of the idea that Go's module system gets right: pin by
+    content hash so that what you verify against is exactly what was meant.
+    It is deliberately missing the other half. Go pins `path + hash` and
+    *resolves the path over the network*; a document format cannot, because a
+    document-controlled string that a client turns into a request is the covert
+    channel the fetch boundary exists to close. So there is no path, no proxy
+    and no checksum server -- only a hash, and a local archive that either has
+    it or does not. An unresolvable pin is reported, never fetched.
+    """
+    if not isinstance(digest, str):
+        return None
+    p = REGISTER_ARCHIVE / f"{digest}.json"
+    if not p.is_file():
+        return None
+    got = Register(p)
+    # the archive is content-addressed, so verify rather than trust the filename
+    if register_digest(p) != digest:
+        raise ValueError(f"register archive {p.name} does not match its own hash")
+    return got
+
+
 def register_digest(path=REGISTER_PATH):
     """The content hash of the vocabulary register itself.
 
@@ -297,9 +324,14 @@ def validate(doc, reg):
         declared = spec.get("fields", {})
         present = fields(node)
 
-        # R4: no unknown fields
+        # R4: no unknown fields. `document.register` is exempt: it names the
+        # register that governs the document, so it cannot itself be governed
+        # by that register without circularity -- and a register that predates
+        # the field would otherwise reject every document pinning it, which is
+        # precisely the archival case the field exists for. This is the one
+        # meta-level field in the format. See m0/FINDINGS.md defect 20.
         for f in present:
-            if f not in declared:
+            if f not in declared and not (name == "document" and f == "register"):
                 err("R4", where, f"unknown field {f!r} on {name}")
 
         for fname, fspec in declared.items():

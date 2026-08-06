@@ -8,6 +8,7 @@ Commands:
     check      run the conformance ruleset
     contract   project to L0 and assert no content unit is lost
     merkle     Merkle root over block nodes, plus one excerpt proof
+    provenance check the document against the register it claims, offline
     l0         emit the L0 text projection
     project    emit the degraded L0 tree as canonical JSON
     all        canon, check, contract, merkle
@@ -92,6 +93,61 @@ def cmd_merkle(doc, reg):
           f"hashes ({len(proof) * 32} bytes)   verifies {ok}")
     print(f"tamper check     forged leaf verifies {tampered} (must be False)")
     return 0 if (ok and not tampered) else 1
+
+
+def cmd_provenance(doc, reg):
+    """Check a document against the register it claims, not the current one.
+
+    This is what makes `document.register` more than decoration: a document
+    archived in 2026 and read in 2036 can be validated against the vocabulary
+    it was actually written against, offline, without trusting that the reader
+    happens to hold the right one.
+    """
+    claimed = doc.get("register")
+    current = stoa.register_digest()
+    print(f"document digest  {stoa.digest_hex(doc)}")
+    print(f"register claimed {claimed or '(none — the document does not pin one)'}")
+    print(f"register current {current}")
+
+    if not claimed:
+        errs = [d for d in stoa.validate(doc, reg) if d.sev == "error"]
+        print(f"validated against current register: {len(errs)} errors")
+        print("note             an unpinned document is conforming, but its "
+              "conformance claim is only meaningful with out-of-band knowledge "
+              "of which vocabulary was current when it was written")
+        return 1 if errs else 0
+
+    if claimed == current:
+        errs = [d for d in stoa.validate(doc, reg) if d.sev == "error"]
+        print(f"pin              matches the current register")
+        print(f"validated        {len(errs)} errors")
+        return 1 if errs else 0
+
+    pinned = stoa.register_for(claimed)
+    if pinned is None:
+        print("pin              NOT RESOLVABLE from the local archive")
+        print("                 the client does not fetch it: a hash is not a "
+              "location, and resolving one would breach the fetch boundary")
+        errs = [d for d in stoa.validate(doc, reg) if d.sev == "error"]
+        print(f"validated against the current register instead: {len(errs)} errors")
+        print("note             this document may legitimately use elements "
+              "added or removed since; treat the result as advisory")
+        return 0
+
+    errs = [d for d in stoa.validate(doc, pinned) if d.sev == "error"]
+    cur_errs = [d for d in stoa.validate(doc, reg) if d.sev == "error"]
+    print(f"pin              resolved from the local archive "
+          f"({len(pinned.elements)} elements)")
+    print(f"validated against the pinned register:  {len(errs)} errors")
+    print(f"validated against the current register: {len(cur_errs)} errors")
+    if errs and not cur_errs:
+        print("reading          the document is valid now but was not valid "
+              "against the register it claims: the pin is wrong")
+    if cur_errs and not errs:
+        print("reading          the document was valid when written and uses "
+              "something the current register no longer has. This is what an "
+              "epoch is for; it is not a defect in the document")
+    return 1 if errs else 0
 
 
 def cmd_l0(doc, reg):
@@ -203,7 +259,7 @@ def cmd_registerhash(reg):
 
 COMMANDS = {"canon": cmd_canon, "check": cmd_check, "contract": cmd_contract,
             "merkle": cmd_merkle, "l0": cmd_l0, "project": cmd_project,
-            "all": cmd_all}
+            "provenance": cmd_provenance, "all": cmd_all}
 
 
 def main(argv):

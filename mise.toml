@@ -34,6 +34,18 @@ run = "python3 tools/structhash.py conformance/conformance-01.json"
 description = "Emit the L0 text projection"
 run = "python3 tools/stoa0.py conformance/conformance-01.json l0"
 
+[tasks.provenance]
+description = "Check a document against the register it claims, offline"
+run = "python3 tools/stoa0.py conformance/archived-01.json provenance"
+
+[tasks."archive-register"]
+description = "Snapshot the current register into the content-addressed archive"
+run = """
+h=$(python3 tools/stoa0.py registerhash)
+cp spec/vocabulary.json "spec/registers/$h.json"
+echo "archived $h"
+"""
+
 [tasks.surface]
 description = "M0c: surface fixed point, both directions"
 run = "python3 tools/surface.py conformance/conformance-01.json fixedpoint"
@@ -97,4 +109,4 @@ run = "python3 tools/selftest.py"
 
 [tasks.check]
 description = "Everything that does not touch the network"
-depends = ["canon", "validate", "negative", "contract", "merkle", "hash", "golden-check", "selftest", "surface", "fuzz"]
+depends = ["canon", "validate", "negative", "contract", "merkle", "hash", "golden-check", "selftest", "surface", "provenance", "fuzz"]

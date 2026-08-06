@@ -105,6 +105,15 @@ ENCODING INDEPENDENT True
   degradation totality over synthetic instances of all 23 elements above L0.
 - 5,000 generated hostile documents per fuzz run, 0 crashes. The first run
   found 272 in 3,000 — see `m0/FINDINGS.md` defect 12.
+- **Archival provenance, offline.** A document may pin the vocabulary register
+  it was written against by content hash (`document.register`).
+  `stoa0.py <doc> provenance` resolves that pin against a local
+  content-addressed archive and validates the document against *the register it
+  claims*, not the one you happen to hold. Demonstrated on a real superseded
+  register: `conformance/archived-01.json` is invalid against the current
+  vocabulary and valid against the one it names. The pin is never resolved over
+  a network — a hash is not a location, for the same reason renderers are named
+  by hash.
 - **Surface fixed point, both directions.** The conformance document written a
   second time in a CommonMark-contained surface syntax
   ([`conformance/conformance-01.stoa`](conformance/conformance-01.stoa), 63% of
@@ -206,6 +215,8 @@ spec/vocabulary.json          the register: normative, machine-readable
 spec/VOCABULARY.md            generated from it; do not edit by hand
 conformance/                  the conformance document, negative fixture, golden output
 conformance/conformance-01.stoa  the same document in the surface syntax; generated
+conformance/archived-01.json  a document pinned to a superseded register
+spec/registers/               content-addressed archive of register versions
 tools/                        throwaway M0 toolchain (Python, standard library only)
 corpus/RESULTS.md             corpus 1: administrative notices (Diavgeia)
 corpus/RESULTS-rfc.md         corpus 2: standards documents (IETF RFCs)

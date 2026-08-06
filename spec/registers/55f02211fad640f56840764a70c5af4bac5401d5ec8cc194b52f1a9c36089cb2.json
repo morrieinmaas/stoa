@@ -4,10 +4,10 @@
   "status": "provisional; L0 evidence-complete and ready to freeze (see spec/EVIDENCE.md)",
   "counts": {
     "L0": 30,
-    "L1": 10,
+    "L1": 11,
     "L2": 8,
     "L3": 2,
-    "total": 50,
+    "total": 51,
     "render_primitives": 5,
     "provisional": 2
   },
@@ -48,13 +48,9 @@
         "title": {
           "type": "text",
           "required": true
-        },
-        "register": {
-          "type": "hash",
-          "required": false
         }
       },
-      "note": "The root. Exactly one per document. title is metadata, not the first heading. `register` optionally names the vocabulary register this document was written against, by content hash. It is provenance, not negotiation: a client MUST NOT alter its behaviour based on it, and MUST NOT resolve it over a network -- it is a hash, never a location, for the same reason `rendering.renderer` is. An unrecognised register hash changes nothing, because unknown elements already render their fallback. It exists so that an archived document can state which vocabulary it conformed to, and so that a conformance claim is checkable years later rather than resting on out-of-band knowledge. Adopted after studying TSON, which reaches the same conclusion from the API-versioning side: a document names its schema, the schema names its meta-schema, and one hash verifies the chain."
+      "note": "The root. Exactly one per document. title is metadata, not the first heading."
     },
     {
       "n": "section",
@@ -540,6 +536,19 @@
       "fields": {}
     },
     {
+      "n": "epigraph",
+      "layer": 1,
+      "class": "block",
+      "children": "flow",
+      "degrades": "quote",
+      "fields": {
+        "source": {
+          "type": "text",
+          "required": false
+        }
+      }
+    },
+    {
       "n": "signature-block",
       "layer": 1,
       "class": "block",
@@ -829,11 +838,5 @@
     "required": "true if the field must be present",
     "enum": "optional: the complete set of permitted values",
     "range": "optional, integers only: inclusive [min, max]"
-  },
-  "authoring_rules": {
-    "absence-is-absence": "Absence of content is absence of a node. An element whose content is empty MUST be omitted rather than emitted with a child carrying the empty string. A required text field is non-empty (R8), so a producer that emits one has produced a non-conforming document. This applies to every producer: a degradation projection, an importer from another format, and a surface parser alike. Independently rediscovered three times during M0; see m0/FINDINGS.md defects 3, 10 and 18.",
-    "projection-conforms": "Projecting a conforming document MUST produce a conforming document. The degradation graph and the content models are therefore not independent: if X degrades to Y, no element permitting X as a child may forbid Y as a child.",
-    "identifiers-are-not-consumed": "Resolving an identifier to a human label MUST NOT discard the identifier. Labels are not stable and are not what anything cites.",
-    "register-hash-is-provenance": "A document MAY name the vocabulary register it was written against, by content hash, in `document.register`. A client MUST NOT alter its behaviour based on that value, MUST NOT refuse a document because the hash is unfamiliar, and MUST NOT resolve it over a network. Forward compatibility comes from unknown elements rendering their fallback; a version field a client acts on would replace that with a compatibility matrix, which is the thing this design exists to avoid. `document.register` is the format's single meta-level field: it is exempt from the unknown-field rule, because a register cannot govern the field that names it, and a register published before the field existed would otherwise reject every document that pins it."
   }
 }
