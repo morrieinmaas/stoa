@@ -369,6 +369,41 @@ while trees do not: an emitter and a parser can be consistently wrong together.
 Any future surface must pass both, and the harness in `tools/surface.py` is
 reusable for that.
 
+### 19. A document could not say which vocabulary it was written against
+
+Found by reading TSON (Typed Schema Object Notation), an unrelated project
+solving schema versioning for APIs. Its central move:
+
+> A document names its schema, the schema names its meta-schema; **one hash
+> verifies the whole chain.**
+
+Stoa had the document digest and the content-hash-pinned renderer and theme,
+and no way for a document to state which register it conformed to. Which means
+an archived document's conformance claim rested on out-of-band knowledge: you
+had to already know which vocabulary version was current when it was written.
+For a format whose case is archival integrity, that is a gap in exactly the
+wrong place.
+
+**Fix.** `document.register` — optional, typed `hash`, naming the vocabulary
+register by content hash.
+
+**The constraint that makes it safe.** A version field that clients act on
+becomes a compatibility matrix, which is precisely what the layer model exists
+to avoid (design notes 9.3). So the rule is normative and narrow: a client MUST
+NOT alter its behaviour based on the value, MUST NOT refuse a document because
+the hash is unfamiliar, and MUST NOT resolve it over a network. It is a hash,
+never a location, for the same reason `rendering.renderer` is. Forward
+compatibility still comes from unknown elements rendering their fallback. The
+field is provenance, and provenance only.
+
+**Why it is worth recording as a finding rather than a feature.** It is the
+only change in this project that came from reading another design rather than
+from running a corpus, and it arrived with about three weeks to spare before a
+permanent freeze. Convergent evidence is real evidence: TSON reasons from API
+versioning, this design reasons from archival epochs, and both land on "new
+version, new hash, both coexist, no migration." Two unrelated paths to the same
+rule is the strongest signal available that the rule is right.
+
 ## Where this leaves the freeze
 
 The first corpus did not falsify the vocabulary. The second one did, on the

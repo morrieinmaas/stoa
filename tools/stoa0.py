@@ -12,6 +12,7 @@ Commands:
     project    emit the degraded L0 tree as canonical JSON
     all        canon, check, contract, merkle
     register   (no document) print the vocabulary register as markdown
+    registerhash (no document) print the register's own content hash
 """
 
 import sys
@@ -195,6 +196,11 @@ def cmd_register(reg):
     return 0
 
 
+def cmd_registerhash(reg):
+    print(stoa.register_digest())
+    return 0
+
+
 COMMANDS = {"canon": cmd_canon, "check": cmd_check, "contract": cmd_contract,
             "merkle": cmd_merkle, "l0": cmd_l0, "project": cmd_project,
             "all": cmd_all}
@@ -204,6 +210,8 @@ def main(argv):
     reg = stoa.Register()
     if len(argv) >= 2 and argv[1] == "register":
         return cmd_register(reg)
+    if len(argv) >= 2 and argv[1] == "registerhash":
+        return cmd_registerhash(reg)
     if len(argv) < 3 or argv[2] not in COMMANDS:
         print(__doc__)
         return 2

@@ -296,6 +296,21 @@ implement it. This is the rule that makes §3 load-bearing rather than
 decorative, and it is the reason there is no negotiation: there is nothing to
 negotiate about.
 
+### 9.2a Naming the register, without negotiating on it
+
+A document may pin the vocabulary register it was written against, by content
+hash, in `document.register`. This is provenance: it lets an archived document
+state which vocabulary its conformance claim was made against, instead of that
+resting on out-of-band knowledge.
+
+It is deliberately inert. A client MUST NOT act on the value, MUST NOT refuse an
+unfamiliar hash, and MUST NOT resolve it over a network — a hash, never a
+location, for the same reason renderers are named by hash (§6.3). Forward
+compatibility continues to come from §9.2, not from this field.
+
+The distinction between *stating* a version and *negotiating* on one is the
+whole of §9.3, and this field sits firmly on the stating side.
+
 ### 9.3 Why the version field is advisory
 
 A version field that clients act on becomes a compatibility matrix, and a

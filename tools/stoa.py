@@ -185,6 +185,19 @@ def digest_hex(node):
     return structural_hash(node).hex()
 
 
+def register_digest(path=REGISTER_PATH):
+    """The content hash of the vocabulary register itself.
+
+    A document may pin this in `document.register` to record which vocabulary
+    it was written against. Provenance only -- see the `register-hash-is-
+    provenance` rule: a client never acts on it and never resolves it.
+    """
+    raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    return hashlib.sha256(
+        json.dumps(nfc_tree(raw), sort_keys=True, separators=(",", ":"),
+                   ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
 # --------------------------------------------------------------------------
 # validator
 # --------------------------------------------------------------------------

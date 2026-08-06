@@ -301,6 +301,34 @@ def test_producers_emit_no_empty_nodes():
           str(bad))
 
 
+def test_register_hash_is_provenance_only():
+    """The register hash must be accepted, never acted on, never resolved."""
+    h = stoa.register_digest()
+    if len(h) != 64 or not all(c in "0123456789abcdef" for c in h):
+        check("register digest is a sha-256 hex string", False, h)
+        return
+    base = {"t": "document", "id": "urn:stoa:x", "lang": "en", "title": "t",
+            "c": [{"t": "paragraph", "c": [{"t": "text", "v": "x"}]}]}
+    pinned = dict(base, register=h)
+    stale = dict(base, register="f" * 64)
+    for name, d in (("current", pinned), ("unfamiliar", stale)):
+        errs = [x for x in stoa.validate(d, REG) if x.sev == "error"]
+        if errs:
+            check(f"a document pinning an {name} register hash validates",
+                  False, str(errs[0]))
+            return
+    # it must not be a location
+    bad = dict(base, register="https://example.org/vocabulary.json")
+    if not [x for x in stoa.validate(bad, REG) if x.sev == "error"]:
+        check("register must be a hash, not a location", False)
+        return
+    # and it must not change the digest of the content it describes
+    if stoa.digest_hex(base) == stoa.digest_hex(pinned):
+        check("pinning the register changes the document digest", False)
+        return
+    check("register hash: accepted, unfamiliar is fine, never a location", True)
+
+
 def test_float_is_unrepresentable():
     import json
     doc = json.loads('{"t":"quantity","significand":1.5,"scale":2,"unit":"E"}',
