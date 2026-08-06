@@ -219,8 +219,6 @@ m0/FINDINGS.md                what closing the vocabulary actually surfaced
 docs/STATE.md                 where things stand, what is next, funding position
 docs/GOVERNANCE.md            licensing, custody, amendment process, succession
 docs/ROADMAP.md               milestones
-docs/FUNDING.md               the funding application, written as a form answer sheet
-docs/APPLYING.md              how to actually submit it: runbook and checklist
 docs/LICENSING.md             licence split and rationale
 docs/NAME.md                  naming decision and how to undo it
 ```

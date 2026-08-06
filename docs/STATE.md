@@ -115,45 +115,14 @@ A high coverage number is also the single most persuasive line available for a f
 
 ## 7. Funding
 
-### Position
+Position, targets and the application itself are kept out of this repository:
+they reference client engagements and the maintainer's business details,
+neither of which belongs in a public standards repository.
 
-**NLnet is the right funder and the timing is unusually good.** NLnet has funded protocol and standards work for individuals for a decade, explicitly at the pre-adoption R&D stage, which is exactly the stage this is at. Grants run €5,000 to €50,000 for a first proposal, up to €150,000 subsequently, with a €500,000 lifetime cap. Projects are one to twelve months, the main application is about two pages, and individuals are eligible, so no company structure is required to apply.
-
-**The window.** The NGI Zero Commons Fund closed its thirteenth and final call on 1 June 2026. NLnet paused general submissions to take stock and prepare the transition to the Open Internet Stack, prompted by the Commission's Tech Sovereignty package of 3 June 2026. Regular calls reopen after the European summer, alongside three new programmes under the Open Internet Stack umbrella, and NLnet has been selected to run a €10M Open Internet Stack cascade funding call plus two pilots. Practically: applications reopen around September 2026, which is roughly the time it takes to finish the corpus test and M1.
-
-**Strategic fit.** The EU Open Source Strategy names support for new open source building blocks in critical technology areas including future internet architectures, and long-term stewardship through an Open Source Maintenance Instrument. A document format built for European public sector accessibility, verifiable public records, and archival integrity is close to a poster child for that narrative. Write the application in that vocabulary: sovereignty, interoperability, digital commons, reusable public digital assets.
-
-### What makes this application unusual
-
-Most two-page applications describe intended work. This one can attach work already done: a closed vocabulary register, a conformance document exercising all 50 elements, a ruleset catching 13 deliberate faults, a degradation contract verified over 121 content units, encoding independence demonstrated across two serialisations, and a written governance document answering the stewardship question. Very few proposals can answer stewardship at all.
-
-### Scoping the ask
-
-Scope to what is completable in six to twelve months, not to the vision:
-
-- Reference compiler in Rust (core types, canonical encoding, parser, validator).
-- Conformance suite and test corpus.
-- Accessibility attestation toolchain and CI action.
-- Corpus validation against a real public register.
-
-Not "the format." Not "a new internet."
-
-### Honest reading of the money
-
-NLnet pays cost-recovery, not commercial rates, so €50,000 over six to twelve months is a fraction of a consulting day rate. That is fine and it is the correct use of it: the grant funds the parts no client will ever pay for, meaning the specification and the conformance suite, while paid pilot work with a public body funds the rest.
-
-The larger asset is not the money. It is **legitimacy transfer**. Being an Open Internet Stack grantee is a citable credential in the room where a public body decides whether to depend on a format written by one person, which is the same question the governance document answers. It also compounds: the first grant is a rung toward €150,000 follow-ons against the lifetime cap, not a payout.
-
-### Other routes
-
-- **A paid pilot with one public body** is better money and much better validation than any grant, and it supplies the thing a grant cannot: evidence somebody wanted it.
-- **Horizon Europe Cluster 4 Open Internet Stack** calls are consortium-scale rather than solo, but joining an existing consortium is plausible later.
-- **Greek and regional programmes** (ESPA cycles, Region of Crete) suit the applied pilot rather than the format itself.
-- **Archival and accessibility bodies** (national libraries, digital preservation organisations) are small money but strong legitimacy, and the archival claim is genuinely aimed at them.
-
-### One thing to check separately
-
-How grant income to an individual interacts with the Greek relocation and IKE timing. It differs depending on whether the application is personal or through a company, and it is worth knowing before applying rather than after.
+What is public and relevant here: the work is licensed so that anyone may
+implement it without permission (`LICENSING.md`), governance and succession are
+answered in advance (`GOVERNANCE.md`), and every figure quoted anywhere about
+this project is reproduced by `mise run check` and `mise run corpora`.
 
 ## 8. Risks, ranked
 

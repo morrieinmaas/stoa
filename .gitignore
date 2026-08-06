@@ -49,6 +49,13 @@ node_modules/
 secrets.*
 credentials.*
 
+# --- Not for publication -----------------------------------------------------
+# The funding application and its runbook name client work under NDA, the
+# applicant's business details, and funding strategy. None of that belongs in a
+# public standards repository. Keep them here, version them separately if you
+# want history.
+private/
+
 # --- Fetched corpora --------------------------------------------------------
 # Cached upstream response bodies. Not committed: they are large, they are not
 # ours to redistribute, and the point is that the measurement is reproducible
