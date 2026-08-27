@@ -226,6 +226,60 @@ def register_digest(path=REGISTER_PATH):
 
 
 # --------------------------------------------------------------------------
+# the L0 freeze
+# --------------------------------------------------------------------------
+
+def l0_closure(raw):
+    """The part of the register that determines what L0 means.
+
+    The L0 element records, the shared definitions those records name, and the
+    global rules that constrain how any element is read.
+
+    `field_types` and `content_models` are included *by reference* rather than
+    wholesale: adding a type or a model that no L0 element names does not
+    change what L0 means, and a freeze check that cried wolf would be
+    negotiated away inside a year. `field_spec` and `authoring_rules` are
+    included wholesale, because they constrain every element including the
+    frozen ones -- a new global rule changes L0 even though it touches no L0
+    record.
+
+    Excluded, because all of them move without L0 moving: render primitives
+    (L3), the counts block, the version, the status, and the freeze record.
+    """
+    l0 = sorted((e for e in raw["elements"] if e["layer"] == 0),
+                key=lambda e: e["n"])
+    types, models = set(), set()
+    for e in l0:
+        children = e.get("children", "none")
+        # an explicit list of permitted child names *is* the "list" model
+        models.add("list" if isinstance(children, list) else children)
+        for f in e.get("fields", {}).values():
+            types.add(f["type"])
+    return {
+        "elements": l0,
+        "field_types": {k: v for k, v in raw["field_types"].items()
+                        if k in types},
+        "content_models": {k: v for k, v in raw["content_models"].items()
+                           if k in models},
+        "field_spec": raw["field_spec"],
+        "authoring_rules": raw["authoring_rules"],
+    }
+
+
+def l0_digest(path=REGISTER_PATH):
+    """The content hash of frozen L0.
+
+    The same recipe as `register_digest`, over the closure rather than over the
+    whole register, so that L1 and above stay additive without disturbing it.
+    """
+    raw = json.loads(Path(path).read_text(encoding="utf-8"))
+    return hashlib.sha256(
+        json.dumps(nfc_tree(l0_closure(raw)), sort_keys=True,
+                   separators=(",", ":"),
+                   ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
+# --------------------------------------------------------------------------
 # validator
 # --------------------------------------------------------------------------
 

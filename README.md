@@ -7,12 +7,14 @@ Not a protocol, not a browser, not an alternative internet. The closest
 structural analogue is PDF/A: a constrained format defined by what it
 guarantees rather than by what it can express.
 
-**Status:** M0 complete. A closed vocabulary register, design notes, a working
-throwaway toolchain, and five corpus coverage runs over 138 real public
-documents in five genres. One of those corpora falsified a bet the design had
-written down, which is what it was for. Not a specification, not a reference
-implementation. Nothing here is stable, and **L0 is not frozen** — the remaining
-gate is a judgement, not a measurement.
+**Status:** M0 complete, and **L0 was frozen on 27 August 2026** — permanently,
+enforced by a content hash that `mise run check` asserts. A closed vocabulary
+register, design notes, a working throwaway toolchain, and five corpus coverage
+runs over 138 real public documents in five genres. One of those corpora
+falsified a bet the design had written down, which is what it was for. Not a
+specification, not a reference implementation: freezing L0 fixes the floor of
+the format, not the maturity of this repository. The freeze record, including
+the risks knowingly accepted, is [`docs/FREEZE.md`](docs/FREEZE.md).
 
 ---
 
@@ -385,18 +387,33 @@ formats die: they die through the escape hatch, the escape hatch opens one
 reasonable-sounding element at a time, and **a persuasive argument cannot
 satisfy a requirement to produce two unrelated bodies of real documents.**
 
-## The one thing standing between here and freezing L0
+## L0 is frozen
 
-Nothing mechanical. Three corpora across three genres are at 100% on every
-component, every L0 element is corpus-backed, and the one bet that was
-falsified (superscripts) has been fixed by adding `power`.
+Taken deliberately on 27 August 2026, not reached by attrition. The full record
+is [`docs/FREEZE.md`](docs/FREEZE.md); the short version:
 
-What is left is a judgement call, not a measurement: four L1 elements
-(`contents`, `admonition`) are still exercised only by
-the conformance document. L1 is additive-only rather than frozen, so an
-unearned element there is recoverable — unlike at L0. The freeze is a decision
-the maintainer should now take deliberately rather than a task waiting on
-evidence. See `spec/EVIDENCE.md` and `docs/STATE.md`.
+```
+L0 elements      30
+frozen           2026-08-27
+digest           269d4dce3149f8f2102d9d85d388bc13b162962cd21907e110f2c6e49f84f194
+L0 FREEZE        intact
+```
+
+The digest covers the L0 element records and the definitions they rest on — the
+field types and content models they name, the field spec, the global authoring
+rules — and deliberately nothing else, so L1 and above stay additive without
+disturbing it. `mise run check` fails if it moves. `tools/selftest.py` asserts
+the check in both directions: eight mutations that must break it, six that must
+not, because a freeze check that cried wolf would be argued away inside a year.
+
+**Two of the 30 were frozen on one genre each,** and the record says so rather
+than averaging it away: `media` (scholarly articles only) and `quantity`
+(administrative notices only). The reasoning for admitting each, and the four
+other risks accepted on the day, are §4 and §8 of the freeze record.
+
+What is not frozen: L1 and L2 remain additive-only, L3 remains provisional, and
+`contents` and `admonition` are still exercised only by the conformance
+document — knowingly unearned, at the layer where that is survivable.
 
 ## Licensing
 

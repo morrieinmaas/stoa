@@ -113,19 +113,17 @@ def main():
           "exercised by a document nobody wrote for this project.\n")
     if fixture_only:
         w("## Elements resting on assertion\n")
-        w("These are L0 or L1 and no real document in either corpus used them.\n")
+        w("These are L0 or L1 and no document in any corpus used them.\n")
         w("Read this as a statement about the corpora, not automatically about "
-          "the elements. Neither genre chosen so far contains a footnote or an "
-          "image: the first is JSON metadata wrapped around a PDF, and RFCs are "
-          "text-only by tradition and cite rather than footnote. That is a "
-          "corpus artifact, and it is exactly why the verdict is *unproven* "
-          "rather than *unnecessary*.\n")
-        w("It is still a gap, and it is precise about what would close it: a "
-          "third genre containing footnotes and figures. Legislation with "
-          "footnoted recitals, or scholarly articles in JATS, would settle all "
-          "three L0 entries at once. Until then these elements rest on the "
-          "author's judgement, and after the freeze that judgement is "
-          "permanent.\n")
+          "the elements: an element no sampled genre happened to need is "
+          "*unproven*, which is not the same as *unnecessary*. It is still a "
+          "gap, and the gate is symmetrical — `tab-group`, `tab` and `epigraph` "
+          "were removed when the corpora produced none of them.\n")
+        w("The layer decides how much this costs. L0 is frozen (`docs/FREEZE.md`), "
+          "so an unearned element there is permanent; L1 and L2 are additive "
+          "only, so an unearned element there is still removable. Everything "
+          "listed below is L1 or above, which is why it is recorded rather "
+          "than blocking.\n")
         for n, layer, _, _ in fixture_only:
             note = reg[n].get("note", "")
             w(f"- **`{n}`** (L{layer}) — {note[:160] if note else 'no rationale recorded'}")
@@ -142,7 +140,7 @@ def main():
     for n, layer, verdict, where in rows:
         w(f"| `{n}` | L{layer} | {verdict} | {where} |")
     w("")
-    w(f"Union across both corpora: **{len(union)} of {total}** elements "
+    w(f"Union across all corpora: **{len(union)} of {total}** elements "
       f"exercised by real documents.\n")
 
     text = "\n".join(out)

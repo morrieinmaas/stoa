@@ -45,6 +45,8 @@ Trademark policy, in one line: use of the name for a conforming implementation, 
 
 **L0 is frozen and this process cannot alter it.** No amendment, at any point, in any epoch. If L0 is wrong, the answer is a new epoch (9.5) coexisting with this one, never a change to this one. This paragraph is the load-bearing sentence in the document.
 
+It stopped being a promise on **27 August 2026**, when L0 was frozen at digest `269d4dce3149f8f2102d9d85d388bc13b162962cd21907e110f2c6e49f84f194` over 30 elements. The digest is pinned in the register, `mise run check` asserts it, and `tools/selftest.py` asserts that the assertion bites where it should and stays quiet where it should not. An exception negotiated into that check would be an amendment to L0 by another route, and is refused on the same grounds. The record of what was frozen, on what evidence, and what risks were knowingly accepted is `FREEZE.md`.
+
 For everything else:
 
 1. **Proposal.** A written case containing: the need, at least three real documents that cannot be expressed without it, the proposed element or field, and its normative degradation into the layer below.

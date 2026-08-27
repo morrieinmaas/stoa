@@ -13,11 +13,11 @@ What justifies each element in the register. A closed vocabulary is only defensi
 
 ## Elements resting on assertion
 
-These are L0 or L1 and no real document in either corpus used them.
+These are L0 or L1 and no document in any corpus used them.
 
-Read this as a statement about the corpora, not automatically about the elements. Neither genre chosen so far contains a footnote or an image: the first is JSON metadata wrapped around a PDF, and RFCs are text-only by tradition and cite rather than footnote. That is a corpus artifact, and it is exactly why the verdict is *unproven* rather than *unnecessary*.
+Read this as a statement about the corpora, not automatically about the elements: an element no sampled genre happened to need is *unproven*, which is not the same as *unnecessary*. It is still a gap, and the gate is symmetrical — `tab-group`, `tab` and `epigraph` were removed when the corpora produced none of them.
 
-It is still a gap, and it is precise about what would close it: a third genre containing footnotes and figures. Legislation with footnoted recitals, or scholarly articles in JATS, would settle all three L0 entries at once. Until then these elements rest on the author's judgement, and after the freeze that judgement is permanent.
+The layer decides how much this costs. L0 is frozen (`docs/FREEZE.md`), so an unearned element there is permanent; L1 and L2 are additive only, so an unearned element there is still removable. Everything listed below is L1 or above, which is why it is recorded rather than blocking.
 
 - **`contents`** (L1) — Table of contents. Degrades to an ordinary list of intra-document references.
 - **`admonition`** (L1) — Degrades to a section whose heading is the kind label, so the salience survives as words rather than as colour.
@@ -77,5 +77,5 @@ It is still a gap, and it is precise about what would close it: a third genre co
 | `payload` | L3 | PROVISIONAL | — |
 | `rendering` | L3 | PROVISIONAL | — |
 
-Union across both corpora: **48 of 50** elements exercised by real documents.
+Union across all corpora: **48 of 50** elements exercised by real documents.
 

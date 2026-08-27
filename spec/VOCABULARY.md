@@ -3,7 +3,7 @@
 
 Register `stoa-vocabulary`, version `0.1.0-m0`.
 
-**Status:** provisional; L0 evidence-complete and ready to freeze (see spec/EVIDENCE.md)
+**Status:** L0 frozen 2026-08-27; L1 and above additive only (see docs/FREEZE.md)
 
 30 elements at L0, 10 at L1, 8 at L2, 2 at L3. Total 50, plus 5 render primitives that are not document elements.
 
@@ -38,7 +38,7 @@ These bind anything that emits a conforming tree: a degradation projection, an i
 
 ## L0 — content
 
-Frozen on release. No amendment process can alter this layer; if L0 is wrong the answer is a new epoch, never a change to this one.
+**Frozen 2026-08-27.** No amendment process can alter this layer; if L0 is wrong the answer is a new epoch, never a change to this one. The freeze covers these records and the definitions they rest on, at content hash `269d4dce3149f8f2102d9d85d388bc13b162962cd21907e110f2c6e49f84f194`, asserted by `mise run l0freeze`. Record: `docs/FREEZE.md`.
 
 | Element | Class | Children | Degrades to | Fields |
 |---|---|---|---|---|

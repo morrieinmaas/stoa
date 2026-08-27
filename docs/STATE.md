@@ -33,6 +33,8 @@ Decisions that survived scrutiny and are unlikely to move.
 
 **The four layers, and the degradation contract.** L0 content (frozen), L1 structure, L2 interaction, L3 typed rendering. Every element above L0 projects into the layer below, in band, so a client implementing only L0 gets complete meaning. This one rule does double duty: it is the accessibility guarantee and it is the versioning mechanism, because a client that has never heard of an element added years later still renders it correctly via its fallback.
 
+**L0 is frozen.** Taken deliberately on 27 August 2026: 30 elements, digest `269d4dce3149f8f2102d9d85d388bc13b162962cd21907e110f2c6e49f84f194`, pinned in the register and asserted by `mise run check`. The digest covers the L0 records plus the definitions they rest on and nothing else, so L1 and above stay additive without disturbing it, and `tools/selftest.py` asserts the check bites in both directions. Two of the 30 (`media`, `quantity`) were frozen on one genre each and the record says so rather than averaging it away. `FREEZE.md`.
+
 **Versioning: freeze the floor, grow the ceiling.** L0 is closed permanently. L1 and above are additive only. Unknown elements are specified from 1.0 as "render the fallback." The version field is advisory and clients never negotiate on it. A genuine break becomes an epoch that coexists rather than a migration.
 
 **The reverse bridge.** No forward bridge, ever. A publisher serves the canonical form and a prerendered static HTML projection from the same URL by content negotiation, and the same negotiation serves `text/markdown` (the CommonMark-contained surface) and `text/plain` (the L0 projection). Every representation is generated from the tree, so none can drift from another. Adoption is unilateral, there is no two-sided market to bootstrap, and the client is not the product.
@@ -70,11 +72,9 @@ M0 found four defects that were free to fix then and would have been impossible 
 
 ## 4. What is open
 
-**Blocking the L0 freeze:**
+**Settled since this section was written:** the L0 freeze, taken 27 August 2026. The two elements that did not clear the two-genre gate (`media`, `quantity`) were frozen anyway, on reasoning recorded in `FREEZE.md` §4, together with the four other risks accepted on the day.
 
-1. **Nothing mechanical — the freeze is now a judgement.** Five corpora across five genres are at 100% on every component. Every L0 element is exercised by real documents and 28 of 30 pass the two-genre evidence gate; the two that do not (`media`, `quantity`) each name the genre that would close them. L1 and L2 are additive-only, so an unearned element there is recoverable in a way an L0 one is not. Freezing L0 is now a decision to take deliberately rather than a task waiting on evidence. See `../spec/EVIDENCE.md`.
-
-**Not blocking the freeze:**
+**Open:**
 
 2. Type identifier namespace. Who names `time-series`, and how are collisions handled.
 3. Theme and renderer distribution. Content-addressed, but discovered how. Same question as 2.
@@ -89,12 +89,13 @@ M0 found four defects that were free to fix then and would have been impossible 
 ## 5. Immediate next actions, in order
 
 1. ~~Run the corpus test.~~ Done, five times over. Seventeen defects found and fixed; see `../m0/FINDINGS.md`.
-2. **Decide whether to freeze L0.** Nothing is blocking it mechanically. The open question is whether 30 of 30 exercised and 28 of 30 twice-exercised is enough, given that after the freeze the only remedy is a new epoch.
+2. ~~**Decide whether to freeze L0.**~~ Done, 27 August 2026. 30 of 30 exercised and 28 of 30 twice-exercised was judged enough; `FREEZE.md` records the two that were not and why they were frozen regardless.
 3. ~~**Write the conformance document a second time in a surface syntax.**~~ Done (M0c). Both fixed points hold over all 50 elements; the surface document is `../conformance/conformance-01.stoa`.
 4. **Do the governance chores**: register the trademark, mirror the repository, deposit with Software Heritage and Zenodo for a DOI. An afternoon, and the DOI is what makes it citable in a tender.
 5. **Open one conversation with a public body about a paid pilot.** This is the single highest-value remaining action and no amount of further measurement substitutes for it.
-6. **Start M1** (core types, encoding, parser, validator, HTML emitter, in Rust).
-7. **Submit the NLnet application** when the general call reopens — see section 7 and `FUNDING.md` section 9.
+6. **Serve the reverse bridge.** One URL, real `Accept` negotiation across the canonical tree, `text/html`, `text/markdown` (the surface) and `text/plain` (the L0 projection) — design notes §11.3. Every representation already exists as an emitter; what does not exist is a URL, and after five corpora there is still nothing anyone can look at. It also turns §11.3's two claims into assertions: that no representation can drift, and that the markdown served converts back to the same structural digest.
+7. **Start M1** (core types, encoding, parser, validator, HTML emitter, in Rust).
+8. **Submit the NLnet application** when the general call reopens — see section 7 and `FUNDING.md` section 9.
 
 ## 6. The corpus test (original plan, retained for the record)
 

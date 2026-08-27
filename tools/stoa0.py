@@ -212,9 +212,18 @@ def cmd_register(reg):
     for layer in (0, 1, 2, 3):
         print(f"## {layer_names[layer]}\n")
         if layer == 0:
-            print("Frozen on release. No amendment process can alter this "
-                  "layer; if L0 is wrong the answer is a new epoch, never a "
-                  "change to this one.\n")
+            pin = reg.raw.get("l0", {})
+            if pin.get("frozen"):
+                print(f"**Frozen {pin['frozen']}.** No amendment process can "
+                      "alter this layer; if L0 is wrong the answer is a new "
+                      "epoch, never a change to this one. The freeze covers "
+                      "these records and the definitions they rest on, at "
+                      f"content hash `{pin['digest']}`, asserted by "
+                      "`mise run l0freeze`. Record: `docs/FREEZE.md`.\n")
+            else:
+                print("Frozen on release. No amendment process can alter this "
+                      "layer; if L0 is wrong the answer is a new epoch, never "
+                      "a change to this one.\n")
         print("| Element | Class | Children | Degrades to | Fields |")
         print("|---|---|---|---|---|")
         for e in reg.by_layer(layer):
@@ -252,6 +261,29 @@ def cmd_register(reg):
     return 0
 
 
+def cmd_l0freeze(reg):
+    """Assert that frozen L0 has not moved."""
+    actual = stoa.l0_digest()
+    pin = reg.raw.get("l0", {})
+    n = sum(1 for e in reg.raw["elements"] if e["layer"] == 0)
+    print(f"L0 elements      {n}")
+    print(f"frozen           {pin.get('frozen', '-- NOT FROZEN --')}")
+    print(f"pinned digest    {pin.get('digest', '--')}")
+    print(f"computed digest  {actual}")
+    if not pin.get("digest"):
+        print("L0 FREEZE        no pin in the register")
+        return 1
+    ok = pin["digest"] == actual
+    print(f"L0 FREEZE        {'intact' if ok else 'BROKEN'}")
+    if not ok:
+        print("\nL0 is frozen permanently: docs/FREEZE.md, and the load-bearing")
+        print("sentence in docs/GOVERNANCE.md section 4. This digest changing means an")
+        print("L0 element, a field type or content model an L0 element names, the field")
+        print("spec, or a global authoring rule has moved. The remedy is a new epoch")
+        print("coexisting with this one, never an edit to this one.")
+    return 0 if ok else 1
+
+
 def cmd_registerhash(reg):
     print(stoa.register_digest())
     return 0
@@ -268,6 +300,8 @@ def main(argv):
         return cmd_register(reg)
     if len(argv) >= 2 and argv[1] == "registerhash":
         return cmd_registerhash(reg)
+    if len(argv) >= 2 and argv[1] == "l0freeze":
+        return cmd_l0freeze(reg)
     if len(argv) < 3 or argv[2] not in COMMANDS:
         print(__doc__)
         return 2

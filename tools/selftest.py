@@ -385,6 +385,81 @@ def test_float_is_unrepresentable():
         check("a float cannot be hashed", True)
 
 
+def test_l0_freeze_scope():
+    """The freeze check has to bite, and only where it should.
+
+    A freeze digest that never moves is decoration. One that moves whenever L1
+    is extended would be argued away the first time it cried wolf, and the
+    freeze with it. Both directions are asserted.
+    """
+    import copy
+    import hashlib
+    import json as _json
+    raw = _json.loads(stoa.REGISTER_PATH.read_text(encoding="utf-8"))
+    base = stoa.l0_digest()
+    check("the register's own L0 pin matches the register",
+          raw.get("l0", {}).get("digest") == base)
+
+    def moved(mutate):
+        r = copy.deepcopy(raw)
+        mutate(r)
+        return base != hashlib.sha256(_json.dumps(
+            stoa.nfc_tree(stoa.l0_closure(r)), sort_keys=True,
+            separators=(",", ":"),
+            ensure_ascii=False).encode("utf-8")).hexdigest()
+
+    def el(r, layer, n=None):
+        return next(e for e in r["elements"]
+                    if e["layer"] == layer and (n is None or e["n"] == n))
+
+    breaks = {
+        "an L0 note is edited":
+            lambda r: el(r, 0, "paragraph").__setitem__("note", "x"),
+        "an L0 element is removed":
+            lambda r: r["elements"].remove(el(r, 0, "quantity")),
+        "an L0 element is added":
+            lambda r: r["elements"].append({"n": "zz", "layer": 0,
+                                            "class": "block",
+                                            "children": "text", "fields": {}}),
+        "a required L0 field becomes optional":
+            lambda r: el(r, 0, "media")["fields"]["alt"].__setitem__(
+                "required", False),
+        "a field type an L0 element names is redefined":
+            lambda r: r["field_types"].__setitem__("text", "anything"),
+        "a content model an L0 element names is redefined":
+            lambda r: r["content_models"].__setitem__("flow", "anything"),
+        "a global authoring rule is added":
+            lambda r: r["authoring_rules"].__setitem__("zz", "x"),
+        "the field spec changes":
+            lambda r: r["field_spec"].__setitem__("required", "x"),
+    }
+    holds = {
+        "an L1 element is added":
+            lambda r: r["elements"].append({"n": "zz", "layer": 1,
+                                            "class": "block",
+                                            "children": "flow", "fields": {},
+                                            "degrades": "section"}),
+        "an L2 note is edited":
+            lambda r: el(r, 2).__setitem__("note", "x"),
+        "an L3 render primitive changes":
+            lambda r: r["render_primitives"][0].__setitem__("note", "x"),
+        "the version is bumped":
+            lambda r: r.__setitem__("version", "9"),
+        "the freeze record itself is edited":
+            lambda r: r["l0"].__setitem__("note", "x"),
+        # `decimal` is described in field_types but named by no element at any
+        # layer -- quantity carries an integer significand and scale instead.
+        # Out of the closure by the rule, and recorded here so that stays a
+        # decision rather than an accident.
+        "a field type no L0 element names is redefined":
+            lambda r: r["field_types"].__setitem__("decimal", "x"),
+    }
+    for name, mut in breaks.items():
+        check(f"L0 freeze breaks when {name}", moved(mut))
+    for name, mut in holds.items():
+        check(f"L0 freeze holds when {name}", not moved(mut))
+
+
 def main():
     print("stoa toolchain self-test\n")
     for fn in sorted(
