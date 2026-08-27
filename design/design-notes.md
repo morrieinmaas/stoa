@@ -415,7 +415,46 @@ Three consequences, all of them load-bearing for adoption:
    a tree that cannot express a third-party fetch, the projection cannot contain
    one either.
 
-### 11.3 The stranded reader
+### 11.3 Negotiated representations
+
+One URL, one document, several representations, every one of them generated
+from the same tree. None is a second copy that an author maintains.
+
+| `Accept` | Representation |
+|---|---|
+| the canonical media type | the canonical tree |
+| `text/html` | the prerendered static HTML projection |
+| `text/markdown` | the reference surface (§8) |
+| `text/plain` | the L0 text projection |
+
+The markdown row is the one that needs an argument, because serving markdown by
+content negotiation is already a convention with advocates of its own, made on
+grounds this design agrees with. Meeting it costs one content type, and it makes
+the relationship additive rather than competitive: a consumer that wants only
+prose gets what it would have got anywhere else, and a consumer that wants a
+declared structure, an exact quantity or a verifiable excerpt has somewhere
+further to go.
+
+Two properties come free here and are not available to a publisher keeping a
+markdown copy by hand:
+
+1. **It cannot drift.** The surface is generated from the tree being served.
+   This is §3.2's argument applied to transport rather than to fallback content:
+   a second representation maintained alongside the first has nothing forcing
+   the two to move together.
+2. **It converts back.** The surface satisfies the fixed point in §8, so the
+   markdown returned is markdown that reproduces the document's structural
+   digest. Markdown extracted from a rendering does not have this property and
+   cannot acquire it.
+
+The L0 text projection is not the markdown representation and must not be
+relabelled as one. It is markdown-flavoured and not CommonMark: its tables carry
+no delimiter row, and its footnote references and term lists have no CommonMark
+construct at all. `text/plain` is the honest content type for it, and a
+CommonMark-valid projection, if one is ever wanted, is a third emitter rather
+than a relabelling of this one.
+
+### 11.4 The stranded reader
 
 Recorded as a weakness rather than solved. The properties most likely to make an
 *individual* care — portable themes, reader supremacy, a consistent reading
@@ -470,7 +509,7 @@ list and is the place to look for what is done.
 
 Kept here rather than in a section that sounds like marketing.
 
-- **The stranded reader** (§11.3).
+- **The stranded reader** (§11.4).
 - **One genre of corpus.** The first corpus did not falsify the vocabulary and
   did not exercise 32 of 50 elements. M0b2 exists for this.
 - **Governance is interim.** The licences are irrevocable and the succession

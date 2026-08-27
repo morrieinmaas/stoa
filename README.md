@@ -71,6 +71,51 @@ rather than asserted:
 
 ---
 
+## Why not just markdown?
+
+Serve `Accept: text/markdown` and an agent stops paying for your DOM. That is
+one HTTP header, it works today, and nothing here argues against it —
+[acceptmarkdown.com](https://acceptmarkdown.com) makes the case well. So the
+honest version of the comparison starts by conceding the part markdown wins.
+
+**It wins the token argument, very nearly outright.** The 16.3× below is
+measured against live HTML. Against markdown it would almost vanish, because
+markdown and the L0 projection carry the same text with different punctuation
+around it. Bytes are not the differentiator and this project should not claim
+they are.
+
+What one header does not buy:
+
+| | Stoa | Markdown |
+|---|---|---|
+| Vocabulary | Closed, 50 elements, mechanically checkable | Open-ended; CommonMark admits raw HTML, including `<script>` |
+| Missing alternative text | Unrepresentable: `media.alt` is required and non-empty | `![](fig.png)` is valid markdown. The 0-of-65 finding below is not expressible as a check |
+| Document identity | Structural digest over the tree, identical across JSON and CBOR | No canonical tree, so any digest is over bytes and a reserialisation breaks it |
+| Excerpt proof | 224-byte Merkle proof for one paragraph, verifiable without the document | Requires a canonical tree. Not available |
+| Unknown constructs | Declared fallback, in band, total | Extensions — tables, footnotes, admonitions, MDX — render as literal syntax in a reader that does not implement them |
+| Exact quantities | Integer significand and scale; no float at any layer | No type system. *"0 amounts requiring a float"* is not a statement markdown can make |
+| Interaction | L2: `field.label` is required, so an unlabelled control cannot be written | No interaction layer |
+| Third-party fetch | Unrepresentable | Arbitrary image hosts and embedded HTML |
+| Provenance | Register pinned by content hash, resolved offline | None |
+
+Every row rests on the same thing: a closed vocabulary over a canonical tree.
+Markdown is deliberately the opposite — an open surface for human prose in
+which anything the parser does not recognise passes through as text. That is
+the correct design for what markdown is for, and it is exactly what makes each
+row above unavailable to it.
+
+**So the relationship is not competition. Markdown is an input to this, not a
+rival.** The reference surface is contained by CommonMark for the reason
+acceptmarkdown gives — existing editors, diffs and review workflows should work
+on day one — and `Accept: text/markdown` returns that surface (design notes
+§11.3). Two things follow that a hand-maintained markdown copy cannot have: it
+is generated from the tree being served, so it cannot drift from it; and it
+satisfies a fixed-point test, so the markdown returned is markdown that
+converts back to the same structural digest. Markdown extracted from a
+rendering has neither property and cannot acquire them.
+
+---
+
 ## Measured, not claimed
 
 Every number below is produced by the toolchain in this repository. Reproduce
@@ -170,6 +215,12 @@ inference step — and because a block node is Merkle-provable, a cited paragrap
 is *verifiable* rather than merely quoted. Non-visual consumption is a
 first-class target, not an accommodation, which is also why the terminal client
 in `docs/ROADMAP.md` is a conformance proof rather than a nicety.
+
+**The comparison is against HTML, not against markdown.** A markdown
+projection captures most of the byte column for the cost of one HTTP header;
+see [Why not just markdown?](#why-not-just-markdown). What it does not capture
+is everything the byte column is not: a structure that is declared rather than
+inferred, and an excerpt that verifies.
 
 **Read the 100% with its caveats.** `corpus/RESULTS.md` section 6 states them:
 the act body is a signed PDF that this does not test, a generic mapper flatters

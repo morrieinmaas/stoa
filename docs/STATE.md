@@ -35,7 +35,7 @@ Decisions that survived scrutiny and are unlikely to move.
 
 **Versioning: freeze the floor, grow the ceiling.** L0 is closed permanently. L1 and above are additive only. Unknown elements are specified from 1.0 as "render the fallback." The version field is advisory and clients never negotiate on it. A genuine break becomes an epoch that coexists rather than a migration.
 
-**The reverse bridge.** No forward bridge, ever. A publisher serves the canonical form and a prerendered static HTML projection from the same URL by content negotiation. Adoption is unilateral, there is no two-sided market to bootstrap, and the client is not the product.
+**The reverse bridge.** No forward bridge, ever. A publisher serves the canonical form and a prerendered static HTML projection from the same URL by content negotiation, and the same negotiation serves `text/markdown` (the CommonMark-contained surface) and `text/plain` (the L0 projection). Every representation is generated from the tree, so none can drift from another. Adoption is unilateral, there is no two-sided market to bootstrap, and the client is not the product.
 
 **Content determinism, not pixel determinism.** Fonts are client-side, declared by role, never fetched. What is guaranteed identical is the render tree, not the rasterisation. The signature claim survives because HTML fails "what you see is what you sign" through *content* variance from scripts, not through font variance, and a format with no author code has content invariance regardless.
 
