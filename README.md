@@ -80,11 +80,12 @@ one HTTP header, it works today, and nothing here argues against it —
 [acceptmarkdown.com](https://acceptmarkdown.com) makes the case well. So the
 honest version of the comparison starts by conceding the part markdown wins.
 
-**It wins the token argument, very nearly outright.** The 16.3× below is
-measured against live HTML. Against markdown it would almost vanish, because
-markdown and the L0 projection carry the same text with different punctuation
-around it. Bytes are not the differentiator and this project should not claim
-they are.
+**It wins the token argument, and there is now a number for that too.** The
+same published act, served four ways by `tools/serve.py`: the live page is
+22,187 bytes, the markdown representation 2,336, the L0 text projection 1,336.
+Markdown captures **95% of the byte reduction** the L0 projection achieves, for
+the cost of one HTTP header. Bytes are not the differentiator and this project
+should not claim they are.
 
 What one header does not buy:
 
@@ -232,6 +233,47 @@ which is exactly why a second one was needed.
 
 ---
 
+### The reverse bridge, running
+
+`tools/serve.py` serves each document at one URL in four representations, all
+generated from the same tree, by ordinary content negotiation (RFC 9110).
+`mise run bridge` asserts it over real HTTP on loopback: 76 checks, no browser.
+
+| `Accept` | Representation | The real Diavgeia act |
+|---|---|---|
+| `application/prs.stoa` | the canonical tree | 4,609 bytes |
+| `text/html` | the static HTML projection | 2,415 |
+| `text/markdown` | the reference surface | 2,336 |
+| `text/plain` | the L0 text projection | 1,336 |
+| | *the live page, for comparison* | *22,187* |
+
+What the check asserts, so that §11.3 of the design notes is not three claims in
+prose:
+
+- **No representation can drift.** All four are emitted from the tree being
+  served. The canonical response is byte-identical to the document's canonical
+  JSON, and the text response to its L0 projection.
+- **The markdown converts back.** Fed through the surface parser, the
+  `text/markdown` response reproduces the document's structural digest exactly,
+  and reparses as a conforming document. Markdown extracted from a rendering
+  cannot do this and cannot be made to.
+- **The HTML names no host.** No script, no stylesheet, no frame, no `@import`;
+  every subresource reference is same-origin, because `media.src` is a `path`
+  and a `path` cannot express an authority.
+- **Negotiation actually negotiates.** q-values beat header order, `q=0` is a
+  refusal, a type wildcard resolves within its type, an unavailable type is
+  `406`, and `Vary: Accept` is on every response including the `406`.
+- **The index is itself a conforming document**, built from the register rather
+  than hand-written, because a site whose front door is hand-written HTML would
+  be arguing against itself.
+
+A browser cannot set an `Accept` header, so `?form=canonical|html|markdown|text`
+reaches the same four representations — which is what makes the
+`<link rel="alternate">` that the HTML projection already emitted resolve to
+something.
+
+---
+
 ## Running the toolchain
 
 Python 3, standard library only, no dependencies.
@@ -242,6 +284,15 @@ python3 tools/stoa0.py conformance/negative-01.json check    # must report 13 er
 python3 tools/stoa0.py conformance/conformance-01.json l0    # the L0 text projection
 python3 tools/structhash.py conformance/conformance-01.json  # encoding independence
 python3 tools/stoa0.py register                              # regenerate spec/VOCABULARY.md
+```
+
+The reverse bridge, on localhost — one URL per document, four representations,
+ordinary content negotiation:
+
+```sh
+python3 tools/serve.py                # http://localhost:8080
+python3 tools/serve.py --check        # assert the bridge, 76 checks, no browser
+curl -H 'Accept: text/markdown' localhost:8080/notice-01
 ```
 
 The corpus test, which reaches the network on first run and caches afterwards:
@@ -271,6 +322,7 @@ conformance/conformance-01.stoa  the same document in the surface syntax; genera
 conformance/archived-01.json  a document pinned to a superseded register
 spec/registers/               content-addressed archive of register versions
 tools/                        throwaway M0 toolchain (Python, standard library only)
+tools/serve.py                the reverse bridge, running: one URL, four representations
 corpus/RESULTS.md             corpus 1: administrative notices (Diavgeia)
 corpus/RESULTS-rfc.md         corpus 2: standards documents (IETF RFCs)
 corpus/RESULTS-jats.md        corpus 3: scholarly articles (JATS)

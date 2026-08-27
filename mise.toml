@@ -46,6 +46,14 @@ cp spec/vocabulary.json "spec/registers/$h.json"
 echo "archived $h"
 """
 
+[tasks.serve]
+description = "The reverse bridge: one URL, four representations, on localhost"
+run = "python3 tools/serve.py"
+
+[tasks.bridge]
+description = "Assert the reverse bridge over real HTTP on loopback"
+run = "python3 tools/serve.py --check"
+
 [tasks.l0freeze]
 description = "L0 is frozen: assert the frozen layer has not moved"
 run = "python3 tools/stoa0.py l0freeze"
@@ -113,4 +121,4 @@ run = "python3 tools/selftest.py"
 
 [tasks.check]
 description = "Everything that does not touch the network"
-depends = ["canon", "validate", "negative", "contract", "merkle", "hash", "golden-check", "selftest", "surface", "provenance", "l0freeze", "fuzz"]
+depends = ["canon", "validate", "negative", "contract", "merkle", "hash", "golden-check", "selftest", "surface", "provenance", "l0freeze", "bridge", "fuzz"]

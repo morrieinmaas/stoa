@@ -93,7 +93,7 @@ M0 found four defects that were free to fix then and would have been impossible 
 3. ~~**Write the conformance document a second time in a surface syntax.**~~ Done (M0c). Both fixed points hold over all 50 elements; the surface document is `../conformance/conformance-01.stoa`.
 4. **Do the governance chores**: register the trademark, mirror the repository, deposit with Software Heritage and Zenodo for a DOI. An afternoon, and the DOI is what makes it citable in a tender.
 5. **Open one conversation with a public body about a paid pilot.** This is the single highest-value remaining action and no amount of further measurement substitutes for it.
-6. **Serve the reverse bridge.** One URL, real `Accept` negotiation across the canonical tree, `text/html`, `text/markdown` (the surface) and `text/plain` (the L0 projection) — design notes §11.3. Every representation already exists as an emitter; what does not exist is a URL, and after five corpora there is still nothing anyone can look at. It also turns §11.3's two claims into assertions: that no representation can drift, and that the markdown served converts back to the same structural digest.
+6. ~~**Serve the reverse bridge.**~~ Done. `tools/serve.py`: one URL, four representations, real `Accept` negotiation, 76 assertions over loopback HTTP (`mise run bridge`). §11.3's claims are now asserted rather than written down — no representation can drift, the markdown served reproduces the structural digest, and the HTML names no host. What is still missing is a public URL: this runs on localhost.
 7. **Start M1** (core types, encoding, parser, validator, HTML emitter, in Rust).
 8. **Submit the NLnet application** when the general call reopens — see section 7 and `FUNDING.md` section 9.
 
